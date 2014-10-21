@@ -1,0 +1,4 @@
+- name: Ensure deployer user is present
+  user: name=deployer state=present append=yes shell=/bin/bash
+
+- include: keys.yml

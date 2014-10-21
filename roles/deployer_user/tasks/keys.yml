@@ -1,0 +1,4 @@
+- name: Ensure devs keys are present
+  authorized_key: key="{{ item }}" manage_dir=yes state=present user=deployer
+  with_file:
+    - keys/jack.pub

@@ -1,0 +1,39 @@
+# -*- encoding : utf-8 -*-
+worker_processes {{ unicorn.num_workers }} 
+working_directory '{{ app_path }}'
+pid '{{ app_path }}/tmp/unicorn.pid'
+stderr_path '{{ app_path }}/log/unicorn.log'
+stdout_path '{{ app_path }}/log/unicorn.log'
+
+preload_app true
+
+# Restart any workers that haven't responded in 30 seconds
+timeout 30
+
+listen "{{ unicorn.sockfile }}"
+
+before_exec do |server|
+  # reload Gemfile
+  ENV["BUNDLE_GEMFILE"] = "#{Rails.root}/Gemfile"
+end
+
+before_fork do |server, worker|
+
+  # Clear DB Connections. See `after_fork`!
+  if defined? ActiveRecord::Base
+    # ActiveRecord::Base.connection_handler.clear_all_connections!
+    ActiveRecord::Base.connection.disconnect!
+  end
+
+  # Lock up a file so our upstart script knows we're running even if
+  # the parent hot-restarts
+  lockfile = File.open("{{ app_path}}/tmp/unicorn.lock", 'w')
+  exit unless lockfile.flock(File::LOCK_SH)
+end
+
+after_fork do |server, worker|
+  if defined?(ActiveRecord::Base)
+    # ActiveRecord::Base.connection_handler.verify_active_connections!
+    ActiveRecord::Base.establish_connection
+  end
+end

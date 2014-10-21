@@ -1,0 +1,12 @@
+- name: Install VIM
+  apt: name=vim state=present
+
+- name: Install GIT
+  apt: name=git state=present
+
+- name: Install IM
+  apt: name={{ item }} state=present
+  with_items:
+    - imagemagick
+    - libmagickcore-dev
+    - libmagickwand-dev

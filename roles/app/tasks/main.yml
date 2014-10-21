@@ -1,0 +1,12 @@
+- name: Symlink to new rbenv install location
+  file: path=/home/deployer/.rbenv state=link src=/usr/local/rbenv
+
+- name: Check out application
+  remote_user: deployer
+  git: dest={{ app_path }}
+       repo={{ app_repo }}
+       version={{ app_branch }}
+       accept_hostkey=true
+  register: app_checkout
+  tags:
+    - deploy

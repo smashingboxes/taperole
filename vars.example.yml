@@ -1,0 +1,30 @@
+app_name: weaveup
+app_env: staging
+deployer_user: deployer
+database_password: sayhelloworld
+
+app_path: "/home/{{deployer_user }}/{{ app_name }}"
+app_repo: git@github.com:smashingboxes/weaveup.git
+app_branch: api/staging
+
+unicorn:
+  num_workers: 2
+  sockfile: /tmp/unicorn_{{ app_name }}.sock
+
+rbenv:
+  version: v0.4.0
+  env: system
+  ruby_version: 2.1.2
+
+swap_file:
+  path: /swp
+  size_kb: "{{ 1024 * 1024 }}"
+
+rbenv_users:
+  - deployer
+  - root
+
+rbenv:
+  version: v0.4.0
+  env: system
+  ruby_version: 2.1.2

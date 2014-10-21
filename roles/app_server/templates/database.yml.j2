@@ -1,0 +1,8 @@
+{{ app_env }}:
+  adapter: postgresql
+  encoding: unicode
+  database: {{ app_name }}_{{ app_env }}
+  username: deployer
+  password: {{ database_password }}
+  pool: 5
+  host: localhost

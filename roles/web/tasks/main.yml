@@ -1,0 +1,18 @@
+- name: Enable nginx PPA
+  apt_repository: repo=ppa:nginx/stable
+
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Ensure WWW dir present
+  file: path=/var/www state=directory owner=deployer group=deployer mode=0700
+
+- name: Configure nginx
+  template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
+  notify: restart nginx
+
+- name: Ditch default nginx site enabled
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
+- name: Ensure nginx running
+  service: name=nginx state=running

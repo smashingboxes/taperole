@@ -1,0 +1,24 @@
+- name: Ensure postgres repo is enabled
+  apt_repository: repo=ppa:pitti/postgresql update_cache=true
+
+- name: Ensure postgres is installed
+  apt: name={{item }} state=present
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+
+- name: Ensure deployer has got permissions
+  sudo: true
+  sudo_user: postgres
+  postgresql_user: name=deployer
+                   state=present
+                   role_attr_flags=CREATEDB,LOGIN,REPLICATION
+                   password={{ database_password }}
+
+- name: Create db
+  sudo: true
+  sudo_user: postgres
+  postgresql_db: owner=deployer
+                 name="{{ app_name }}_{{app_env}}"
+                 state=present

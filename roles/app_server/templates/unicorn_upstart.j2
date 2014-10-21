@@ -1,0 +1,25 @@
+description "{{app_name}} unicorn daemon"
+
+start on virtual-filesystems
+stop on runlevel [06]
+
+env PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/bin:/sbin:/bin
+
+env RAILS_ENV={{app_env}}
+
+setuid {{deployer_user}}
+setgid {{deployer_user}}
+
+chdir {{app_path}}
+
+respawn limit 5 5
+
+script
+  trap "kill -SIGUSR2 `cat tmp/unicorn.pid`" HUP
+  bundle exec unicorn -c config/unicorn.rb -E {{app_env}} &&
+    flock -x 0 < {{app_path}}/tmp/unicorn.lock
+end script
+
+pre-stop script
+  start-stop-daemon --stop --pidfile tmp/unicorn.pid
+end script
