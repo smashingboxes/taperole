@@ -46,3 +46,7 @@ Basic nginx installation, configured to work with unicorns running on the same b
 ### app\_server
 
 Runs unicorns executing app code
+
+### legacy
+
+Used to migrate from old capistrano-managed boxes to the new infrastructure
