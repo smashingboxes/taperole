@@ -1,0 +1,7 @@
+---
+- include: omnibox.yml
+  vars: 
+    app_name: weaveup
+    app_env: staging
+    app_repo: git@github.com:smashingboxes/weaveup.git
+    app_branch: api/staging
