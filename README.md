@@ -12,18 +12,19 @@ To generate hosts from capistrano hosts (only ip addresses supported): `./mkhost
 
 1) `ansible-galaxy install -r Rolefile` to install deps
 2) `ssh-add` root keys from Passpack
-3) `ansible-playbook -ihosts omnibox.yml`
-
-## Testing
-
-1) get vagrant base box SSH key from Vagrant's GH repo and `ssh-add` it
-2) install vbox
-3) `vagrant up`
-4) ssh to vagrant box (host-only ip in Vagrantfile, or `vagrant ssh`)
-5) `sudo mkdir /root/.ssh/ && cp .ssh/authorized_keys /root/.ssh/authorized_keys && chmod /root/.ssh/authorized_keys 0600`
-6) `ansible_playbook -itest_hosts omnibox.yml`
+3) `ansible-playbook -ihosts site.yml`
 
 ## Playbooks
+
+### site
+
+You can use site.example.yml to create a new site.yml for your project, based on omnibox. If site.yml lives in a directory different from where this repo is checked out you'll need `SMASHING_BOXER_PATH` set on the command line with this repo directory if you use the same include style that site.example.yml does.
+
+Currently, playbooks need to be executed in this repo directory for ansible to be able to include all the roles and files necessary for execution.
+
+Here's an example of how running this tool here with project-specific files looks for weaveup:
+
+`ansible-playbook -i ~/src/sb/weaveup/hosts ~/src/sb/weaveup/site.yml`
 
 ### omnibox
 
