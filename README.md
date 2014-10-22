@@ -20,11 +20,11 @@ To generate hosts from capistrano hosts (only ip addresses supported): `./mkhost
 
 You can use site.example.yml to create a new site.yml for your project, based on omnibox. If site.yml lives in a directory different from where this repo is checked out you'll need `SMASHING_BOXER_PATH` set on the command line with this repo directory if you use the same include style that site.example.yml does.
 
-Currently, playbooks need to be executed in this repo directory for ansible to be able to include all the roles and files necessary for execution.
+Executing playbooks in other directories requires an env variable to point to the smashing boxer files.
 
 Here's an example of how running this tool here with project-specific files looks for weaveup:
 
-`ansible-playbook -i ~/src/sb/weaveup/hosts ~/src/sb/weaveup/site.yml`
+`SMASHING_BOXER_PATH=~/src/sb/smashing_boxer ansible-playbook -ihosts site.yml`
 
 ### omnibox
 
