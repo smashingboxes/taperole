@@ -8,7 +8,7 @@
 
     app_path: "/home/{{deployer_user }}/{{ app_name }}"
     fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
-
+    fe_app: false
     local_dir: "{{lookup('env', 'PWD')}}"
 
     nvm:
@@ -41,9 +41,9 @@
       ruby_version: 2.1.2
 
   roles:
+    - database
     - general
     - web
-    - database
     - legacy
     - gems
     - app_server
