@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: zzet.rbenv }
+  - { role: vendor/roles/zzet.rbenv }

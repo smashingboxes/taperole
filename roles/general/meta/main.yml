@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - { role: jnv.unattended-upgrades }
+  - { role: vendor/roles/jnv.unattended-upgrades }
   - { role: deployer_user }
