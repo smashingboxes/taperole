@@ -6,10 +6,6 @@
   apt: name=nginx state=present
   tags: [nginx]
 
-- name: Ensure WWW dir present
-  file: path=/var/www state=directory owner=deployer group=deployer mode=0700
-  tags: [nginx]
-
 - name: Configure nginx
   template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
   notify: restart nginx
