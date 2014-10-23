@@ -44,6 +44,8 @@ This user needs to have some SSH keys so all the devs on the project can ssh to 
 
 Basic nginx installation, configured to work with unicorns running on the same box
 
+This looks for the `fe_app` variable, and either configures nginx to serve `./public` from a rails app or `./dist` from an angular app at the root of the site.
+
 ### app\_server
 
 Runs unicorns executing app code
