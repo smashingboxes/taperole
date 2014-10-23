@@ -1,0 +1,6 @@
+---
+- hosts: all
+  user: deployer
+  tasks:
+    - copy: src={{static_repo}}/dist/ dest=/home/deployer/{{app_name}}/public
+      when: app_static_files is defined and app_static_files != ""

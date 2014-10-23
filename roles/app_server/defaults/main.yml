@@ -1,4 +1,5 @@
 rake:
   force_seed: false
   force_migrate: false
-rake_force_migrate: true
+force_unicorn_restart: false
+force_unicorn_reload: false
