@@ -1,13 +1,80 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+require 'ostruct'
+
 class SmashingBoxer
-  def initialize(opts = {})
+  class InvalidAction < StandardError; end
+  ACTIONS = {
+    'everything' => :do_it_all,
+    'deploy' => :deploy_only,
+    'restart_unicorn' => :restart_unicorn
+  }
+
+  def initialize(opts)
     ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../')
+    @opts = opts
   end
 
-  def run
-    Kernel.exec("ansible-playbook -i test_hosts site.yml")
+  def execute_action(action)
+    unless ACTIONS.include?(action)
+      raise InvalidAction, "#{action} is not a valid action!"
+    end
+
+    send(ACTIONS[action])
+  end
+
+  protected
+  attr_reader :opts
+
+  def restart_unicorn
+    ansible '-tunicorn_restart -e force_unicorn_restart=true'
+  end
+
+  def deploy_only
+    ansible '-tdeploy'
+  end
+
+  def do_it_all 
+    ansible
+  end
+
+  def ansible(cmd_str = '')
+    cmd = "ansible-playbook -i #{hosts_file} site.yml #{cmd_str}"
+    STDERR.puts "Executing: #{cmd}" if opts.verbose
+    Kernel.exec(cmd)
+  end
+
+  def hosts_file
+    'test_hosts'
   end
 end
 
-SmashingBoxer.new.run
+options = OpenStruct.new
+opt_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: smashing_boxer <action> [options]"
+
+  opts.on("-v", "--[no-]verbose", "Be loud") {|v| options.verbose = v}
+  opts.on("-h", "--help", "Show this help") do
+    STDERR.puts opts 
+    exit 0
+  end
+
+  opts.separator ''
+  opts.separator "ACTIONS"
+  opts.separator "  everything:  Provision and deploy all aspects of the application"
+end
+opt_parser.parse! ARGV
+action = ARGV.shift
+
+if action
+  begin
+    SmashingBoxer.new(options).execute_action(action)
+  rescue SmashingBoxer::InvalidAction => e
+    STDERR.puts(e.msg)
+    exit 2
+  end
+else
+  STDERR.puts opt_parser.help
+  exit 1
+end
