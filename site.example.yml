@@ -3,4 +3,13 @@
   vars: 
     app_name: weaveup
     app_repo: git@github.com:smashingboxes/weaveup.git
+    fe_app_repo: git@github.com:smashingboxes/weaveup_web_frontend.git
+    fe_app_branch: deployable/master
     base: "{{ lookup('env', 'SMASHING_BOXER_PATH') | default('.') }}"
+    app_static_files: "{{ lookup('env', 'WEAVEUP_FE_PATH') }}"
+    fe_app: true
+    dev_key_files:
+      - dev_keys/jack.pub
+      - dev_keys/rick.pub
+      - dev_keys/james.pub
+      - dev_keys/rob.pub
