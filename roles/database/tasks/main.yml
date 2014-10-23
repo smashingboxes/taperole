@@ -1,5 +1,10 @@
 - name: Ensure postgres repo is enabled
   apt_repository: repo=ppa:pitti/postgresql update_cache=true
+  when: ansible_distribution_version == "12.04"
+
+- name: Remove postgres repo on updated ubuntu
+  apt_repository: repo=ppa:pitti/postgresql update_cache=true state=absent
+  when: ansible_distribution_version == "14.04"
 
 - name: Ensure postgres is installed
   apt: name={{item }} state=present
