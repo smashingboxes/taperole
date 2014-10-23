@@ -9,6 +9,8 @@
     app_path: "/home/{{deployer_user }}/{{ app_name }}"
     fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
 
+    local_dir: "{{lookup('env', 'PWD')}}"
+
     nvm:
       user: deployer
       version: v0.4.0
@@ -17,6 +19,8 @@
     unicorn:
       num_workers: "{{ansible_processor_cores * 2}}"
       sockfile: /tmp/unicorn_{{ app_name }}.sock
+
+    dev_key_files: []
 
     rbenv:
       version: v0.4.0
