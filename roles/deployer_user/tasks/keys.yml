@@ -5,7 +5,7 @@
   tags: [deployer]
 
 - name: Ensure devs keys are present
-  authorized_key: key={{ lookup('file', local_dir + '/' + item) }}
+  authorized_key: key="{{ lookup('file', local_dir + '/' + item) }}"
                   manage_dir=yes
                   state=present
                   user=deployer
