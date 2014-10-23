@@ -8,5 +8,4 @@
        version={{ app_branch }}
        accept_hostkey=true
   register: app_checkout
-  tags:
-    - deploy
+  tags: [deploy]

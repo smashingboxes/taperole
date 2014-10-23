@@ -21,9 +21,6 @@
 - name: Set up db config
   template: src=database.yml.j2 dest={{app_path}}/config/database.yml
   
-- name: Install v8
-  apt: name=nodejs state=present
-
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundle gems
@@ -82,8 +79,3 @@
   service: name=unicorn_{{app_name}} state=restarted
   tags: [unicorn_restart]
   when: force_unicorn_restart
-
-- name: Copy static files if present
-  synchronize: src={{app_static_files}}/ dest=/home/deployer/{{app_name}}/public
-  when: app_static_files is defined and app_static_files != ""
-  tags: [deploy, static]

@@ -2,3 +2,4 @@
 
 dependencies:
   - { role: deployer_user }
+  - { role: vendor/roles/leonidas.nvm, tags: [nodejs]}

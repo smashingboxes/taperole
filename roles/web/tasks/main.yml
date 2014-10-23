@@ -1,18 +1,56 @@
 - name: Enable nginx PPA
   apt_repository: repo=ppa:nginx/stable
+  tags: [nginx]
 
 - name: Install nginx
   apt: name=nginx state=present
+  tags: [nginx]
 
 - name: Ensure WWW dir present
   file: path=/var/www state=directory owner=deployer group=deployer mode=0700
+  tags: [nginx]
 
 - name: Configure nginx
   template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
   notify: restart nginx
+  tags: [nginx]
 
 - name: Ditch default nginx site enabled
   file: path=/etc/nginx/sites-enabled/default state=absent
+  tags: [nginx]
+
+- name: Check out FE application
+  remote_user: deployer
+  git: dest={{ fe_app_path }}
+       repo={{ fe_app_repo }}
+       version={{ fe_app_branch }}
+       accept_hostkey=true
+  when: fe_app
+  tags: [deploy, fe]
+  
+- name: Remove Apt NodeJS Package
+  apt: name={{item}} state=absent
+  with_items: [nodejs, npm]
+  tags: [nodejs]
+
+- name: Install node packages for web FE
+  remote_user: deployer
+  command: chdir={{fe_app_path}}
+           bash -lc "npm install"
+  tags: [deploy, fe]
+
+- name: Install grunt
+  remote_user: deployer
+  command: bash -lc "npm install grunt-cli -g"
+  tags: [fe, grunt]
+
+- name: Build FE app
+  remote_user: deployer
+  command: chdir={{fe_app_path}}
+           bash -lc "grunt build"
+  tags: [deploy, fe]
 
 - name: Ensure nginx running
+  remote_user: deployer
   service: name=nginx state=running
+  tags: [deploy, fe]

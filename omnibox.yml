@@ -7,9 +7,15 @@
     database_password: sayhelloworld
 
     app_path: "/home/{{deployer_user }}/{{ app_name }}"
+    fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
+
+    nvm:
+      user: deployer
+      version: v0.4.0
+      node_version: '0.10'
 
     unicorn:
-      num_workers: 2
+      num_workers: "{{ansible_processor_cores * 2}}"
       sockfile: /tmp/unicorn_{{ app_name }}.sock
 
     rbenv:
