@@ -1,0 +1,6 @@
+- name: Precompile assets
+  remote_user: deployer
+  command: chdir={{ app_path }}
+      bash -lc "bundle exec rake assets:precompile RAILS_ENV={{ app_env }}"
+  run_once: true
+  when: migrate is defined and migrate
