@@ -35,7 +35,7 @@ class SmashingBoxer
     ansible '-tdeploy'
   end
 
-  def do_it_all 
+  def do_it_all
     ansible
   end
 
@@ -56,7 +56,7 @@ opt_parser = OptionParser.new do |opts|
 
   opts.on("-v", "--[no-]verbose", "Be loud") {|v| options.verbose = v}
   opts.on("-h", "--help", "Show this help") do
-    STDERR.puts opts 
+    STDERR.puts opts
     exit 0
   end
 
