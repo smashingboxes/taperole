@@ -27,6 +27,7 @@
        accept_hostkey=true
   when: fe_app
   tags: [deploy, fe]
+  register: fe_app_checkout
   
 - name: Remove Apt NodeJS Package
   apt: name={{item}} state=absent
@@ -38,17 +39,20 @@
   command: chdir={{fe_app_path}}
            bash -lc "npm install"
   tags: [deploy, fe]
+  when: fe_app_checkout is defined and fe_app_checkout.changed
 
 - name: Install grunt
   remote_user: deployer
   command: bash -lc "npm install grunt-cli -g"
   tags: [fe, grunt]
+  when: fe_app_checkout is defined and fe_app_checkout.changed
 
 - name: Build FE app
   remote_user: deployer
   command: chdir={{fe_app_path}}
            bash -lc "grunt build"
   tags: [deploy, fe]
+  when: fe_app_checkout is defined and fe_app_checkout.changed
 
 - name: Ensure nginx running
   remote_user: deployer
