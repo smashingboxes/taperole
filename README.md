@@ -10,9 +10,9 @@ Our old Capistrano system is too much of a ballache to add new tasks to.  Ansibl
 
 To generate hosts from capistrano hosts (only ip addresses supported): `./mkhosts.sh`
 
-1) `ansible-galaxy install -r Rolefile` to install deps
-2) `ssh-add` root keys from Passpack
-3) `ansible-playbook -ihosts site.yml`
+1. `ansible-galaxy install -r Rolefile` to install deps
+2. `ssh-add` root keys from Passpack
+3. `ansible-playbook -ihosts site.yml`
 
 ## Playbooks
 
