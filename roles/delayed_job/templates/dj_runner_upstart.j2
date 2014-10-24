@@ -3,7 +3,6 @@ description "{{app_name}} delayed job runner daemon"
 start on virtual-filesystems
 stop on runlevel [06]
 
-expect fork
 env PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/bin:/sbin:/bin
 env RAILS_ENV={{app_env}}
 setuid {{deployer_user}}
@@ -15,4 +14,4 @@ respawn limit 5 5
 
 kill timeout 5
 
-exec bundle exec bin/delayed_job start
+exec bundle exec bin/delayed_job run
