@@ -11,5 +11,7 @@
 
 - name: restart delayed job runner
   service: name=dj_runner_{{app_name}} state=restarted
-  when: dj_runner_installation.changed or force_dj_runner_restart
-  tags: [configure_dj_runner]
+  when: (dj_runner_installation is defined and dj_runner_installation.changed) or
+    force_dj_runner_restart or
+    (app_checkout is defined and app_checkout.changed)
+  tags: [configure_dj_runner, deploy]
