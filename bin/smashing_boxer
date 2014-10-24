@@ -4,7 +4,7 @@ require 'optparse'
 require 'ostruct'
 
 class SmashingBoxer
-  class Action < Struct.new(:name, :opts); end
+  class Action < Struct.new(:name, :opts, :description); end
   class InvalidAction < StandardError; end
   ACTIONS = {
     'everything' => :do_it_all,
@@ -20,16 +20,26 @@ class SmashingBoxer
 
   def self.action(name, opts = '', doc = '')
     @actions ||= Hash.new
-    @actions[name.to_sym] = opts
+    @actions[name.to_sym] = Action.new(name, opts, doc)
   end
 
-  action :configure_dj_runner, '-tconfigure_dj_runner'
-  action :configure_dj_runner, '-tconfigure_dj_runner -e force_dj_runner_restart=true'
-  action :reload_unicorn, '-t unicorn_restart -e force_unicorn_restart=true'
-  action :restart_unicorn, '-t unicorn_restart -e force_unicorn_reload=true'
-  action :bundle, '-t bundle -e force_bundle=true'
-  action :deploy, '-tdeploy'
-  action :everything, ''
+  action :configure_dj_runner,
+    '-tconfigure_dj_runner -e force_dj_runner_restart=true',
+    "Configures and restarts the delayed job runner"
+  action :reload_unicorn,
+    '-t unicorn_reload -e force_unicorn_reload',
+    "Reloads the unicorns running on the app servers"
+  action :restart_unicorn,
+    '-t unicorn_restart -e force_unicorn_restart=true',
+    "Restarts the unicorns running on the app servers"
+  action :bundle,
+    '-t bundle -e force_bundle=true',
+    "Bundles the gems running on the app servers"
+  action :deploy,
+    '-tdeploy',
+    "Checks out app code, installs dependencies and restarts unicorns for "\
+    "both FE and BE code."
+  action :everything, '', "This does it all."
 
   def actions
     self.class.actions
@@ -50,7 +60,7 @@ class SmashingBoxer
       raise InvalidAction, "ansible-playbook must be on your PATH to use this tool"
     end
 
-    ansible(actions[action])
+    ansible(actions[action].opts)
   end
 
   protected
@@ -84,8 +94,9 @@ opt_parser = OptionParser.new do |opts|
 
   opts.separator ''
   opts.separator "ACTIONS"
-  opts.separator "  everything:  Provision and deploy all aspects of the application"
-  opts.separator "  configure_dj_runner:  Set up the Delayed Job runner"
+  SmashingBoxer.actions.each do |key, action|
+    opts.separator "  #{action.name}:  #{action.description}"
+  end
 end
 opt_parser.parse! ARGV
 action = ARGV.shift
