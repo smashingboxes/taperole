@@ -46,6 +46,10 @@ class SmashingBoxer
       raise InvalidAction, "#{action} is not a valid action!"
     end
 
+    unless system("ansible-playbook --version")
+      raise InvalidAction, "ansible-playbook must be on your PATH to use this tool"
+    end
+
     ansible(actions[action])
   end
 
