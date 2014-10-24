@@ -4,12 +4,36 @@ require 'optparse'
 require 'ostruct'
 
 class SmashingBoxer
+  class Action < Struct.new(:name, :opts); end
   class InvalidAction < StandardError; end
   ACTIONS = {
     'everything' => :do_it_all,
     'deploy' => :deploy_only,
-    'restart_unicorn' => :restart_unicorn
+    'restart_unicorn' => :restart_unicorn,
+    'configure_dj_runner' => :configure_dj_runner,
+    'restart_dj_runner' => :restart_dj_runner
   }
+
+  def self.actions
+    @actions
+  end
+
+  def self.action(name, opts = '', doc = '')
+    @actions ||= Hash.new
+    @actions[name.to_sym] = opts
+  end
+
+  action :configure_dj_runner, '-tconfigure_dj_runner'
+  action :configure_dj_runner, '-tconfigure_dj_runner -e force_dj_runner_restart=true'
+  action :reload_unicorn, '-t unicorn_restart -e force_unicorn_restart=true'
+  action :restart_unicorn, '-t unicorn_restart -e force_unicorn_reload=true'
+  action :bundle, '-t bundle -e force_bundle=true'
+  action :deploy, '-tdeploy'
+  action :everything, ''
+
+  def actions
+    self.class.actions
+  end
 
   def initialize(opts)
     ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../')
@@ -17,36 +41,25 @@ class SmashingBoxer
   end
 
   def execute_action(action)
-    unless ACTIONS.include?(action)
+    action = action.to_sym
+    unless actions.include?(action)
       raise InvalidAction, "#{action} is not a valid action!"
     end
 
-    send(ACTIONS[action])
+    ansible(actions[action])
   end
 
   protected
   attr_reader :opts
 
-  def restart_unicorn
-    ansible '-tunicorn_restart -e force_unicorn_restart=true'
-  end
-
-  def deploy_only
-    ansible '-tdeploy'
-  end
-
-  def do_it_all
-    ansible
-  end
-
   def ansible(cmd_str = '')
-    cmd = "ansible-playbook -i #{hosts_file} site.yml #{cmd_str}"
+    cmd = "ansible-playbook -i #{inventory_file} site.yml #{cmd_str}"
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
   end
 
-  def hosts_file
-    'test_hosts'
+  def inventory_file
+    opts.inventory_file || 'test_hosts'
   end
 end
 
@@ -60,9 +73,15 @@ opt_parser = OptionParser.new do |opts|
     exit 0
   end
 
+  opts.on("-i", "--inventory [INVENTORY_FILE]",
+    String, "Do actions with the given inventory file") do |i|
+      options.inventory_file = i
+    end
+
   opts.separator ''
   opts.separator "ACTIONS"
   opts.separator "  everything:  Provision and deploy all aspects of the application"
+  opts.separator "  configure_dj_runner:  Set up the Delayed Job runner"
 end
 opt_parser.parse! ARGV
 action = ARGV.shift
@@ -71,7 +90,7 @@ if action
   begin
     SmashingBoxer.new(options).execute_action(action)
   rescue SmashingBoxer::InvalidAction => e
-    STDERR.puts(e.msg)
+    STDERR.puts(e.message)
     exit 2
   end
 else

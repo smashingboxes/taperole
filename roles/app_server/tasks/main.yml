@@ -26,9 +26,11 @@
 - name: Install bundle gems
   remote_user: deployer
   command: chdir={{ app_path }}
-           bash -lc "RAILS_ENV={{app_env}} bundle install --path vendor/bundle"
-  tags: [deploy bundle]
-  when: app_checkout is defined and app_checkout.changed
+           bash -lc "RAILS_ENV={{app_env}} bundle install
+             --without test development contests_development --deployment"
+  tags: [deploy, bundle]
+  when: (app_checkout is defined and app_checkout.changed) or
+        force_bundle
 
 - name: Ensure env_config.yml file present
   stat: path={{ app_path }}/config/env_config.yml

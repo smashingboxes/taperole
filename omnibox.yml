@@ -47,3 +47,4 @@
     - legacy
     - gems
     - app_server
+    - delayed_job

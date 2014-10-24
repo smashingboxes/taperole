@@ -1,0 +1,15 @@
+- name: Install upstart job
+  template: src=dj_runner_upstart.j2
+            dest=/etc/init/dj_runner_{{app_name}}.conf
+  tags: [configure_dj_runner]
+  register: dj_runner_installation
+
+- name: register unicorn upstart script
+  command: initctl reload-configuration
+  when: dj_runner_installation.changed
+  tags: [configure_dj_runner]
+
+- name: restart delayed job runner
+  service: name=dj_runner_{{app_name}} state=restarted
+  when: dj_runner_installation.changed or force_dj_runner_restart
+  tags: [configure_dj_runner]

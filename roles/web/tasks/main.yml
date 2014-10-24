@@ -25,11 +25,6 @@
   tags: [deploy, fe]
   register: fe_app_checkout
   
-- name: Remove Apt NodeJS Package
-  apt: name={{item}} state=absent
-  with_items: [nodejs, npm]
-  tags: [nodejs]
-
 - name: Install node packages for web FE
   remote_user: deployer
   command: chdir={{fe_app_path}}
