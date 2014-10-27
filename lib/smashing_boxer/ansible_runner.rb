@@ -19,10 +19,10 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t deploy'},
     "Checks out app code, installs dependencies and restarts unicorns for "\
     "both FE and BE code."
-  action :everything, ->{ansible}, "This does it all."
+  action :everything, proc {ansible}, "This does it all."
 
   def initialize(*args)
-    ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../')
+    ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../../')
     super
   end
 
