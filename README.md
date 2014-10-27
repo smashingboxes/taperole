@@ -12,7 +12,21 @@ To generate hosts from capistrano hosts (only ip addresses supported): `./mkhost
 
 1. `ansible-galaxy install -r Rolefile` to install deps
 2. `ssh-add` root keys from Passpack
-3. `ansible-playbook -ihosts site.yml`
+3. `smashing_boxer -i hosts ansible deploy`
+
+## The `smashing_boxer` tool
+
+This tool provides a basic wrapper around the ansible scripts, and also contains a `qemu` module which is useful for testing ansible scripts locally.
+
+Here's what a local test would look like using the tool
+
+1. `smashing_boxer qemu create --name fe_test`
+2. `smashing_boxer qemu start --name fe_test -p2255`
+3. `smashing_boxer qemu add_ssh_key_to_agent`
+4. `echo 'localhost:2255' >test_hosts`
+5. `smashing_boxer ansible everything -i test_hosts`
+ 
+Run `smashing_boxer -h` for a quick rundown of the tool's modules and options.
 
 ## Playbooks
 
