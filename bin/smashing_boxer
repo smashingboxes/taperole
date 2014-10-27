@@ -1,110 +1,61 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH << File.join(__dir__, '..', 'lib')
+
 require 'optparse'
 require 'ostruct'
-
-class SmashingBoxer
-  class Action < Struct.new(:name, :opts, :description); end
-  class InvalidAction < StandardError; end
-  ACTIONS = {
-    'everything' => :do_it_all,
-    'deploy' => :deploy_only,
-    'restart_unicorn' => :restart_unicorn,
-    'configure_dj_runner' => :configure_dj_runner,
-    'restart_dj_runner' => :restart_dj_runner
-  }
-
-  def self.actions
-    @actions
-  end
-
-  def self.action(name, opts = '', doc = '')
-    @actions ||= Hash.new
-    @actions[name.to_sym] = Action.new(name, opts, doc)
-  end
-
-  action :configure_dj_runner,
-    '-tconfigure_dj_runner -e force_dj_runner_restart=true',
-    "Configures and restarts the delayed job runner"
-  action :reload_unicorn,
-    '-t unicorn_reload -e force_unicorn_reload',
-    "Reloads the unicorns running on the app servers"
-  action :restart_unicorn,
-    '-t unicorn_restart -e force_unicorn_restart=true',
-    "Restarts the unicorns running on the app servers"
-  action :bundle,
-    '-t bundle -e force_bundle=true',
-    "Bundles the gems running on the app servers"
-  action :deploy,
-    '-tdeploy',
-    "Checks out app code, installs dependencies and restarts unicorns for "\
-    "both FE and BE code."
-  action :everything, '', "This does it all."
-
-  def actions
-    self.class.actions
-  end
-
-  def initialize(opts)
-    ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../')
-    @opts = opts
-  end
-
-  def execute_action(action)
-    action = action.to_sym
-    unless actions.include?(action)
-      raise InvalidAction, "#{action} is not a valid action!"
-    end
-
-    unless system("ansible-playbook --version")
-      raise InvalidAction, "ansible-playbook must be on your PATH to use this tool"
-    end
-
-    ansible(actions[action].opts)
-  end
-
-  protected
-  attr_reader :opts
-
-  def ansible(cmd_str = '')
-    cmd = "ansible-playbook -i #{inventory_file} site.yml #{cmd_str}"
-    STDERR.puts "Executing: #{cmd}" if opts.verbose
-    Kernel.exec(cmd)
-  end
-
-  def inventory_file
-    opts.inventory_file || 'test_hosts'
-  end
-end
+require 'smashing_boxer'
+require 'smashing_boxer/arg_parser'
 
 options = OpenStruct.new
 opt_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: smashing_boxer <action> [options]"
+  opts.banner = "Usage: smashing_boxer <module> <action> [options]"
 
   opts.on("-v", "--[no-]verbose", "Be loud") {|v| options.verbose = v}
-  opts.on("-h", "--help", "Show this help") do
-    STDERR.puts opts
-    exit 0
-  end
 
   opts.on("-i", "--inventory [INVENTORY_FILE]",
     String, "Do actions with the given inventory file") do |i|
       options.inventory_file = i
     end
 
+  opts.on('-n', "--name [NAME]",
+    String, "The name of the machine to operate on") do |n|
+      options.name = n
+    end
+
+  opts.on('-p', "--port [PORT]",
+    Integer, "The port that the machine is listening on for SSH connections") do |p|
+      options.port = p
+    end
+
+  opts.on("-h", "--help", "Show this help") do
+    STDERR.puts opts
+    exit 0
+  end
+
   opts.separator ''
-  opts.separator "ACTIONS"
-  SmashingBoxer.actions.each do |key, action|
-    opts.separator "  #{action.name}:  #{action.description}"
+  opts.separator "MODULES"
+  SmashingBoxer.registered_modules.values.each do |exec_module|
+    opts.separator "  #{exec_module.name.to_s.upcase}"
+    exec_module.klass.actions.values.each do |action|
+      opts.separator "    #{action.name}: #{action.description}"
+    end
   end
 end
-opt_parser.parse! ARGV
-action = ARGV.shift
 
-if action
+opt_parser.parse! ARGV
+
+module_name = ARGV.shift.to_sym
+action_name = ARGV.shift.to_sym
+
+exec_module = SmashingBoxer.registered_modules[module_name]
+
+if exec_module and action_name
   begin
-    SmashingBoxer.new(options).execute_action(action)
-  rescue SmashingBoxer::InvalidAction => e
+    exec_module.klass.new(options).execute_action(action_name)
+  rescue SmashingBoxer::InvalidAction,
+    SmashingBoxer::ActionError, SmashingBoxer::UnspecifiedOption => e
+
     STDERR.puts(e.message)
     exit 2
   end
