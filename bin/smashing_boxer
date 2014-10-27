@@ -5,7 +5,6 @@ $LOAD_PATH << File.join(__dir__, '..', 'lib')
 require 'optparse'
 require 'ostruct'
 require 'smashing_boxer'
-require 'smashing_boxer/arg_parser'
 
 options = OpenStruct.new
 opt_parser = OptionParser.new do |opts|
