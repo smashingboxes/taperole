@@ -58,11 +58,6 @@ module SmashingBoxer
         raise UnspecifiedOption, "Option #{name} must be specified to do this!"
       end
     end
-
-    def do_action
-      raise NotImplementedError, "ExecutionModule is an abstract "\
-        "class and can not handle action execution itself"
-    end
   end
 end
 

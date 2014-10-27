@@ -18,6 +18,9 @@ class QemuProvisioner < ExecutionModule
     proc {ssh_to_box},
     'SSHes to the box by the given name. Requires id_rsa_sb_basebox
          key to be added to the current SSH agent'
+  action :reset,
+    proc {reset_box},
+    'Destroys and re-creates the box by the given name'
 
   protected
 
@@ -52,6 +55,14 @@ class QemuProvisioner < ExecutionModule
 
     write_pidfile(pid)
     Process.detach(pid)
+  end
+
+  def reset_box
+    require_opt :name
+    ensure_box_created
+
+    File.delete(image_path)
+    create_img
   end
 
   def ensure_box_created

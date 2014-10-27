@@ -43,23 +43,30 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-opt_parser.parse! ARGV
 
-module_name = ARGV.shift.to_sym
-action_name = ARGV.shift.to_sym
+opt_parser.parse!(ARGV)
 
-exec_module = SmashingBoxer.registered_modules[module_name]
+fail_without = ->(&block){
+  val = block.call
 
-if exec_module and action_name
-  begin
-    exec_module.klass.new(options).execute_action(action_name)
-  rescue SmashingBoxer::InvalidAction,
-    SmashingBoxer::ActionError, SmashingBoxer::UnspecifiedOption => e
-
-    STDERR.puts(e.message)
-    exit 2
+  if val
+    return val
+  else
+    STDERR.puts(opt_parser.help)
+    exit 1
   end
-else
-  STDERR.puts opt_parser.help
-  exit 1
+}
+
+module_name = fail_without.call{ ARGV.shift }.to_sym
+action_name = fail_without.call{ ARGV.shift }.to_sym
+
+exec_module = fail_without.call{SmashingBoxer.registered_modules[module_name]}
+
+begin
+  exec_module.klass.new(options).execute_action(action_name)
+rescue SmashingBoxer::InvalidAction,
+  SmashingBoxer::ActionError, SmashingBoxer::UnspecifiedOption => e
+
+  STDERR.puts(e.message)
+  exit 2
 end
