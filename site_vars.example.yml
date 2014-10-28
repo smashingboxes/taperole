@@ -1,0 +1,8 @@
+app_name: weaveup
+app_repo: git@github.com:smashingboxes/weaveup.git
+fe_app_repo: git@github.com:smashingboxes/weaveup_web_frontend.git
+fe_app_branch: deployable/master
+fe_app: true
+dev_key_files:
+  - dev_keys/jack.pub
+  - dev_keys/rick.pub
