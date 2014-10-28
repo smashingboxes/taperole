@@ -6,13 +6,12 @@ We've got the Ansible!
 
 Our old Capistrano system is too much of a ballache to add new tasks to.  Ansible is being used here for infrastructure mgmt since Capistrano isn't even the right tool for the job.
 
-## Running
+## Configuring your app
 
-To generate hosts from capistrano hosts (only ip addresses supported): `./mkhosts.sh`
-
-1. `ansible-galaxy install -r Rolefile` to install deps
-2. `ssh-add` root keys from Passpack
-3. `smashing_boxer -i hosts ansible deploy`
+1. Add `smashing_boxer` to your gemfile
+2. `bundle install`
+3. Create inventory file (see hosts.example)
+4. `smashing_boxer ansible everything -i hosts` from your project root
 
 ## The `smashing_boxer` tool
 
@@ -30,15 +29,9 @@ Run `smashing_boxer -h` for a quick rundown of the tool's modules and options.
 
 ## Playbooks
 
-### site
+### deploy
 
-You can use site.example.yml to create a new site.yml for your project, based on omnibox. If site.yml lives in a directory different from where this repo is checked out you'll need `SMASHING_BOXER_PATH` set on the command line with this repo directory if you use the same include style that site.example.yml does.
-
-Executing playbooks in other directories requires an env variable to point to the smashing boxer files.
-
-Here's an example of how running this tool here with project-specific files looks for weaveup:
-
-`SMASHING_BOXER_PATH=~/src/sb/smashing_boxer ansible-playbook -ihosts site.yml`
+This does the basic deployment for both FE/BE portions of the application.  Handles code checkout, building, migrating, seeding and server reloading.
 
 ### omnibox
 
