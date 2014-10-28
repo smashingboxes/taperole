@@ -9,6 +9,17 @@
   when: unicorn_upstart_installation.changed
   tags: [configure_unicorn]
 
+- name: Give deployer user access to unicorn upstart jobs
+  lineinfile: 'dest=/etc/sudoers
+               state=present
+               line="{{deployer_user}} ALL = (root) NOPASSWD: /sbin/{{item}} unicorn_{{app_name}}"'
+  with_items:
+    - start
+    - stop
+    - restart
+    - status
+  tags: [configure_unicorn]
+
 - name: Set up unicorn log dir
   file: path={{app_path}}/log state=directory owner={{deployer_user}}
   tags: [configure_unicorn]

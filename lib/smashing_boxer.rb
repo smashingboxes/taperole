@@ -53,6 +53,10 @@ module SmashingBoxer
 
     protected
 
+    def sb_dir
+      File.realpath(File.join(__dir__, '../'))
+    end
+
     def require_opt(name)
       unless opts[name.to_sym]
         raise UnspecifiedOption, "Option #{name} must be specified to do this!"

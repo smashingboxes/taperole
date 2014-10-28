@@ -1,0 +1,39 @@
+deployer_user: deployer
+database_password: 7f8374651850
+
+app_path: "/home/{{deployer_user }}/{{ app_name }}"
+fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
+fe_app: false
+
+# Path where this playbook is being run from
+local_dir: "{{lookup('env', 'PWD')}}"
+
+nvm:
+  user: deployer
+  version: v0.4.0
+  node_version: '0.10'
+
+unicorn:
+  num_workers: "{{ansible_processor_cores * 2}}"
+  sockfile: /tmp/unicorn_{{ app_name }}.sock
+
+dev_key_files: []
+
+rbenv:
+  version: v0.4.0
+  env: system
+  ruby_version: 2.1.2
+
+swap_file:
+  path: /swp
+  size_kb: "{{ 1024 * 1024 }}"
+
+rbenv_users:
+  - deployer
+  - root
+
+rbenv:
+  version: v0.4.0
+  env: system
+
+  ruby_version: 2.1.2
