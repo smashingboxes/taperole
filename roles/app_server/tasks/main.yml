@@ -10,7 +10,7 @@
   tags: [configure_unicorn]
 
 - name: Set up unicorn log dir
-  file: path={{app_path}}/log state=directory owner={{deployer_user}}
+  file: path={{app_path}}/log state=directory owner=deployer
   tags: [configure_unicorn]
 
 - name: Install unicorn config
@@ -24,7 +24,7 @@
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundle gems
-  remote_user: deployer
+  remote_user: "{{deployer_user}}"
   command: chdir={{ app_path }}
            bash -lc "RAILS_ENV={{app_env}} bundle install
              --without test development contests_development --deployment"
@@ -41,6 +41,7 @@
   template: src=env_config.yml.j2
             dest={{app_path}}/config/env_config.yml
             owner={{deployer_user}}
+  remote_user: "{{deployer_user}}"
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
