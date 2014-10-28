@@ -4,7 +4,7 @@ class AnsibleRunner < ExecutionModule
   SmashingBoxer.register_module :ansible, self
 
   action :configure_dj_runner,
-    proc {ansible '-tconfigure_dj_runner -e force_dj_runner_restart=true'},
+    proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
     "Configures and restarts the delayed job runner"
   action :reload_unicorn,
     proc {ansible '-t unicorn_reload -e force_unicorn_reload'},
