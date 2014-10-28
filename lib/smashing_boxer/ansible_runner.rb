@@ -15,6 +15,9 @@ class AnsibleRunner < ExecutionModule
   action :bundle,
     proc {ansible '-t bundle -e force_bundle=true'},
     "Bundles the gems running on the app servers"
+  action :fe_deploy,
+    proc {ansible '-t fe -e force_fe_build=true'},
+    "Re-deploys fe code"
   action :deploy,
     proc {ansible_deploy},
     "Checks out app code, installs dependencies and restarts unicorns for "\

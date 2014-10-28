@@ -30,20 +30,23 @@
   command: chdir={{fe_app_path}}
            bash -lc "npm install"
   tags: [deploy, fe]
-  when: fe_app_checkout is defined and fe_app_checkout.changed
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
 
 - name: Install grunt
   remote_user: deployer
   command: bash -lc "npm install grunt-cli -g"
   tags: [fe, grunt]
-  when: fe_app_checkout is defined and fe_app_checkout.changed
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
 
 - name: Build FE app
   remote_user: deployer
   command: chdir={{fe_app_path}}
            bash -lc "grunt build"
   tags: [deploy, fe]
-  when: fe_app_checkout is defined and fe_app_checkout.changed
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
 
 - name: Ensure nginx running
   remote_user: deployer
