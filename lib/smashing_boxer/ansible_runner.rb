@@ -16,7 +16,7 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t bundle -e force_bundle=true'},
     "Bundles the gems running on the app servers"
   action :deploy,
-    proc {ansible '-t deploy'},
+    proc {ansible_deploy},
     "Checks out app code, installs dependencies and restarts unicorns for "\
     "both FE and BE code."
   action :everything, proc {ansible}, "This does it all."
@@ -30,7 +30,17 @@ class AnsibleRunner < ExecutionModule
   attr_reader :opts
 
   def ansible(cmd_str = '')
-    cmd = "ansible-playbook -i #{inventory_file} site.yml #{cmd_str}"
+    exec_ansible('omnibox.yml', cmd_str)
+  end
+
+  def ansible_deploy
+    exec_ansible('deploy.yml', '-t deploy')
+  end
+
+  def exec_ansible(playbook, args)
+    playbook = File.join(sb_dir, playbook)
+    cmd = "ansible-playbook -i #{inventory_file} #{playbook} #{args}"
+    cmd += ' -vvvv' if opts.verbose
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
   end
