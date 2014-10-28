@@ -20,10 +20,15 @@
     - status
   tags: [configure_dj_runner]
 
+# Unfortunately, we can't use the service module for this since we need to
+# run the restart task with sudo.  When we use the sudo: option in ansible,
+# it runs the entire shell script output from the module with sudo, instead
+# of just the command, which causes a 'No sudo password' failure as we only
+# allow passwordless sudo for the service commands.
 - name: restart delayed job runner
-  service: name=dj_runner_{{app_name}} state=restarted
+  shell: sudo /sbin/restart dj_runner_{{app_name}}
   remote_user: "{{deployer_user}}"
-  sudo: true
+  sudo_user: root
   when: (dj_runner_installation is defined and dj_runner_installation.changed) or
     force_dj_runner_restart or
     (app_checkout is defined and app_checkout.changed)

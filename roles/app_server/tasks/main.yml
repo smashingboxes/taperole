@@ -84,9 +84,8 @@
   tags: [deploy]
 
 - name: reload unicorn
-  service: name=unicorn_{{app_name}} state=reloaded
+  shell: sudo /sbin/restart unicorn_{{app_name}}
   remote_user: deployer
-  sudo: true
   tags: [deploy, unicorn_reload]
   when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
 
