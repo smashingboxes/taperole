@@ -12,7 +12,7 @@
 - name: Give deployer user access to unicorn upstart jobs
   lineinfile: 'dest=/etc/sudoers
                state=present
-               line="{{deployer_user}} ALL = (root) NOPASSWD: /sbin/{{item}} weaveup_unicorn"'
+               line="{{deployer_user}} ALL = (root) NOPASSWD: /sbin/{{item}} {{app_name}}_unicorn"'
   with_items:
     - start
     - stop

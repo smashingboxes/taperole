@@ -9,8 +9,20 @@
   when: dj_runner_installation.changed
   tags: [configure_dj_runner]
 
+- name: Give deployer user access to DJ upstart jobs
+  lineinfile: 'dest=/etc/sudoers
+               state=present
+               line="{{deployer_user}} ALL = (root) NOPASSWD: /sbin/{{item}} dj_runner_{{app_name}}"'
+  with_items:
+    - start
+    - stop
+    - restart
+    - status
+  tags: [configure_dj_runner]
+
 - name: restart delayed job runner
   service: name=dj_runner_{{app_name}} state=restarted
+  remote_user: "{{deployer_user}}"
   when: (dj_runner_installation is defined and dj_runner_installation.changed) or
     force_dj_runner_restart or
     (app_checkout is defined and app_checkout.changed)
