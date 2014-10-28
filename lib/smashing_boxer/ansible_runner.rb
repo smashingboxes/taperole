@@ -12,6 +12,9 @@ class AnsibleRunner < ExecutionModule
   action :restart_unicorn,
     proc {ansible '-t unicorn_restart -e force_unicorn_restart=true'}
     "Restarts the unicorns running on the app servers"
+  action :configure_deployer_user,
+    proc {ansible '-t deployer'},
+    "Ensures the deployer user is present and configures his SSH keys"
   action :bundle,
     proc {ansible '-t bundle -e force_bundle=true'},
     "Bundles the gems running on the app servers"
@@ -25,7 +28,8 @@ class AnsibleRunner < ExecutionModule
   action :everything, proc {ansible}, "This does it all."
 
   def initialize(*args)
-    ENV['SMASHING_BOXER_PATH'] = File.join(__dir__, '../../')
+    ENV['SMASHING_BOXER_PATH'] = sb_dir
+    ENV['ANSIBLE_CONFIG'] = File.join(sb_dir, 'ansible.cfg')
     super
   end
 
