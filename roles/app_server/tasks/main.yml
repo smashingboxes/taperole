@@ -56,7 +56,7 @@
   tags: [deploy]
 
 - include: db_reset.yml
-  when: force_reset is defined and force_reset
+  when: force_db_reset is defined and force_db_reset
   tags: [db_reset]
 
 - name: Migrate DB
@@ -85,6 +85,8 @@
 
 - name: reload unicorn
   service: name=unicorn_{{app_name}} state=reloaded
+  remote_user: deployer
+  sudo: true
   tags: [deploy, unicorn_reload]
   when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
 

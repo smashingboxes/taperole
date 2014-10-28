@@ -7,7 +7,7 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
     "Configures and restarts the delayed job runner"
   action :reload_unicorn,
-    proc {ansible '-t unicorn_reload -e force_unicorn_reload'},
+    proc {ansible '-t unicorn_reload -e force_unicorn_reload=true'},
     "Reloads the unicorns running on the app servers"
   action :restart_unicorn,
     proc {ansible '-t unicorn_restart -e force_unicorn_restart=true'}
@@ -15,6 +15,9 @@ class AnsibleRunner < ExecutionModule
   action :configure_deployer_user,
     proc {ansible '-t deployer'},
     "Ensures the deployer user is present and configures his SSH keys"
+  action :reset_db,
+    proc {ansible '-t db_reset -e force_db_reset=true'},
+    "wipes and re-seeds the DB"
   action :bundle,
     proc {ansible '-t bundle -e force_bundle=true'},
     "Bundles the gems running on the app servers"
