@@ -30,6 +30,7 @@
   remote_user: "{{deployer_user}}"
   sudo_user: root
   when: (dj_runner_installation is defined and dj_runner_installation.changed) or
-    force_dj_runner_restart or
-    (app_checkout is defined and app_checkout.changed)
-  tags: [configure_dj_runner, deploy]
+    force_dj_runner_restart or force_db_reset or
+    (app_checkout is defined and app_checkout.changed) or
+
+  tags: [configure_dj_runner, deploy, reset_db]
