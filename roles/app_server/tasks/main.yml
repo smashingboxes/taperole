@@ -48,11 +48,13 @@
   register: env_config_file
   tags: [deploy]
 
-- name: Put env_config.yml
-  template: src=env_config.yml.j2
-            dest={{app_path}}/config/env_config.yml
-            owner={{deployer_user}}
-  remote_user: "{{deployer_user}}"
+- name: Ask for env_config.yml
+  debug: msg="You've got to upload env_config.yml to {{app_path}}/config to continue"
+  when: env_config_file.stat.exists != true
+  tags: [deploy]
+
+- name: Wait for env_config.yml to get put on the server
+  wait_for: path={{app_path}}/config/env_config.yml state=present
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
