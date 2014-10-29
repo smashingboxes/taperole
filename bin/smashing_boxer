@@ -32,6 +32,11 @@ opt_parser = OptionParser.new do |opts|
     exit 0
   end
 
+  opts.on("-l", "--limit [PATTERN]",
+    String, "Limits ansible runs to hosts matching PATTERN") do |p|
+      options.host_pattern = p
+    end
+
   opts.separator ''
   opts.separator "MODULES"
   SmashingBoxer.registered_modules.values.each do |exec_module|
