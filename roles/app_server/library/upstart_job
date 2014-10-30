@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'ostruct'
+require 'shellwords'
+
+class UnicornsManager
+  attr_reader :opts
+
+  def initialize(opts)
+    @opts = parse_opts(opts)
+    require_opt :state
+    require_opt :name
+  end
+
+  def parse_opts(opts_str)
+    opts_str.shellsplit.reduce(Hash.new) do |hash, str|
+      key, val = str.split('=')
+      hash[key] = val
+      hash
+    end
+  end
+
+  def run
+    case opts['state']
+    when 'running' then ensure_running
+    when 'reloaded' then reload or ensure_running
+    when 'stopped' then ensure_stopped
+    end
+  end
+
+  def result
+    {change: @change || :none}.to_json
+  end
+
+  protected
+
+  def name
+    opts['name']
+  end
+
+  def reload
+    @change = :reloaded
+    exec "sudo reload #{name}"
+  end
+
+  def start
+    @change = :started
+    exec "sudo start #{name}"
+  end
+
+  def stop
+    @change = :stopped
+    exec "sudo stop #{name}"
+  end
+  
+  def ensure_stopped
+    stop if status != 'stop/waiting'
+  end
+
+  def ensure_running
+    start if status != 'start/running'
+  end
+
+  def status
+    `sudo status unicorn_weaveup`.split[1]
+  end
+
+  def require_opt(name)
+    unless opts.include? name.to_s
+      STDERR.puts({error: "Option #{name} must be defined!"}.to_json)
+      exit 1
+    end
+  end
+end
+
+begin
+  f = File.open(ARGV.first).read
+  m = UnicornsManager.new(f)
+  m.run
+  puts m.result
+rescue Exception => e
+  puts({failed: true, msg: e.message}.to_json)
+end

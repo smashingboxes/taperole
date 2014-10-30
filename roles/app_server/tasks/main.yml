@@ -18,6 +18,7 @@
     - stop
     - restart
     - status
+    - reload
   tags: [configure_unicorn]
 
 - name: Set up unicorn log dir
@@ -87,7 +88,7 @@
   tags: [deploy]
 
 - name: reload unicorn
-  shell: sudo /sbin/restart unicorn_{{app_name}}
+  sudo_upstart: name=unicorn_{{app_name}}s state=reloaded
   remote_user: deployer
   tags: [deploy, unicorn_reload]
   when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload

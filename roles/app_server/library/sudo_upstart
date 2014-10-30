@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# This ansible module runs upstart tasks with sudo.
+# This is necessary when specific jobs are allowed with
+# the sudoers file, as using the ansible service module will
+# attempt to execute the entire service module as root instead
+# of just the /sbin/{start,stop,...} jobs
+#
+# This module also wraps restart and reload, ensuring the service
+# is started
+
+# Ansible provides its module opts in a file that needs to be sourced
+# to get the env we run in
+. $1
+
+# Avoid stalling on password prompts
+sudocmd="echo '' | sudo -S"
+
+# holds the result of our operations for reporting state changes
+res=none
+
+sudoex() { eval "$sudocmd $@ >/dev/null";}
+
+# Failure JSON that ansible expects
+fail() {
+  echo '{"failed": true, "msg": "' $1 '", "status": "'`us_status $name`'"}'
+  exit 1
+}
+
+# Make sure certain vars are set when sourcing $1
+require_opt() {
+  eval val=\$$1
+  if [ ! -n "$val" ]; then
+    fail "Opt: $1 is required!"
+  fi
+}
+
+# All we need for now is name and state
+require_opt name
+require_opt state
+
+if ! status $name; then
+  fail "Invalid service: $name"
+fi
+
+reload() {
+  if sudoex /sbin/reload $name; then
+    res=reloaded
+  else
+    sudoex /sbin/start $name || fail "Could not reload or start! $name"
+    res=started
+  fi
+}
+
+restart() {
+  if sudoex /sbin/restart $name; then
+    res=restarted
+  else
+    sudoex /sbin/start $name || fail "Could not restart or start! $name"
+    res=started
+  fi
+}
+
+stopit() {
+  if [ "`us_status $name`" = "stop/waiting" ]; then
+    res=none
+  else
+    sudoex /sbin/stop $name || fail "Could not stop $name"
+    res=stopped
+  fi
+}
+
+start() {
+  if [ "`us_status $name`" = "start/running" ]; then
+    res=none
+  else
+    sudoex /sbin/start $name || fail "Could not start $name"
+    res=started
+  fi
+}
+
+# Return status string for the given service
+us_status() {
+  status $1 | cut -f 2 -d ' ' | tr -d ','
+}
+
+res=''
+case $state in
+reloaded) reload;;
+restarted) restart;;
+stopped) stopit;;
+started) start;;
+*) fail "Invalid state: $state";;
+esac
+
+# Were there changes applied?
+if [ "$res" = none ]; then
+  echo '{"changed": false}'
+else
+  echo '{"change": "'$res'", "changed": true}'
+fi
