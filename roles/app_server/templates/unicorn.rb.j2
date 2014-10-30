@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-worker_processes {{ unicorn.num_workers }} 
+worker_processes {{ unicorn_workers }} 
 working_directory '{{ app_path }}'
 pid '{{ app_path }}/tmp/unicorn.pid'
 stderr_path '{{ app_path }}/log/unicorn.log'
@@ -10,7 +10,7 @@ preload_app true
 # Restart any workers that haven't responded in 30 seconds
 timeout 30
 
-listen "{{ unicorn.sockfile }}"
+listen "{{ unicorn_sockfile }}"
 
 before_exec do |server|
   # reload Gemfile
