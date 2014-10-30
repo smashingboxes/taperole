@@ -15,11 +15,11 @@ chdir {{app_path}}
 respawn limit 5 5
 
 script
-  trap "kill -SIGUSR2 `cat tmp/unicorn.pid`" HUP
+  trap "cat {{app_path}}/tmp/unicorn.pid | xargs kill -USR2" HUP
   bundle exec unicorn -c config/unicorn.rb -E {{app_env}} &&
     flock -x 0 < {{app_path}}/tmp/unicorn.lock
 end script
 
 pre-stop script
-  start-stop-daemon --stop --pidfile tmp/unicorn.pid
+  start-stop-daemon --stop --pidfile {{app_path}}/tmp/unicorn.pid
 end script
