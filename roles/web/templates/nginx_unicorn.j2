@@ -1,5 +1,5 @@
 upstream unicorn {
-  server unix:/tmp/unicorn_{{ app_name }}.sock fail_timeout=0;
+  server unix:{{unicorn_sockfile}} fail_timeout=0;
 }
 
 server {

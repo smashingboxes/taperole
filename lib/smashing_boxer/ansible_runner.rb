@@ -52,10 +52,14 @@ class AnsibleRunner < ExecutionModule
 
   def exec_ansible(playbook, args)
     playbook = File.join(sb_dir, playbook)
-    cmd = "ansible-playbook -i #{inventory_file} #{playbook} #{args}"
+    cmd = "ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag}"
     cmd += ' -vvvv' if opts.verbose
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
+  end
+
+  def hosts_flag
+    "-l #{opts.host_pattern}" if opts.host_pattern
   end
 
   def inventory_file

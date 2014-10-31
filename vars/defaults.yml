@@ -13,9 +13,8 @@ nvm:
   version: v0.4.0
   node_version: '0.10'
 
-unicorn:
-  num_workers: "{{ansible_processor_cores * 2}}"
-  sockfile: /tmp/unicorn_{{ app_name }}.sock
+unicorn_workers: "{{ansible_processor_cores * 2}}"
+unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
 
 dev_key_files: []
 

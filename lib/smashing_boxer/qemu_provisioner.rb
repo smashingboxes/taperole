@@ -5,6 +5,7 @@ class QemuProvisioner < ExecutionModule
   PIDFILE_DIR = "/tmp/smashing_boxer"
   BOXIMG_DIR = File.join(ENV['HOME'], '.smashing_boxer', 'boxes')
   BOXLOG_DIR = '/tmp/smashing_boxer'
+  DEFAULT_PORT = 2255
 
   SmashingBoxer.register_module :qemu, self
 
@@ -25,6 +26,7 @@ class QemuProvisioner < ExecutionModule
   protected
 
   def ssh_to_box
+    require_opt :name
     ensure_box_running
     Kernel.exec("ssh root@127.0.0.1 -p #{port}")
   end
@@ -47,7 +49,7 @@ class QemuProvisioner < ExecutionModule
     ensure_box_not_running
 
     cmd = "qemu-system-x86_64 -m 512 "\
-      "-netdev user,hostfwd=tcp:127.0.01:#{opts.port}-:22,id=net.0 "\
+      "-netdev user,hostfwd=tcp:127.0.01:#{qemu_port}-:22,id=net.0 "\
       "-device e1000,netdev=net.0 "\
       "-nographic -enable-kvm #{image_path}"
 
@@ -55,6 +57,10 @@ class QemuProvisioner < ExecutionModule
 
     write_pidfile(pid)
     Process.detach(pid)
+  end
+
+  def qemu_port
+    opts.port || DEFAULT_PORT
   end
 
   def reset_box
@@ -79,7 +85,7 @@ class QemuProvisioner < ExecutionModule
   end
 
   def port
-    options.port or 2255
+    opts.port or 2255
   end
 
   def ensure_box_not_running

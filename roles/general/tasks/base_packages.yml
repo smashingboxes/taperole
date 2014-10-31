@@ -1,6 +1,9 @@
 - name: Install VIM
   apt: name=vim state=present
 
+- name: Install Build-Essential
+  apt: name=build-essential state=present
+
 - name: Install GIT
   apt: name=git state=present
 
