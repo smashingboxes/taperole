@@ -94,6 +94,6 @@
   when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
 
 - name: restart unicorn
-  service: name=unicorn_{{app_name}} state=restarted
+  sudo_upstart: name=unicorn_{{app_name}} state=restarted
   tags: [unicorn_restart]
   when: force_unicorn_restart
