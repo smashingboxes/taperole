@@ -55,7 +55,7 @@
   tags: [deploy]
 
 - name: Wait for env_config.yml to get put on the server
-  wait_for: path={{app_path}}/config/env_config.yml state=present
+  wait_for: path={{app_path}}/config/env_config.yml state=present timeout=0
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
