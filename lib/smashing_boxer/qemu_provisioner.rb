@@ -49,7 +49,7 @@ class QemuProvisioner < ExecutionModule
     ensure_box_not_running
 
     cmd = "qemu-system-x86_64 -m 512 "\
-      "-netdev user,hostfwd=tcp:127.0.01:#{qemu_port}-:22,id=net.0 "\
+      "-netdev user,hostfwd=tcp:127.0.0.1:#{qemu_port}-:22,id=net.0 "\
       "-device e1000,netdev=net.0 "\
       "-nographic -enable-kvm #{image_path}"
 
