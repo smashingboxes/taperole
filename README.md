@@ -21,7 +21,7 @@ Here's what a local test would look like using the tool
 
 1. `smashing_boxer qemu create --name fe_test`
 2. `smashing_boxer qemu start --name fe_test -p2255`
-3. `smashing_boxer qemu add_ssh_key_to_agent`
+3. `ssh-add ./id_rsa_sb_basebox`
 4. `echo 'localhost:2255' >test_hosts`
 5. `smashing_boxer ansible everything -i test_hosts`
  
