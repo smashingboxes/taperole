@@ -1,3 +1,6 @@
+require 'erb'
+require 'fileutils'
+
 module SmashingBoxer
   class InvalidAction < StandardError; end
   class ActionError < StandardError; end
@@ -59,11 +62,10 @@ module SmashingBoxer
 
     def require_opt(name)
       unless opts[name.to_sym]
-        raise UnspecifiedOption, "Option #{name} must be specified to do this!"
+        raise UnspecifiedOption, "Option --#{name} must be specified to do this!"
       end
     end
   end
 end
 
-require 'smashing_boxer/ansible_runner'
-require 'smashing_boxer/qemu_provisioner'
+Dir[File.dirname(__FILE__) + "/smashing_boxer/*.rb"].each {|file| require file }
