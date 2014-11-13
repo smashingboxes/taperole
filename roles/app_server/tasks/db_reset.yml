@@ -1,6 +1,9 @@
 - name: stop unicorns
   service: name=unicorn_{{app_name}} state=stopped
 
+- name: stop delayed_job
+  service: name=dj_runner_{{app_name}} state=stopped
+
 - name: Reset DB
   command: chdir={{ app_path }}
            bash -lc "bundle exec rake db:drop db:create RAILS_ENV={{app_env}}"
@@ -9,3 +12,6 @@
 
 - name: start unicorns
   service: name=unicorn_{{app_name}} state=started
+
+- name: stop delayed_job
+  service: name=dj_runner_{{app_name}} state=started
