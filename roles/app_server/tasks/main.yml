@@ -54,8 +54,8 @@
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
-- name: Wait for env_config.yml to get put on the server
-  wait_for: path={{app_path}}/config/env_config.yml state=present
+- name: Wait one day for env_config.yml to get put on the server
+  wait_for: path={{app_path}}/config/env_config.yml state=present timeout=86400
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
@@ -94,6 +94,11 @@
   when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
 
 - name: restart unicorn
-  service: name=unicorn_{{app_name}} state=restarted
+  sudo_upstart: name=unicorn_{{app_name}} state=restarted
   tags: [unicorn_restart]
   when: force_unicorn_restart
+
+- name: Ensure unicorn is running
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  remote_user: deployer
+  tags: [unicorn_start]
