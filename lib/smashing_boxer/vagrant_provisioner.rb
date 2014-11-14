@@ -20,23 +20,23 @@ module SmashingBoxer
 
     protected
     def create_box
-      Kernel.system "vagrant up"
+      Kernel.exec "vagrant up"
     end
 
     def stop_box
-      Kernel.system "vagrant halt #{opts[:name]}"
+      Kernel.exec "vagrant halt #{opts[:name]}"
     end
 
     def start_box
-      Kernel.system "vagrant up #{opts[:name]}"
+      Kernel.exec "vagrant up #{opts[:name]}"
     end
 
     def ssh_to_box
-      Kernel.system "vagrant ssh #{opts[:name]}"
+      Kernel.exec "vagrant ssh #{opts[:name]}"
     end
 
     def destroy_box
-      Kernel.system "vagrant destroy #{opts[:name]}"
+      Kernel.exec "vagrant destroy #{opts[:name]}"
     end
   end
 end
