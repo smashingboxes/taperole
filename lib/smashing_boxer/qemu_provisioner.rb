@@ -2,6 +2,7 @@ require 'fileutils'
 module SmashingBoxer
 class QemuProvisioner < ExecutionModule
   BASE_IMG = File.realpath(File.join(__dir__, ''))
+  HOSTED_IMG_PATH = 'http://d.pr/f/17cOG/434tIaDx+'
   PIDFILE_DIR = "/tmp/smashing_boxer"
   BOXIMG_DIR = File.join(ENV['HOME'], '.smashing_boxer', 'boxes')
   BOXLOG_DIR = '/tmp/smashing_boxer'
@@ -101,9 +102,14 @@ class QemuProvisioner < ExecutionModule
   end
 
   def base_image_path
-    path = File.join(image_dir, "sb_ubuntu_12.04_x64_base.img")
+    img = "sb_ubuntu_12.04_x64_base.img"
+    path = File.join(image_dir, img)
     unless File.exists?(path)
-      raise ActionError, "The base image (#{path}) needs to be present!"
+      print 'base image #{path} not found. Dow you want to download (y/n) '
+      if STDOUT.flush and gets.chomp.downcase == 'y'
+        %x[curl -0L #{HOSTED_IMG_PATH} > #{image_dir}/#{img}]
+        path = File.join(image_dir, img)
+      end
     end
 
     return path

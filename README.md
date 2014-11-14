@@ -1,3 +1,4 @@
+
 # WeaveUp Infrastructure Management
 
 [Trello](https://trello.com/b/4sOCutfn/smashingboxer)
@@ -17,7 +18,14 @@ Our old Capistrano system is too much of a ballache to add new tasks to.  Ansibl
 
 This tool provides a basic wrapper around the ansible scripts, and also contains a `qemu` module which is useful for testing ansible scripts locally.
 
-Here's what a local test would look like using the tool
+###Testing
+####With vagrant
+
+1. `smashing_boxer vagrant create`
+2. `smashing_boxer vagrant start`
+3. `smashing_boxer ansible everything -i vagrant`
+
+####With QEMU
 
 1. `smashing_boxer qemu create --name fe_test`
 2. `smashing_boxer qemu start --name fe_test -p2255`

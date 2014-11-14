@@ -1,3 +1,4 @@
 hosts
 test_hosts
 *.img
+.vagrant/
