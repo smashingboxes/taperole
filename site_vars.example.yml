@@ -1,8 +1,8 @@
-app_name: weaveup
-app_repo: git@github.com:smashingboxes/weaveup.git
-fe_app_repo: git@github.com:smashingboxes/weaveup_web_frontend.git
-fe_app_branch: deployable/master
+app_name: appname
+app_repo: git@github.com:user/appname.git
+fe_app_repo: git@github.com:user/fe_appname.git
+fe_app_branch: remote/branch
 fe_app: true
 dev_key_files:
-  - dev_keys/jack.pub
-  - dev_keys/rick.pub
+  - ssh/key/dir/key.pub
+  - ssh/key/dir/key.pub
