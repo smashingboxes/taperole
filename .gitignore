@@ -1,4 +1,5 @@
-hosts
-test_hosts
 *.img
 .vagrant/
+site_vars.yml
+hosts
+omnibox.yml
