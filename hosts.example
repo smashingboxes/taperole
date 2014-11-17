@@ -1,2 +1,3 @@
-[api_qa]
-104.131.187.202 app_env=staging app_branch=api/qa
+// Base Example
+[omnibox]
+0.0.0.0 app_env=SOME_ENV app_branch=SOME_BRANCH

@@ -1,6 +1,5 @@
-require 'fileutils'
 module SmashingBoxer
-class QemuProvisioner < ExecutionModule
+class QemuProvisioner < Provisioner
   BASE_IMG = File.realpath(File.join(__dir__, ''))
   HOSTED_IMG_PATH = 'http://d.pr/f/17cOG/434tIaDx+'
   PIDFILE_DIR = "/tmp/smashing_boxer"
