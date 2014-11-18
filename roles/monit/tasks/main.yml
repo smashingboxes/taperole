@@ -1,0 +1,8 @@
+- name: Ensure latest monit is installed
+  apt: name=monit state=latest
+
+- name: Update monit configuration (/etc/monit/monitrc)
+  template:
+    src: "etc_monit_monitrc.j2"
+    dest: "/etc/monit/monitrc"
+  notify: restart monit
