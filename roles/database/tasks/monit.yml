@@ -8,5 +8,5 @@
     name: monit
     state: reloaded
 
-- name: Ensure monitoring
+- name: Ensure postgres monitoring
   monit: name=postgres state=monitored
