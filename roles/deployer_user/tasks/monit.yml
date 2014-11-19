@@ -1,0 +1,4 @@
+- name: Give deployer user access to unicorn upstart jobs
+  lineinfile: 'dest=/etc/sudoers
+               state=present
+               line="{{deployer_user}} ALL = (root) NOPASSWD: /usr/bin/monit"'
