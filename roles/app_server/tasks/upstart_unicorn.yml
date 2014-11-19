@@ -1,0 +1,15 @@
+- name: reload unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=reloaded
+  remote_user: deployer
+  tags: [deploy, unicorn_reload]
+  when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
+
+- name: restart unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=restarted
+  tags: [unicorn_restart]
+  when: force_unicorn_restart
+
+- name: Ensure unicorn is running
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  remote_user: deployer
+  tags: [unicorn_start]

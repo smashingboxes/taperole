@@ -12,7 +12,7 @@
   tags: [nginx]
 
 - include: monit.yml
-  when: use_monit is defined and use_monit
+  when: use_monit
 
 - name: Ditch default nginx site enabled
   file: path=/etc/nginx/sites-enabled/default state=absent
@@ -58,4 +58,4 @@
 
 - name: Ensure nginx is monitored
   monit: name=nginx state=monitored
-  when: use_monit is defined and use_monit
+  when: use_monit

@@ -1,0 +1,5 @@
+check process unicorn_{{ app_name }} with pidfile {{app_path}}/tmp/unicorn.pid
+  start program = "/sbin/start unicorn_{{ app_name }}"
+  stop program = "/sbin/stop unicorn_{{ app_name }}"
+  if 5 restarts within 5 cycles then timeout
+

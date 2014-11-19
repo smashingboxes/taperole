@@ -29,4 +29,4 @@
                  state=present
 
 - include: monit.yml
-  when: use_monit is defined and use_monit
+  when: use_monit

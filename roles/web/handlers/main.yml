@@ -1,5 +1,5 @@
 - include: monit_restart.yml
-  when: use_monit is defined and use_monit
+  when: use_monit
 
 - include: initd_restart.yml
   when: not use_monit
