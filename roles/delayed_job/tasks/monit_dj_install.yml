@@ -1,0 +1,9 @@
+- name: Copy the unicorn service files
+  template:
+    src: "etc_monit_conf.d_delayed_job.j2"
+    dest: "/etc/monit/conf.d/delayed_job"
+
+- name: Restart monit
+  service:
+    name: monit
+    state: reloaded

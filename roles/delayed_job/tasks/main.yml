@@ -9,6 +9,9 @@
   when: dj_runner_installation.changed
   tags: [configure_dj_runner]
 
+- include: monit_dj_install.yml
+  when: use_monit
+
 - name: Give deployer user access to DJ upstart jobs
   lineinfile: 'dest=/etc/sudoers
                state=present
@@ -21,11 +24,8 @@
     - reload
   tags: [configure_dj_runner]
 
-- name: restart delayed job runner
-  sudo_upstart: name=dj_runner_{{app_name}} state=restarted
-  remote_user: "{{deployer_user}}"
-  when: force_dj_runner_restart or
-        (dj_runner_installation is defined and dj_runner_installation.changed) or
-        force_db_reset or
-        (app_checkout is defined and app_checkout.changed)
-  tags: [configure_dj_runner, deploy, reset_db]
+- include: upstart_delayed_job.yml
+  when: not use_monit
+
+- include: monit_delayed_job.yml
+  when: use_monit

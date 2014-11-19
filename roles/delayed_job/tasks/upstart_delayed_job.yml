@@ -1,0 +1,8 @@
+- name: restart delayed job runner
+  sudo_upstart: name=dj_runner_{{app_name}} state=restarted
+  remote_user: "{{deployer_user}}"
+  when: force_dj_runner_restart or
+        (dj_runner_installation is defined and dj_runner_installation.changed) or
+        force_db_reset or
+        (app_checkout is defined and app_checkout.changed)
+  tags: [configure_dj_runner, deploy, reset_db]
