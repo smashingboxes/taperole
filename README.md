@@ -1,5 +1,4 @@
-
-# WeaveUp Infrastructure Management
+# Infrastructure Management
 
 [Trello](https://trello.com/b/4sOCutfn/smashingboxer)
 
