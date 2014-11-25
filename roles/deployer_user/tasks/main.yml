@@ -1,5 +1,8 @@
+- name: Create deployer group
+  group: name=deployer state=present
+
 - name: Ensure deployer user is present
-  user: name=deployer state=present append=yes shell=/bin/bash
+  user: name=deployer groups=deployer state=present append=yes shell=/bin/bash
 
 # It's possible for the deployer's homedir to get created on accident by
 # a deploy script or something getting run before this.  This just ensures
