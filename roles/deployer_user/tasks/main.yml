@@ -1,8 +1,10 @@
-- name: Create deployer group
-  group: name=deployer state=present
+- name: Create deployer groups
+  group: name={{ item }} state=present
+  with_items: {{ deployer_user.groups }}
 
-- name: Ensure deployer user is present
-  user: name=deployer groups=deployer state=present append=yes shell=/bin/bash
+- name: Ensure deployer user is present and put in its groups
+  user: name={{ deployer_user.name }} groups={{ item }} state=present append=yes shell=/bin/bash
+  with_items: {{ deployer_user.groups }}
 
 # It's possible for the deployer's homedir to get created on accident by
 # a deploy script or something getting run before this.  This just ensures
