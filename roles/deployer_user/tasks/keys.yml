@@ -1,11 +1,11 @@
 - name: Ensure key files exist
-  fail: msg="Key file {{local_dir + '/' + item}} is empty!"
-  when: lookup('file', local_dir + '/' + item)|default(None) == None
+  fail: msg="Key file {{item}} is empty!"
+  when: lookup('file', item)|default(None) == None
   with_items: dev_key_files
   tags: [deployer]
 
 - name: Ensure devs keys are present
-  authorized_key: key="{{ lookup('file', local_dir + '/' + item) }}"
+  authorized_key: key="{{ lookup('file', item) }}"
                   manage_dir=yes
                   state=present
                   user=deployer
