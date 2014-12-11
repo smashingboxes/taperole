@@ -1,0 +1,12 @@
+- name: Copy the postgres service files
+  template:
+    src: "etc_monit_conf.d_postgres.j2"
+    dest: "/etc/monit/conf.d/postgres"
+
+- name: Restart monit
+  service:
+    name: monit
+    state: reloaded
+
+- name: Ensure postgres monitoring
+  monit: name=postgres state=monitored

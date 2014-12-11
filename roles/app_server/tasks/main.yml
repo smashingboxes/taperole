@@ -30,6 +30,9 @@
             dest={{app_path}}/config/unicorn.rb
   tags: [configure_unicorn]
 
+- include: monit_unicorn_install.yml
+  when: use_monit
+
 - name: Set up db config
   template: src=database.yml.j2 dest={{app_path}}/config/database.yml
   
@@ -87,18 +90,8 @@
   file: state=directory path={{app_path}}/tmp/unicorn owner=deployer
   tags: [deploy]
 
-- name: reload unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=reloaded
-  remote_user: deployer
-  tags: [deploy, unicorn_reload]
-  when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
+- include: upstart_unicorn.yml
+  when: not use_monit
 
-- name: restart unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=restarted
-  tags: [unicorn_restart]
-  when: force_unicorn_restart
-
-- name: Ensure unicorn is running
-  sudo_upstart: name=unicorn_{{app_name}} state=started
-  remote_user: deployer
-  tags: [unicorn_start]
+- include: monit_unicorn.yml
+  when: use_monit

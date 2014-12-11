@@ -1,0 +1,9 @@
+- name: Copy the unicorn service files
+  template:
+    src: "etc_monit_conf.d_unicorn.j2"
+    dest: "/etc/monit/conf.d/unicorn"
+
+- name: Restart monit
+  service:
+    name: monit
+    state: reloaded

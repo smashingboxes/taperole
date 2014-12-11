@@ -13,3 +13,6 @@
   file: path=/home/deployer state=directory owner=deployer
 
 - include: keys.yml
+
+- include: monit.yml
+  when: use_monit

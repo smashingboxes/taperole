@@ -1,0 +1,5 @@
+check process dj_runner_{{ app_name }} with pidfile {{app_path}}/tmp/pids/delayed_job_0.pid
+  start program = "start dj_runner_{{ app_name }}"
+  stop program = "stop dj_runner_{{ app_name }}"
+  if 5 restarts within 5 cycles then timeout
+

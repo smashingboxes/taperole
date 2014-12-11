@@ -11,6 +11,9 @@
   notify: restart nginx
   tags: [nginx]
 
+- include: monit.yml
+  when: use_monit
+
 - name: Ditch default nginx site enabled
   file: path=/etc/nginx/sites-enabled/default state=absent
   tags: [nginx]
@@ -52,3 +55,7 @@
   remote_user: deployer
   service: name=nginx state=running
   tags: [deploy, fe]
+
+- name: Ensure nginx is monitored
+  monit: name=nginx state=monitored
+  when: use_monit

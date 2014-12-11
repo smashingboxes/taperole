@@ -3,6 +3,7 @@ app_repo: git@github.com:user/appname.git
 fe_app_repo: git@github.com:user/fe_appname.git
 fe_app_branch: remote/branch
 fe_app: true
+use_monit: true
 dev_key_files:
   - ssh/key/dir/key.pub
   - ssh/key/dir/key.pub

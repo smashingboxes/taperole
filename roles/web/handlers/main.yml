@@ -1,2 +1,5 @@
-- name: restart nginx
-  service: name=nginx state=restarted
+- include: monit_restart.yml
+  when: use_monit
+
+- include: initd_restart.yml
+  when: not use_monit

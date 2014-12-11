@@ -27,3 +27,6 @@
   postgresql_db: owner=deployer
                  name="{{ app_name }}_{{app_env}}"
                  state=present
+
+- include: monit.yml
+  when: use_monit
