@@ -22,7 +22,7 @@ dev_key_files: []
 
 rbenv:
   version: v0.4.0
-  env: system
+  env: user
   ruby_version: 2.1.2
 
 swap_file:
@@ -32,9 +32,3 @@ swap_file:
 rbenv_users:
   - deployer
   - root
-
-rbenv:
-  version: v0.4.0
-  env: system
-
-  ruby_version: 2.1.2
