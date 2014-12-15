@@ -20,6 +20,11 @@ unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
 
 dev_key_files: []
 
+deployer_user_info:
+  name: 'deployer'
+  groups:
+   - deployer
+
 rbenv:
   version: v0.4.0
   env: user

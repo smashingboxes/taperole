@@ -2,7 +2,10 @@
   group: name={{ item }} state=present
   with_items: deployer_user_info.groups
 
-- name: Ensure deployer user is present and put in its groups
+- name: Ensure deployer user is present
+  user: name={{ deployer_user_info.name }} state=present append=yes shell=/bin/bash
+
+- name: Ensure deployer user is in its groups
   user: name={{ deployer_user_info.name }} groups={{ item }} state=present append=yes shell=/bin/bash
   with_items: deployer_user_info.groups
 
