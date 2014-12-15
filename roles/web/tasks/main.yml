@@ -33,17 +33,17 @@
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)
 
-- name: Install grunt
+- name: Install gulp
   remote_user: deployer
-  command: bash -lc "npm install grunt-cli -g"
-  tags: [fe, grunt]
+  command: bash -lc "npm install gulp -g"
+  tags: [fe, gulp]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)
 
 - name: Build FE app
   remote_user: deployer
   command: chdir={{fe_app_path}}
-           bash -lc "grunt build"
+           bash -lc "gulp build"
   tags: [deploy, fe]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)
