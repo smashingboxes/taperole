@@ -4,12 +4,9 @@ deployer_user:
     - deployer
 
 database_password: 7f8374651850
-app_name: 'test'
-app_env: 'production'
 
 app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
-fe_app: false
 
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
