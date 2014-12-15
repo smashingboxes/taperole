@@ -1,4 +1,4 @@
-- name: Make zero'd swap file
+- name: Make zerod swap file
   command: dd if=/dev/zero of={{ swap_file.path }} bs=1024 count={{swap_file.size_kb}}
            creates={{ swap_file.path }}
 - name: Set swap permissions
