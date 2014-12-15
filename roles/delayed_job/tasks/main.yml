@@ -12,7 +12,7 @@
 - name: Give deployer user access to DJ upstart jobs
   lineinfile: 'dest=/etc/sudoers
                state=present
-               line="{{deployer_user}} ALL = (root) NOPASSWD: /sbin/{{item}} dj_runner_{{app_name}}"'
+               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /sbin/{{item}} dj_runner_{{app_name}}"'
   with_items:
     - start
     - stop
@@ -23,7 +23,7 @@
 
 - name: restart delayed job runner
   sudo_upstart: name=dj_runner_{{app_name}} state=restarted
-  remote_user: "{{deployer_user}}"
+  remote_user: "{{ deployer_user.name }}"
   when: force_dj_runner_restart or
         (dj_runner_installation is defined and dj_runner_installation.changed) or
         force_db_reset or

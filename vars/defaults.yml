@@ -1,17 +1,21 @@
-deployer_user: deployer
+deployer_user:
+  name: 'deployer'
+  groups:
+    - deployer
+
 database_password: 7f8374651850
 app_name: 'test'
 app_env: 'production'
 
-app_path: "/home/{{deployer_user }}/{{ app_name }}"
-fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
+app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
+fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
 fe_app: false
 
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
 
 nvm:
-  user: deployer
+  user: "{{ deployer_user.name }}"
   version: v0.4.0
   node_version: '0.10'
 
@@ -19,11 +23,6 @@ unicorn_workers: "{{ansible_processor_cores * 2}}"
 unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
 
 dev_key_files: []
-
-deployer_user_info:
-  name: 'deployer'
-  groups:
-   - deployer
 
 rbenv:
   version: v0.4.0
@@ -35,5 +34,5 @@ swap_file:
   size_kb: "{{ 1024 * 1024 }}"
 
 rbenv_users:
-  - deployer
+  - "{{ deployer_user.name }}"
   - root

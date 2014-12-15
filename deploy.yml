@@ -1,7 +1,7 @@
 # This is meant to be run with the deploy tag
 ---
 - hosts: omnibox:delayed_job:app_server
-  user: "{{deployer_user}}"
+  user: "{{ deployer_user.name }}"
   vars_files:
     - vars/defaults.yml
     - "{{local_dir}}/site_vars.yml"

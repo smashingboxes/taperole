@@ -14,7 +14,7 @@
 app_name: vanilla
 app_repo: git@github.com:BrandonMathis/vanilla-rails-app.git
 app_env: 'production'
-app_path: "/home/{{deployer_user }}/{{ app_name }}"
+app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 
 #
 # Frontend App Configs
@@ -22,7 +22,7 @@ app_path: "/home/{{deployer_user }}/{{ app_name }}"
 fe_app: false                                              # Do you want to deploy/provision a fe app?
 fe_app_repo: git@github.com:user/fe_appname.git
 fe_app_branch: remote/branch
-fe_app_path: "/home/{{deployer_user}}/{{ app_name}}_fe"
+fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
 
 #
 # SSH Configs

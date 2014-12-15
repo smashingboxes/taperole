@@ -7,8 +7,8 @@ env PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/bin:/sbin:/bin
 
 env RAILS_ENV={{app_env}}
 
-setuid {{deployer_user}}
-setgid {{deployer_user}}
+setuid {{ deployer_user.name }}
+setgid {{ deployer_user.name }}
 
 chdir {{app_path}}
 

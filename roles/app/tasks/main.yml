@@ -5,7 +5,7 @@
   apt: name=nodejs state=present
 
 - name: Check out application
-  remote_user: deployer
+  remote_user: "{{ deployer_user.name }}"
   git: dest={{ app_path }}
        repo={{ app_repo }}
        version={{ app_branch }}
