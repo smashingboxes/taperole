@@ -24,6 +24,10 @@ This tool provides a basic wrapper around the ansible scripts, and also contains
 2. `smashing_boxer vagrant start`
 3. `smashing_boxer ansible everything -i vagrant`
 
+**Now, specify your apps configs in site_vars.yml**
+
+4. `smashing_boxer ansible deploy -i vagrant`
+
 ####With QEMU
 
 1. `smashing_boxer qemu create --name fe_test`
