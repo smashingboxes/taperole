@@ -32,7 +32,7 @@
 
 - name: Set up db config
   template: src=database.yml.j2 dest={{app_path}}/config/database.yml
-  
+
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundle gems

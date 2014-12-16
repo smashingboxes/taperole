@@ -1,9 +1,10 @@
+app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
+fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
+
 deployer_user:
   name: 'deployer'
   groups:
     - deployer
-
-database_password: 7f8374651850
 
 app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"

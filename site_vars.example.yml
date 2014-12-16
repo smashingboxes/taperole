@@ -4,26 +4,19 @@
 # and deployment to work properly
 
 #
-# Default vars location:
-#   vars/defaults.yml
-
-
-#
 # App Configs
 #
-app_name: vanilla
-app_repo: git@github.com:BrandonMathis/vanilla-rails-app.git
-app_env: 'production'
-app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
+app_name:
+app_repo:
+app_env: production
 app_branch: master
 
 #
 # Frontend App Configs
 #
 fe_app: false                                              # Do you want to deploy/provision a fe app?
-fe_app_repo: git@github.com:user/fe_appname.git
-fe_app_branch: remote/branch
-fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
+fe_app_repo:
+fe_app_branch: master
 
 #
 # SSH Configs
@@ -36,16 +29,7 @@ dev_key_files:
 #
 # Database configs
 #
-database_password: 7f8374651850
-
-# Path where this playbook is being run from
-local_dir: "{{lookup('env', 'PWD')}}"
-
-#
-# Unicorn Configs
-#
-unicorn_workers: "{{ansible_processor_cores * 2}}"
-unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
+database_password:
 
 ############################################################
 # OVERRIDES                                                #
