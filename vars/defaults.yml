@@ -19,6 +19,7 @@ nvm:
 
 unicorn_workers: "{{ansible_processor_cores * 2}}"
 unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
+force_unicorn_restart: true
 
 dev_key_files: []
 
