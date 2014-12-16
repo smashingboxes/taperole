@@ -95,10 +95,10 @@
 
 - name: restart unicorn
   sudo_upstart: name=unicorn_{{app_name}} state=restarted
-  tags: [unicorn_restart]
+  tags: [unicorn_restart, deploy]
   when: force_unicorn_restart
 
 - name: Ensure unicorn is running
   sudo_upstart: name=unicorn_{{app_name}} state=started
   remote_user: deployer
-  tags: [unicorn_start]
+  tags: [unicorn_start, deploy]
