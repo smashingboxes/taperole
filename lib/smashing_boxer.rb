@@ -20,6 +20,7 @@ module SmashingBoxer
   class ExecutionModule
     attr_reader :opts
     def initialize(opts)
+      ENV['SMASHING_BOXER_PATH'] = sb_dir
       @opts = opts
     end
 

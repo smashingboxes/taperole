@@ -34,7 +34,6 @@ class AnsibleRunner < ExecutionModule
   action :everything, proc {ansible}, "This does it all."
 
   def initialize(*args)
-    ENV['SMASHING_BOXER_PATH'] = sb_dir
     ENV['ANSIBLE_CONFIG'] = File.join(sb_dir, 'ansible.cfg')
     super
   end
