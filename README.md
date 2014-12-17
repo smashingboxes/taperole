@@ -6,16 +6,16 @@
 ## Deploying & provisioning with smashing_boxer
 It is advised that, if you are provisioned your box with an older version of ansible, you stand up a clean box.
 
-0. **Use Unbuntu precise64 (12.04 x64)**
-1. Add the following to your gemfile.
+* **Use Unbuntu precise64 (12.04 x64)**
+* Add the following to your gemfile.
 
 ```
 gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', group: :development
 ```
 
-2. `bundle install`
-3. `smasing_boxer installer install`
-4. Updated the hosts file with the IP addess of your server
+* `bundle install`
+* `smasing_boxer installer install`
+* Updated the hosts file with the IP addess of your server
 
 ```
 [omnibox]
