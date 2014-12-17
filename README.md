@@ -2,33 +2,42 @@
 
 [Trello](https://trello.com/b/4sOCutfn/smashingboxer)
 
-## Why?
 
-Our old Capistrano system is too much of a ballache to add new tasks to.  Ansible is being used here for infrastructure mgmt since Capistrano isn't even the right tool for the job.
+## Deploying & provisioning with smashing_boxer
+It is advised that, if you are provisioned your box with an older version of ansible, you stand up a clean box.
 
-## Configuring your app
+0. **Use Unbuntu precise64 (12.04 x64)**
+1. Add the following to your gemfile.
 
-1. Add `smashing_boxer` to your gemfile
+```
+gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', group: :development
+```
+
 2. `bundle install`
-3. Create inventory file (see hosts.example)
-4. `smashing_boxer ansible everything -i hosts` from your project root
+3. `smasing_boxer installer install`
+4. Updated the hosts file with the IP addess of your server
 
-## The `smashing_boxer` tool
+```
+[omnibox]
+0.0.0.0
+```
 
-This tool provides a basic wrapper around the ansible scripts, and also contains a `qemu` module which is useful for testing ansible scripts locally.
+##Testing
+###With vagrant
 
-###Testing
-####With vagrant
 
 1. `smashing_boxer vagrant create`
-2. `smashing_boxer vagrant start`
-3. `smashing_boxer ansible everything -i vagrant`
+2. Put the following into your hosts file
 
-**Now, specify your apps configs in site_vars.yml**
+```
+[omnibox]
+192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+```
+3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
+4. `smashing_boxer ansible everything -i vagrant`
 
-4. `smashing_boxer ansible deploy -i vagrant`
 
-####With QEMU
+###With QEMU
 
 1. `smashing_boxer qemu create --name fe_test`
 2. `smashing_boxer qemu start --name fe_test -p2255`
@@ -37,37 +46,3 @@ This tool provides a basic wrapper around the ansible scripts, and also contains
 5. `smashing_boxer ansible everything -i test_hosts`
  
 Run `smashing_boxer -h` for a quick rundown of the tool's modules and options.
-
-## Playbooks
-
-### deploy
-
-This does the basic deployment for both FE/BE portions of the application.  Handles code checkout, building, migrating, seeding and server reloading.
-
-### omnibox
-
-This is the setup right now.  This just puts everything on all the hosts, turning them all into single-machine deployments
-
-## Roles
-
-### General
-
-General encapsulates basic stuff every box should have like unattended upgrades and swap space.
-
-### Deployer User
-
-This user needs to have some SSH keys so all the devs on the project can ssh to machines and do things.  Deployer user keys will live under roles/deployer\_user/files/keys.
-
-### Web
-
-Basic nginx installation, configured to work with unicorns running on the same box
-
-This looks for the `fe_app` variable, and either configures nginx to serve `./public` from a rails app or `./dist` from an angular app at the root of the site.
-
-### app\_server
-
-Runs unicorns executing app code
-
-### legacy
-
-Used to migrate from old capistrano-managed boxes to the new infrastructure
