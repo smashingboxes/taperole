@@ -12,3 +12,14 @@
        accept_hostkey=true
   register: app_checkout
   tags: [deploy]
+
+- name: check that secrets is ignored
+  shell: cat {{ app_path }}/.gitignore | grep {{ item }}
+  with_items:
+    - config/secrets.yml
+  register: secrets_ignore_check
+  ignore_errors: true
+
+- name: ignore secrets
+  shell: /bin/bash -c 'echo "config/secrets.yml" > {{ app_path }}/.git/info/exclude'
+  when: secrets_ignore_check|failed

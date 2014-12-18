@@ -11,8 +11,6 @@ app_repo:
 app_env: production
 app_branch: master
 
-rails:
-  secret_key_base: # use `rake secret` to generate a secret key
 #
 # Frontend App Configs
 #

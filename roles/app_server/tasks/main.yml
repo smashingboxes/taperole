@@ -59,6 +59,21 @@
   when: env_config_file.stat.exists != true
   tags: [deploy]
 
+- name: Ensure secrets.yml file present
+  stat: path={{ app_path }}/config/secrets.yml
+  register: secrets_file
+  tags: [deploy]
+
+- name: Ask for secrets.yml
+  debug: msg="You've got to upload secrets.yml to {{app_path}}/config to continue"
+  when: secrets_file.stat.exists != true
+  tags: [deploy]
+
+- name: Wait one day for secrets.yml to get put on the server
+  wait_for: path={{app_path}}/config/secrets.yml state=present timeout=86400
+  when: secrets_file.stat.exists != true
+  tags: [deploy]
+
 - include: db_reset.yml
   when: force_db_reset is defined and force_db_reset
   tags: [db_reset]
