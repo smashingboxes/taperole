@@ -22,6 +22,9 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 0.0.0.0
 ```
 
+* Fill in missing values in `site_vars.yml`
+* Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
+
 ##Testing
 ###With vagrant
 
