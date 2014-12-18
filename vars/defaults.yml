@@ -6,9 +6,6 @@ deployer_user:
   groups:
     - deployer
 
-app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
-fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
-
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
 
@@ -35,3 +32,5 @@ swap_file:
 rbenv_users:
   - "{{ deployer_user.name }}"
   - root
+
+database_password: password

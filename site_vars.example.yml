@@ -29,10 +29,10 @@ dev_key_files:
 #
 # Database configs
 #
-database_password:
+# database_password: somepassword
 
 ############################################################
-# OVERRIDES                                                #
-#                                                          #
-# place all overrides to vars/defaults.yml here            #
+# OVERRIDES
+#
+# place all overrides to vars/defaults.yml here
 ############################################################
