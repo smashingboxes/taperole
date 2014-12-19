@@ -3,10 +3,12 @@
             dest=/etc/init/dj_runner_{{app_name}}.conf
   tags: [configure_dj_runner]
   register: dj_runner_installation
+  when: enabled_delayed_job
 
 - name: register unicorn upstart script
   command: initctl reload-configuration
-  when: dj_runner_installation.changed
+  when: dj_runner_installation.changed and
+        enabled_delayed_job
   tags: [configure_dj_runner]
 
 - name: Give deployer user access to DJ upstart jobs
@@ -20,6 +22,7 @@
     - status
     - reload
   tags: [configure_dj_runner]
+  when: enabled_delayed_job
 
 - name: restart delayed job runner
   sudo_upstart: name=dj_runner_{{app_name}} state=restarted
@@ -27,5 +30,6 @@
   when: force_dj_runner_restart or
         (dj_runner_installation is defined and dj_runner_installation.changed) or
         force_db_reset or
-        (app_checkout is defined and app_checkout.changed)
+        (app_checkout is defined and app_checkout.changed) and
+        enabled_delayed_job
   tags: [configure_dj_runner, deploy, reset_db]

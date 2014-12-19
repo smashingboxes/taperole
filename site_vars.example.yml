@@ -31,6 +31,11 @@ dev_key_files:
 #
 # database_password: somepassword
 
+#
+# Delayed Job
+#
+# enabled_delayed_job: false
+
 ############################################################
 # OVERRIDES
 #
