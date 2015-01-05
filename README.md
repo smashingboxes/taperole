@@ -24,6 +24,7 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 
 * Fill in missing values in `site_vars.yml`
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
+* `smashing_boxer ansible everything -i hosts`
 
 ##Testing
 ###With vagrant
