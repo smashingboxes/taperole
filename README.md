@@ -26,6 +26,20 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
 * `smashing_boxer ansible everything -i hosts`
 
+##Custom roles
+You can write app specific roles in the roles files storred in the `roles` directory
+
+**App-Specific Provisioning Roles**
+* `before_database`
+* `before_general`
+* `before_web`
+* `before_ruby`
+* `before_app_server`
+
+**App-Specific Deploy Roles**
+* `before_deploy`
+* `after_deploy`
+
 ##Testing
 ###With vagrant
 

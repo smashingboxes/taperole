@@ -17,6 +17,7 @@ module SmashingBoxer
 
     protected
     def install
+      make_custom_roles
       copy_example('site_vars.example.yml', 'site_vars.yml')
       copy_example('hosts.example', 'hosts')
       mkdir 'dev_keys'
@@ -28,6 +29,7 @@ module SmashingBoxer
 
     def uninstall
       rm 'site_vars.yml'
+      rm 'roles'
       rm 'hosts'
       rm 'dev_keys'
       rm 'Vagrantfile'
@@ -48,6 +50,21 @@ module SmashingBoxer
         puts "✘".green
         raise e
       end
+    end
+
+    def make_custom_roles
+      mkdir 'roles'
+      touch "#{local_dir}/roles/before_deploy.yml"
+      touch "#{local_dir}/roles/after_deploy.yml"
+      touch "#{local_dir}/roles/before_database.yml"
+      touch "#{local_dir}/roles/before_general.yml"
+      touch "#{local_dir}/roles/before_web.yml"
+      touch "#{local_dir}/roles/before_ruby.yml"
+      touch "#{local_dir}/roles/before_app_server.yml"
+    end
+
+    def touch(file)
+      File.new(file, 'w')
     end
 
     def copy_example(file, cp_file)

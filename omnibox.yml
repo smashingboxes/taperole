@@ -8,10 +8,15 @@
 
 
   roles:
+    - before_database
     - database
+    - before_general
     - general
+    - before_web
     - web
     - legacy
+    - before_ruby
     - gems
+    - before_app_server
     - app_server
     - delayed_job

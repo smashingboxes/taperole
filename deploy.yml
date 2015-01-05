@@ -6,6 +6,8 @@
     - vars/defaults.yml
     - "{{local_dir}}/site_vars.yml"
   roles:
+    - before_deploy
     - web
     - app_server
+    - after_deploy
     - delayed_job
