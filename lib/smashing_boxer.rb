@@ -66,6 +66,11 @@ module SmashingBoxer
         raise UnspecifiedOption, "Option --#{name} must be specified to do this!"
       end
     end
+
+    private
+    def local_dir
+      Dir.pwd
+    end
   end
 end
 

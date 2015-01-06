@@ -7,5 +7,9 @@
   register: db_reset
   run_once: true
 
+- name: DB Reset Failed
+  fail: msg="{{db_reset.stderr}}"
+  when: db_reset.stderr
+
 - name: start unicorns
   service: name=unicorn_{{app_name}} state=started

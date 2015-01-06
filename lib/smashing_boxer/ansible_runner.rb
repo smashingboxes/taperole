@@ -7,7 +7,7 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
     "Configures and restarts the delayed job runner"
   action :configure_unicorn,
-    proc {ansible '-tconfigure_unicorn -e force_unicorn_restart=true'},
+    proc {ansible '-t configure_unicorn -e force_unicorn_restart=true'},
     "Configures and restarts the unicorn app server"
   action :reload_unicorn,
     proc {ansible '-t unicorn_reload -e force_unicorn_reload=true'},
@@ -65,7 +65,7 @@ class AnsibleRunner < ExecutionModule
   end
 
   def inventory_file
-    opts.inventory_file || 'test_hosts'
+    opts.inventory_file || "#{local_dir}/hosts"
   end
 end
 end

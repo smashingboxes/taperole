@@ -77,11 +77,6 @@ module SmashingBoxer
         raise e
       end
     end
-
-    private
-    def local_dir
-      Dir.pwd
-    end
   end
 end
 

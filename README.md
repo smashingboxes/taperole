@@ -24,7 +24,7 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 
 * Fill in missing values in `site_vars.yml`
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
-* `smashing_boxer ansible everything -i hosts`
+* `smashing_boxer ansible everything`
 
 ##Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
@@ -52,7 +52,7 @@ You can write app specific roles in the roles files storred in the `roles` direc
 192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
 3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
-4. `smashing_boxer ansible everything -i vagrant`
+4. `smashing_boxer ansible everything`
 
 
 ###With QEMU
@@ -61,6 +61,6 @@ You can write app specific roles in the roles files storred in the `roles` direc
 2. `smashing_boxer qemu start --name fe_test -p2255`
 3. `ssh-add ./id_rsa_sb_basebox`
 4. `echo 'localhost:2255' >test_hosts`
-5. `smashing_boxer ansible everything -i test_hosts`
+5. `smashing_boxer ansible everything`
  
 Run `smashing_boxer -h` for a quick rundown of the tool's modules and options.
