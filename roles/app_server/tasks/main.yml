@@ -78,6 +78,14 @@
   when: force_db_reset is defined and force_db_reset
   tags: [db_reset]
 
+- name: Precompile Assets
+  remote_user: deployer
+  run_once: true
+  command: chdir={{ app_path }}
+           bash -lc "bundle exec rake assets:precompile RAILS_ENV={{app_env}}"
+  tags: [precompile_assets, deploy]
+  when: precompile_assets
+
 - name: Migrate DB
   remote_user: deployer
   command: chdir={{ app_path }}

@@ -36,3 +36,5 @@ rbenv_users:
 database_password: password
 
 enabled_delayed_job: false
+
+precompile_assets: true
