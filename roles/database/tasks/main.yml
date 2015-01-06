@@ -13,12 +13,12 @@
     - libpq-dev
     - python-psycopg2
 
-- name: Ensure deployer has postgres permissions
+- name: Ensure deployer has got permissions
   sudo: true
   sudo_user: postgres
   postgresql_user: name=deployer
                    state=present
-                   role_attr_flags=CREATEDB,LOGIN,REPLICATION,SUPERUSER
+                   role_attr_flags=CREATEDB,LOGIN,REPLICATION
                    password={{ database_password }}
 
 - name: Create db
