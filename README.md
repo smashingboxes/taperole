@@ -7,6 +7,9 @@
 It is advised that, if you are provisioned your box with an older version of ansible, you stand up a clean box.
 
 * **Use Unbuntu precise64 (12.04 x64)**
+
+###Basics
+
 * Add the following to your gemfile.
 
 ```
@@ -26,10 +29,11 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
 * `smashing_boxer ansible everything`
 
-##Custom roles
+###Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
 
 **App-Specific Provisioning Roles**
+
 * `before_database`
 * `before_general`
 * `before_web`
@@ -37,8 +41,28 @@ You can write app specific roles in the roles files storred in the `roles` direc
 * `before_app_server`
 
 **App-Specific Deploy Roles**
+
 * `before_deploy`
 * `after_deploy`
+
+###Multistage
+You can setup multistage by defining your hosts file as follows
+
+```
+[production]
+0.0.0.0
+[staging]
+0.0.0.0
+[omnibox:children]
+production
+staging
+```
+
+* then use the `-l` option to specify the staging
+
+```
+smashing_boxer ansible deploy -l staging
+```
 
 ##Testing
 ###With vagrant
@@ -51,6 +75,7 @@ You can write app specific roles in the roles files storred in the `roles` direc
 [omnibox]
 192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
+
 3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
 4. `smashing_boxer ansible everything`
 
