@@ -1,10 +1,10 @@
 Gem::Specification.new do |spec|
   spec.name = "smashing_boxer"
-  spec.version = '0.1.3'
-  spec.authors = ['Jack Forrest', 'Smashing Boxes']
-  spec.email = ['jack@smashingboxes.com']
+  spec.version = '0.1.5'
+  spec.authors = ['Jack Forrest', 'Smashing Boxes', 'Brandon Mathis']
+  spec.email = ['jack@smashingboxes.com', 'brandon@sbox.es']
   spec.summary = 'A tool for provisioning and deploying boxes for hosting Rails apps'
-  spec.license = 'All rights reserved'
+  spec.license = 'MIT'
 
   spec.files = `git ls-files`.split("\n")
   spec.executables = 'smashing_boxer'
