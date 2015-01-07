@@ -58,7 +58,7 @@ production
 staging
 ```
 
-* then use the `-l` option to specify the staging
+then use the `-l` option to specify the staging
 
 ```
 smashing_boxer ansible deploy -l staging
