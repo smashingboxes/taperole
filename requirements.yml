@@ -12,3 +12,5 @@
 
 - src: leonelgalan.node
   version: '0.2'
+
+- src: bennojoy.memcached
