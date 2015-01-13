@@ -13,3 +13,10 @@
     - imagemagick
     - libmagickcore-dev
     - libmagickwand-dev
+
+
+- name: Update node.js package
+  command: bash -lc "curl -sL https://deb.nodesource.com/setup | sudo bash -"
+
+- name: Install node.js
+  apt: name=nodejs state=present
