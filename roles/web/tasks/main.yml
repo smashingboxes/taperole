@@ -19,6 +19,25 @@
   file: path=/etc/nginx/sites-enabled/default state=absent
   tags: [nginx]
 
+- name: Install coffeescript
+  npm: name=coffee-script global=yes
+
+- name: Install bower
+  npm: name=bower global=yes
+
+- name: Install smashing-dev-tool
+  remote_user: deployer
+  git:  dest="/home/{{ deployer_user.name }}/smashing-dev-tool"
+        repo=git@github.com:smashingboxes/smashing-dev-tool.git
+        accept_hostkey=true
+  when: fe_app
+  tags: [fe]
+
+- name: Link smashing-dev-tool
+  remote_user: deployer
+  command:  chdir="/home/{{ deployer_user.name }}/smashing-dev-tool"
+            bash -lc "npm link"
+
 - name: Check out FE application
   remote_user: deployer
   git: dest={{ fe_app_path }}
@@ -32,15 +51,8 @@
 - name: Install node packages for web FE
   remote_user: deployer
   command: chdir={{fe_app_path}}
-           bash -lc "npm install"
+           bash -lc "bower install"
   tags: [deploy, fe]
-  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
-        force_fe_build|default(false)
-
-- name: Install grunt
-  remote_user: deployer
-  command: bash -lc "npm install grunt-cli -g"
-  tags: [fe, grunt]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)
 
