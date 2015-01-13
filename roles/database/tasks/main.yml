@@ -18,7 +18,7 @@
   sudo_user: postgres
   postgresql_user: name=deployer
                    state=present
-                   role_attr_flags=CREATEDB,LOGIN,REPLICATION
+                   role_attr_flags=CREATEDB,LOGIN,REPLICATION,SUPERUSER
                    password={{ database_password }}
 
 - name: Create db
