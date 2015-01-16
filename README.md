@@ -3,7 +3,7 @@
 [Trello](https://trello.com/b/4sOCutfn/smashingboxer)
 
 
-## Deploying & provisioning with smashing_boxer
+## Deploying & provisioning with tape
 It is advised that, if you are provisioned your box with an older version of ansible, you stand up a clean box.
 
 * **Use Unbuntu precise64 (12.04 x64)**
@@ -13,7 +13,7 @@ It is advised that, if you are provisioned your box with an older version of ans
 * Add the following to your gemfile.
 
 ```
-gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', group: :development
+gem 'tape', git: 'git@github.com:smashingboxes/tape.git', group: :development
 ```
 
 * `bundle install`
@@ -27,7 +27,7 @@ gem 'smashing_boxer', git: 'git@github.com:smashingboxes/smashing_boxer.git', gr
 
 * Fill in missing values in `site_vars.yml`
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
-* `smashing_boxer ansible everything`
+* `tape ansible everything`
 
 ###Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
@@ -61,14 +61,14 @@ staging
 then use the `-l` option to specify the staging
 
 ```
-smashing_boxer ansible deploy -l staging
+tape ansible deploy -l staging
 ```
 
 ##Testing
 ###With vagrant
 
 
-1. `smashing_boxer vagrant create`
+1. `tape vagrant create`
 2. Put the following into your hosts file
 
 ```
@@ -77,15 +77,15 @@ smashing_boxer ansible deploy -l staging
 ```
 
 3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
-4. `smashing_boxer ansible everything`
+4. `tape ansible everything`
 
 
 ###With QEMU
 
-1. `smashing_boxer qemu create --name fe_test`
-2. `smashing_boxer qemu start --name fe_test -p2255`
+1. `tape qemu create --name fe_test`
+2. `tape qemu start --name fe_test -p2255`
 3. `ssh-add ./id_rsa_sb_basebox`
 4. `echo 'localhost:2255' >test_hosts`
-5. `smashing_boxer ansible everything`
+5. `tape ansible everything`
  
-Run `smashing_boxer -h` for a quick rundown of the tool's modules and options.
+Run `tape -h` for a quick rundown of the tool's modules and options.

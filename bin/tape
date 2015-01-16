@@ -4,11 +4,11 @@ $LOAD_PATH << File.join(__dir__, '..', 'lib')
 
 require 'optparse'
 require 'ostruct'
-require 'smashing_boxer'
+require 'tape'
 
 options = OpenStruct.new
 opt_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: smashing_boxer <module> <action> [options]"
+  opts.banner = "Usage: tape <module> <action> [options]"
 
   opts.on("-v", "--[no-]verbose", "Be loud") {|v| options.verbose = v}
 
@@ -39,7 +39,7 @@ opt_parser = OptionParser.new do |opts|
 
   opts.separator ''
   opts.separator "MODULES"
-  SmashingBoxer.registered_modules.values.each do |exec_module|
+  TapeBoxer.registered_modules.values.each do |exec_module|
     opts.separator "  #{exec_module.name.to_s.upcase}"
     exec_module.klass.actions.values.each do |action|
       opts.separator "    #{action.name}: #{action.description}"
@@ -64,12 +64,12 @@ fail_without = ->(&block){
 module_name = fail_without.call{ ARGV.shift }.to_sym
 action_name = fail_without.call{ ARGV.shift }.to_sym
 
-exec_module = fail_without.call{SmashingBoxer.registered_modules[module_name]}
+exec_module = fail_without.call{TapeBoxer.registered_modules[module_name]}
 
 begin
   exec_module.klass.new(options).execute_action(action_name)
-rescue SmashingBoxer::InvalidAction,
-  SmashingBoxer::ActionError, SmashingBoxer::UnspecifiedOption => e
+rescue TapeBoxer::InvalidAction,
+  TapeBoxer::ActionError, TapeBoxer::UnspecifiedOption => e
 
   STDERR.puts(e.message)
   exit 2

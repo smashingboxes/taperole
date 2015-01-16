@@ -1,14 +1,14 @@
 require 'fileutils'
-module SmashingBoxer
+module TapeBoxer
 class QemuProvisioner < ExecutionModule
   BASE_IMG = File.realpath(File.join(__dir__, ''))
   HOSTED_IMG_PATH = 'http://d.pr/f/17cOG/434tIaDx+'
-  PIDFILE_DIR = "/tmp/smashing_boxer"
-  BOXIMG_DIR = File.join(ENV['HOME'], '.smashing_boxer', 'boxes')
-  BOXLOG_DIR = '/tmp/smashing_boxer'
+  PIDFILE_DIR = "/tmp/tape"
+  BOXIMG_DIR = File.join(ENV['HOME'], '.tape', 'boxes')
+  BOXLOG_DIR = '/tmp/tape'
   DEFAULT_PORT = 2255
 
-  SmashingBoxer.register_module :qemu, self
+  TapeBoxer.register_module :qemu, self
 
   action :create,
     proc {create_img},

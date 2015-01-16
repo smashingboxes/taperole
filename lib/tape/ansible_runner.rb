@@ -1,7 +1,7 @@
 # Executes ansible commands
-module SmashingBoxer
+module TapeBoxer
 class AnsibleRunner < ExecutionModule
-  SmashingBoxer.register_module :ansible, self
+  TapeBoxer.register_module :ansible, self
 
   action :configure_dj_runner,
     proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},

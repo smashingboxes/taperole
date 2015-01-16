@@ -1,7 +1,7 @@
 require 'erb'
 require 'fileutils'
 
-module SmashingBoxer
+module TapeBoxer
   class InvalidAction < StandardError; end
   class ActionError < StandardError; end
   class UnspecifiedOption < StandardError; end
@@ -20,7 +20,7 @@ module SmashingBoxer
   class ExecutionModule
     attr_reader :opts
     def initialize(opts)
-      ENV['SMASHING_BOXER_PATH'] = sb_dir
+      ENV['TAPE_PATH'] = sb_dir
       @opts = opts
     end
 
@@ -74,4 +74,4 @@ module SmashingBoxer
   end
 end
 
-Dir[File.dirname(__FILE__) + "/smashing_boxer/*.rb"].each {|file| require file }
+Dir[File.dirname(__FILE__) + "/tape/*.rb"].each {|file| require file }

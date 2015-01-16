@@ -1,6 +1,6 @@
-module SmashingBoxer
+module TapeBoxer
   class VagrantProvisioner < ExecutionModule
-    SmashingBoxer.register_module :vagrant, self
+    TapeBoxer.register_module :vagrant, self
 
     action :create,
       proc {create_box}

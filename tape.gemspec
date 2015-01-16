@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name = "smashing_boxer"
+  spec.name = "tape"
   spec.version = '0.1.5'
   spec.authors = ['Jack Forrest', 'Smashing Boxes', 'Brandon Mathis']
   spec.email = ['jack@smashingboxes.com', 'brandon@sbox.es']
@@ -7,5 +7,5 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
 
   spec.files = `git ls-files`.split("\n")
-  spec.executables = 'smashing_boxer'
+  spec.executables = 'tape'
 end
