@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/smashingboxes/tape.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
 # Infrastructure Management
 
 [Trello](https://trello.com/b/4sOCutfn/smashingboxer)
