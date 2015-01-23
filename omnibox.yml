@@ -4,7 +4,7 @@
 
   vars_files:
     - vars/defaults.yml
-    - "{{local_dir}}/site_vars.yml"
+    - "{{lookup('env', 'PWD')}}/site_vars.yml"
 
 
   roles:

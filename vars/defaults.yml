@@ -7,7 +7,7 @@ deployer_user:
     - deployer
 
 # Path where this playbook is being run from
-local_dir: "."
+local_dir: "{{lookup('env', 'PWD')}}"
 
 nvm:
   user: "{{ deployer_user.name }}"
