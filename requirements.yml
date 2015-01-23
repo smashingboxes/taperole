@@ -4,3 +4,5 @@
 
 - src: zzet.rbenv
   version: 1.2.2
+
+- src: laggyluke.nodejs
