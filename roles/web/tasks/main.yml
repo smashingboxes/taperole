@@ -28,26 +28,19 @@
   when: fe_app
   tags: [deploy, fe]
   register: fe_app_checkout
-  
+
 - name: Install node packages for web FE
   remote_user: deployer
   command: chdir={{fe_app_path}}
-           bash -lc "npm install"
+           bash -lc "bower install"
   tags: [deploy, fe]
-  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
-        force_fe_build|default(false)
-
-- name: Install grunt
-  remote_user: deployer
-  command: bash -lc "npm install grunt-cli -g"
-  tags: [fe, grunt]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)
 
 - name: Build FE app
   remote_user: deployer
   command: chdir={{fe_app_path}}
-           bash -lc "grunt build"
+           bash -lc "smash build"
   tags: [deploy, fe]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)

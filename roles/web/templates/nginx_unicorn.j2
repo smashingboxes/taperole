@@ -7,7 +7,7 @@ server {
   # server_name example.com;
 
 {% if fe_app %}
-  root {{ fe_app_path}}/dist;
+  root {{ fe_app_path}}/build;
 {% else %}
   root {{ app_path }}/public;
 {% endif %}

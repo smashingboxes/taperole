@@ -1,3 +1,11 @@
+# Dependencies
+rbenv:
+  version: v0.4.0
+  env: system
+  ruby_version: 2.1.2
+node:
+  version: '0.10.35'
+
 app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
 
@@ -9,21 +17,11 @@ deployer_user:
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
 
-nvm:
-  user: "{{ deployer_user.name }}"
-  version: v0.4.0
-  node_version: '0.10'
-
 unicorn_workers: "{{ansible_processor_cores * 2}}"
 unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
 force_unicorn_restart: true
 
 dev_key_files: []
-
-rbenv:
-  version: v0.4.0
-  env: system
-  ruby_version: 2.1.2
 
 swap_file:
   path: /swp

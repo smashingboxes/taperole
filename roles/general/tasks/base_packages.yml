@@ -14,9 +14,35 @@
     - libmagickcore-dev
     - libmagickwand-dev
 
+- name: Install curl
+  apt: name=curl state=present
 
-- name: Update node.js package
-  command: bash -lc "curl -sL https://deb.nodesource.com/setup | sudo bash -"
+- name: Get current node version
+  command: bash -lc "node -v"
+  register: node_version
+  ignore_errors: yes
 
-- name: Install node.js
-  apt: name=nodejs state=present
+- name: Download nodejs source
+  command: bash -lc "curl http://nodejs.org/dist/v{{node.version}}/node-v{{node.version}}.tar.gz > node-v{{node.version}}.tar.gz"
+  when: node_version.stdout != "v{{node.version}}"
+
+- name: Untar nodejs
+  command: bash -lc "tar -zxf node-v{{node.version}}.tar.gz"
+  when: node_version.stdout != "v{{node.version}}"
+
+- name: Install Nodejs
+  command: chdir="node-v{{node.version}}"
+           bash -lc "./configure && make && sudo make install"
+  when: node_version.stdout != "v{{node.version}}"
+
+- name: Install npm
+  command: bash -lc "curl -L https://npmjs.com/install.sh | sh"
+
+- name: Install coffee-script for smashing-dev-tool
+  npm: name=coffee-script global=yes
+
+- name: Install bower for smashing-dev-tool
+  npm: name=bower global=yes
+
+- name: Install smashing dev tool
+  npm: name=smashing-dev-tool global=yes
