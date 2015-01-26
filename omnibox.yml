@@ -8,15 +8,20 @@
 
 
   roles:
+    - apt_update
     - before_database
-    - database
+    - postgres
     - before_general
-    - general
+    - swap_file
+    - install_essentials
     - before_web
-    - web
-    - legacy
+    - nginx
+    - front_end
+    - rbenv
     - before_ruby
-    - gems
+    - bundle_environment
     - before_app_server
-    - app_server
+    - unicorn
+    - load_database
+    - rails_config
     - delayed_job

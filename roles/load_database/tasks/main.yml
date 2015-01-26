@@ -1,0 +1,59 @@
+- include: db_reset.yml
+  when: force_db_reset is defined and force_db_reset
+  tags: [db_reset]
+
+- name: Precompile Assets
+  remote_user: deployer
+  run_once: true
+  command: chdir={{ app_path }}
+           bash -lc "bundle exec rake assets:precompile RAILS_ENV={{app_env}}"
+  tags: [precompile_assets, deploy]
+  when: precompile_assets
+
+- name: Migrate DB
+  remote_user: deployer
+  command: chdir={{ app_path }}
+           bash -lc "bundle exec rake db:migrate RAILS_ENV={{app_env}}"
+  run_once: true
+  tags: [deploy, migrate, db_reset]
+  when: (app_checkout is defined and app_checkout.changed)
+        or rake.force_migrate 
+        or (db_reset is defined and db_reset.changed)
+
+- name: Seed DB
+  remote_user: deployer
+  command: chdir={{ app_path }}
+           bash -lc "bundle exec rake db:seed RAILS_ENV={{app_env}}"
+  run_once: true
+  tags: [deploy, seed, db_reset]
+  when: (app_checkout is defined and app_checkout.changed)
+        or rake.force_seed
+        or (db_reset is defined and db_reset.changed)
+
+- name: Ensure tmp dir present for unicorn pids
+  file: state=directory path={{app_path}}/tmp/unicorn owner=deployer
+  tags: [deploy]
+
+- name: reload unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=reloaded
+  remote_user: deployer
+  tags: [deploy, unicorn_reload]
+  when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
+
+- name: restart unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=restarted
+  tags: [unicorn_restart, deploy]
+  when: force_unicorn_restart
+
+- name: stop unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=stopped
+  tags: [unicorn_stop]
+
+- name: start unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  tags: [unicorn_start]
+
+- name: Ensure unicorn is running
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  remote_user: deployer
+  tags: [unicorn_start, deploy]

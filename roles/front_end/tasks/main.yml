@@ -1,24 +1,3 @@
-- name: Enable nginx PPA
-  apt_repository: repo=ppa:nginx/stable
-  tags: [nginx]
-
-- name: Install nginx
-  apt: name=nginx state=present
-  tags: [nginx]
-
-- name: Configure nginx
-  template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
-  notify: restart nginx
-  tags: [nginx]
-
-- name: Restart nginx
-  service: name=nginx state=restarted
-  tags: [restart_nginx]
-
-- name: Ditch default nginx site enabled
-  file: path=/etc/nginx/sites-enabled/default state=absent
-  tags: [nginx]
-
 - name: Check out FE application
   remote_user: deployer
   git: dest={{ fe_app_path }}

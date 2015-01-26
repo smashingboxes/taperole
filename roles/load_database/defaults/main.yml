@@ -3,4 +3,3 @@ rake:
   force_migrate: false
 force_unicorn_restart: false
 force_unicorn_reload: false
-force_bundle: false

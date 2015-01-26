@@ -19,4 +19,3 @@
 - name: Swapon swapfile
   command: swapon {{ swap_file.path }}
   when: ansible_swaptotal_mb < 1
-
