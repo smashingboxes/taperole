@@ -2,3 +2,4 @@
 .vagrant/
 site_vars.yml
 hosts
+vendor/roles

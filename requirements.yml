@@ -1,0 +1,6 @@
+---
+- src: jnv.unattended-upgrades
+  version: v1.0.1
+
+- src: zzet.rbenv
+  version: 1.2.2

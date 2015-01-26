@@ -90,3 +90,11 @@ tape ansible deploy -l staging
 5. `tape ansible everything`
  
 Run `tape -h` for a quick rundown of the tool's modules and options.
+
+## Development
+
+```sh
+git clone git@github.com:smashingboxes/tape.git
+cd tape
+ansible-galaxy install -r requirements.yml --force
+```
