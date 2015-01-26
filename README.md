@@ -19,7 +19,7 @@ gem 'tape', git: 'git@github.com:smashingboxes/tape.git', group: :development
 
 * `bundle install`
 * `smasing_boxer installer install`
-* Updated the hosts file with the IP addess of your server
+* Updated the hosts file with the IP address of your server
 
 ```
 [omnibox]
