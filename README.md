@@ -65,20 +65,22 @@ then use the `-l` option to specify the staging
 tape ansible deploy -l staging
 ```
 
-##Testing
-###With vagrant
+## Testing
+### With vagrant
 
 
-1. `tape vagrant create`
-2. Put the following into your hosts file
+1. `vagrant up` or `tape vagrant create`
+2. Put the following into your hosts file:
 
 ```
-[omnibox]
-192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+[vagrant]
+localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
+
+The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
 
 3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
-4. `tape ansible everything`
+4. `tape ansible everything -l vagrant`
 
 
 ###With QEMU

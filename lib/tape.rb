@@ -20,7 +20,6 @@ module TapeBoxer
   class ExecutionModule
     attr_reader :opts
     def initialize(opts)
-      ENV['TAPE_PATH'] = sb_dir
       @opts = opts
     end
 
