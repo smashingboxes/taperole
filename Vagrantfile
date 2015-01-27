@@ -7,6 +7,7 @@ Vagrant.configure 2 do |config|
   name = %x[basename `git rev-parse --show-toplevel`].chomp
   config.vm.define "#{name}_vagrant_box"
 
+  config.vm.network 'forwarded_port', guest: 80, host: 8080
   config.vm.network 'private_network', type: 'dhcp'
 
   config.ssh.insert_key = false
