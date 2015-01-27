@@ -18,12 +18,12 @@ module TapeBoxer
     def install
       `ansible-galaxy install -r #{sb_dir}/requirements.yml --force`
       make_custom_roles
-      copy_example('site_vars.example.yml', 'site_vars.yml')
-      copy_example('hosts.example', 'hosts')
+      copy_example 'site_vars.example.yml', 'site_vars.yml'
+      copy_example 'hosts.example', 'hosts'
       mkdir 'dev_keys'
       print 'Are you going to user vagrant? (y/n): '
       if gets.chomp == 'y'
-        copy_example('Vagrantfile', 'Vagrantfile')
+        copy_example 'Vagrantfile', 'Vagrantfile'
       end
     end
 
@@ -37,43 +37,49 @@ module TapeBoxer
 
     def rm(file)
       print 'Deleting '.red
-      FileUtils.rm_r("#{local_dir}/#{file}")
+      FileUtils.rm_r "#{local_dir}/#{file}"
       puts file
     end
 
     def mkdir(name)
       print "#{name}: "
       begin
-        FileUtils.mkdir(name)
-        puts "✔".green
+        FileUtils.mkdir name
+        puts '✔'.green
+      rescue Errno::EEXIST
+        puts '✘ (Exists)'.green
       rescue Exception => e
-        puts "✘".green
+        puts '✘'.red
         raise e
       end
     end
 
     def make_custom_roles
       mkdir 'roles'
-      touch "#{local_dir}/roles/before_deploy.yml"
-      touch "#{local_dir}/roles/after_deploy.yml"
-      touch "#{local_dir}/roles/before_database.yml"
-      touch "#{local_dir}/roles/before_general.yml"
-      touch "#{local_dir}/roles/before_web.yml"
-      touch "#{local_dir}/roles/before_ruby.yml"
-      touch "#{local_dir}/roles/before_app_server.yml"
+      touch 'roles/before_deploy.yml'
+      touch 'roles/after_deploy.yml'
+      touch 'roles/before_database.yml'
+      touch 'roles/before_general.yml'
+      touch 'roles/before_web.yml'
+      touch 'roles/before_ruby.yml'
+      touch 'roles/before_app_server.yml'
     end
 
     def touch(file)
-      File.new(file, 'w')
+      File.new "#{local_dir}/#{file}", 'w'
     end
 
     def copy_example(file, cp_file)
       print "#{cp_file}: "
       begin
-        FileUtils.cp("#{sb_dir}/#{file}", "#{local_dir}/#{cp_file}")
-        puts "✔".green
+        if File.exists?("#{local_dir}/#{cp_file}")
+          puts '✘ (Exists)'.green
+        else
+          FileUtils.cp("#{sb_dir}/#{file}", "#{local_dir}/#{cp_file}")
+          puts '✔'.green
+        end
       rescue Exception => e
-        puts "✘".green
+        puts '✘'.red
         raise e
       end
     end

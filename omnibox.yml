@@ -6,12 +6,12 @@
     - vars/defaults.yml
     - "{{lookup('env', 'PWD')}}/site_vars.yml"
 
-
   roles:
     - general
     - postgres
     - nginx
     - backend_install_essentials
+    - deployer_user
     - frontend_deploy
     - backend_config
     - unicorn_install

@@ -2,7 +2,7 @@ app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
 
 deployer_user:
-  name: 'deployer'
+  name: deployer
   groups:
     - deployer
 
