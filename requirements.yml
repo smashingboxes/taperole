@@ -5,5 +5,10 @@
 - src: zzet.rbenv
   version: 1.2.2
 
+- src: lxhunter.apt
+
+- src: ANXS.postgresql
+  version: v1.0.3
+
 - src: leonelgalan.node
   version: 0.1.1
