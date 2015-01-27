@@ -1,0 +1,8 @@
+- name: Install coffee-script for smashing-dev-tool
+  npm: name=coffee-script global=yes
+
+- name: Install bower for smashing-dev-tool
+  npm: name=bower global=yes
+
+- name: Install smashing dev tool
+  npm: name=smashing-dev-tool global=yes

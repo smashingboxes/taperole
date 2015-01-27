@@ -1,3 +1,0 @@
-- name: apt-get udpate upgrade
-  apt: update_cache=yes  upgrade=safe
-  tags: [update, upgrade]

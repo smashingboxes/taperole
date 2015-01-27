@@ -16,7 +16,7 @@
 - name: Ensure deployer has got permissions
   sudo: true
   sudo_user: postgres
-  postgresql_user: name=deployer
+  postgresql_user: name={{ deployer_user.name }}
                    state=present
                    role_attr_flags=CREATEDB,LOGIN,REPLICATION,SUPERUSER
                    password={{ database_password }}
@@ -24,6 +24,6 @@
 - name: Create db
   sudo: true
   sudo_user: postgres
-  postgresql_db: owner=deployer
+  postgresql_db: owner={{ deployer_user.name }}
                  name="{{ app_name }}_{{app_env}}"
                  state=present
