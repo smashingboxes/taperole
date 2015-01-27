@@ -16,6 +16,7 @@ module TapeBoxer
 
     protected
     def install
+      `ansible-galaxy install -r #{sb_dir}/requirements.yml --force`
       make_custom_roles
       copy_example('site_vars.example.yml', 'site_vars.yml')
       copy_example('hosts.example', 'hosts')
