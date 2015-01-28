@@ -1,3 +1,9 @@
 ---
 dependencies:
+  - role: jnv.unattended-upgrades
   - role: deployer_user
+  - role: leonelgalan.node
+    npm_packages:
+      - coffee-script
+      - bower
+      - gulp

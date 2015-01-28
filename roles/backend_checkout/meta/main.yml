@@ -1,9 +1,3 @@
 ---
-<<<<<<< HEAD
-dependencies:
-  - { role: vendor/roles/zzet.rbenv }
-||||||| parent of 1c3034e... Fixes rbenv
 dependencies:
   - role: zzet.rbenv
-=======
->>>>>>> 1c3034e... Fixes rbenv
