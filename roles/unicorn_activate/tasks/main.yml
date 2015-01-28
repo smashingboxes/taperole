@@ -1,0 +1,27 @@
+- name: Ensure tmp dir present for unicorn pids
+  file: state=directory path={{app_path}}/tmp/unicorn owner={{ deployer_user.name }}
+  tags: [deploy]
+
+- name: reload unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=reloaded
+  remote_user: "{{ deployer_user.name }}"
+  tags: [deploy, unicorn_reload]
+  when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
+
+- name: restart unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=restarted
+  tags: [unicorn_restart, deploy]
+  when: force_unicorn_restart
+
+- name: stop unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=stopped
+  tags: [unicorn_stop]
+
+- name: start unicorn
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  tags: [unicorn_start]
+
+- name: Ensure unicorn is running
+  sudo_upstart: name=unicorn_{{app_name}} state=started
+  remote_user: "{{ deployer_user.name }}"
+  tags: [unicorn_start, deploy]

@@ -8,15 +8,14 @@
 
 
   roles:
-    - before_database
-    - database
-    - before_general
     - general
-    - before_web
-    - web
-    - legacy
-    - before_ruby
-    - gems
-    - before_app_server
-    - app_server
+    - postgres
+    - nginx
+    - backend_install_essentials
+    - frontend_install_essentials
+    - frontend_deploy
+    - backend_config
+    - unicorn_install
+    - database_load
+    - unicorn_activate
     - delayed_job

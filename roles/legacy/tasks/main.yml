@@ -1,7 +1,0 @@
-- name: stat rbenv install path
-  stat: path=/home/deployer/.rbenv
-  register: old_rbenv
-
-- name: Remove old rbenv install
-  file: path=/home/deployer/.rbenv state=absent
-  when: old_rbenv.stat.isdir is defined and old_rbenv.stat.isdir == true

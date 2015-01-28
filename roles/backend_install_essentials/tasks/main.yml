@@ -1,0 +1,18 @@
+- name: Install IM
+  apt: name={{ item }} state=present
+  with_items:
+    - imagemagick
+    - libmagickcore-dev
+    - libmagickwand-dev
+
+- name: Install bundler
+  gem: executable=/usr/local/rbenv/shims/gem name=bundler state=present user_install=no
+
+- name: Rehash rbenv
+  command: bash -c 'source /etc/profile && rbenv rehash'
+  changed_when: false
+  sudo_user: "{{ item }}"
+  with_items:
+    - root
+    - deployer
+  notify: rbenv setup

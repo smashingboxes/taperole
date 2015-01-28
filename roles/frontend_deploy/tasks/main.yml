@@ -1,0 +1,30 @@
+- name: Check out FE application
+  remote_user: "{{ deployer_user.name }}"
+  git: dest={{ fe_app_path }}
+       repo={{ fe_app_repo }}
+       version={{ fe_app_branch }}
+       accept_hostkey=true
+  when: fe_app
+  tags: [deploy, fe]
+  register: fe_app_checkout
+
+- name: Install node packages for web FE
+  remote_user: "{{ deployer_user.name }}"
+  command: chdir={{fe_app_path}}
+           bash -lc "bower install"
+  tags: [deploy, fe]
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
+
+- name: Build FE app
+  remote_user: "{{ deployer_user.name }}"
+  command: chdir={{fe_app_path}}
+           bash -lc "smash build"
+  tags: [deploy, fe]
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
+
+- name: Ensure nginx running
+  remote_user: "{{ deployer_user.name }}"
+  service: name=nginx state=running
+  tags: [deploy, fe]
