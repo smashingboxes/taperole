@@ -1,3 +1,4 @@
+---
 - name: Install VIM
   apt: name=vim state=present
 
@@ -6,18 +7,3 @@
 
 - name: Install GIT
   apt: name=git state=present
-
-- name: Install CURL
-  apt: name=curl state=present
-
-- name: Install NODEJS
-  apt: name=nodejs state=present
-
-- name: Install NPM
-  command: bash -lc "curl -L https://npmjs.com/install.sh | sh"
-
-- name: Install N
-  npm: name=n global=yes
-
-- name: Upgrade NODEJS
-  command: bash -lc "n stable"

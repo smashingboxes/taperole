@@ -12,7 +12,6 @@
     - postgres
     - nginx
     - backend_install_essentials
-    - frontend_install_essentials
     - frontend_deploy
     - backend_config
     - unicorn_install
