@@ -9,17 +9,17 @@ It is advised that, if you are provisioned your box with an older version of ans
 
 * **Use Unbuntu precise64 (12.04 x64)**
 
-###Basics
+### Basics
 
 * Add the following to your gemfile.
 
-```
-gem 'tape', git: 'git@github.com:smashingboxes/tape.git', group: :development
+```ruby
+gem 'tape', github: 'smashingboxes/tape', group: :development
 ```
 
 * `bundle install`
 * `smasing_boxer installer install`
-* Updated the hosts file with the IP addess of your server
+* Updated the hosts file with the IP address of your server
 
 ```
 [omnibox]
@@ -30,7 +30,7 @@ gem 'tape', git: 'git@github.com:smashingboxes/tape.git', group: :development
 * Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
 * `tape ansible everything`
 
-###Custom roles
+### Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
 
 **App-Specific Provisioning Roles**
@@ -46,7 +46,7 @@ You can write app specific roles in the roles files storred in the `roles` direc
 * `before_deploy`
 * `after_deploy`
 
-###Multistage
+### Multistage
 You can setup multistage by defining your hosts file as follows
 
 ```
@@ -61,34 +61,36 @@ staging
 
 then use the `-l` option to specify the staging
 
-```
+```sh
 tape ansible deploy -l staging
 ```
 
-##Testing
-###With vagrant
+## Testing
+### With vagrant
 
 
-1. `tape vagrant create`
-2. Put the following into your hosts file
+1. `vagrant up` or `tape vagrant create`
+2. Put the following into your hosts file:
 
 ```
-[omnibox]
-192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+[vagrant]
+localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
+
+The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
 
 3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
-4. `tape ansible everything`
+4. `tape ansible everything -l vagrant`
 
 
-###With QEMU
+### With QEMU
 
 1. `tape qemu create --name fe_test`
 2. `tape qemu start --name fe_test -p2255`
 3. `ssh-add ./id_rsa_sb_basebox`
 4. `echo 'localhost:2255' >test_hosts`
 5. `tape ansible everything`
- 
+
 Run `tape -h` for a quick rundown of the tool's modules and options.
 
 ## Development

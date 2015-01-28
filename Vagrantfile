@@ -1,14 +1,22 @@
-Vagrant.configure("2") do |config|
-  config.vm.box       = "precise64"
-  config.vm.box_url   = "http://files.vagrantup.com/precise64.box"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-  private_ip = "192.168.13.37"
-  config.vm.network(:private_network, :ip => private_ip)
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.provision :shell, path: "#{ENV['TAPE_PATH']}/vagrant-bootstrap.sh"
+Vagrant.configure 2 do |config|
+  config.vm.box = 'hashicorp/precise64'
 
   name = %x[basename `git rev-parse --show-toplevel`].chomp
-  config.vm.define "#{name}_vagrant_box" do |test|
-    test.vm.box = "#{name}_vagrant_box"
-  end
+  config.vm.define "#{name}_vagrant_box"
+
+  config.vm.network 'forwarded_port', guest: 80, host: 8080
+  config.vm.network 'private_network', type: 'dhcp'
+
+  config.ssh.insert_key = false
+  config.ssh.shell = 'bash -c "BASH_ENV=/etc/profile exec bash"'
+
+  config.vm.provision :shell, inline: <<-SCRIPT
+    sudo su
+    mkdir ~/.ssh/
+    cp /home/vagrant/.ssh/authorized_keys ~/.ssh/
+    chmod 600 ~/.ssh/authorized_keys
+  SCRIPT
 end
