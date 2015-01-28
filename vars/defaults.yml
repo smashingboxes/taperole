@@ -27,10 +27,6 @@ swap_file:
   path: /swp
   size_kb: "{{ 1024 * 1024 }}"
 
-rbenv_users:
-  - "{{ deployer_user.name }}"
-  - root
-
 database_password: password
 
 enabled_delayed_job: false
