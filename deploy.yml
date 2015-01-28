@@ -6,8 +6,11 @@
     - vars/defaults.yml
     - "{{lookup('env', 'PWD')}}/site_vars.yml"
   roles:
-    - before_deploy
-    - web
-    - app_server
-    - after_deploy
+    - nginx
+    - backend_checkout
+    - unicorn_install
+    - backend_config
+    - database_load
+    - unicorn_activate
+    - frontend_deploy
     - delayed_job
