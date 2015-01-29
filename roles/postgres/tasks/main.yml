@@ -1,9 +1,0 @@
----
-  # Remove when PR is merged.
-  # https://github.com/ANXS/postgresql/pull/59
-- name: PostgreSQL | Role attribute flags
-  postgresql_user:
-    name: "{{ item.name }}"
-    role_attr_flags: "{{ item.role_attr_flags }}"
-  with_items: postgresql_user_privileges
-  when: postgresql_users|length > 0

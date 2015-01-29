@@ -3,7 +3,7 @@ description "{{app_name}} unicorn daemon"
 start on virtual-filesystems
 stop on runlevel [06]
 
-env PATH=/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/bin:/sbin:/bin
+env PATH={{ rbenv_root }}/shims:{{ rbenv_root }}/bin:/usr/bin:/sbin:/bin
 
 env RAILS_ENV={{app_env}}
 

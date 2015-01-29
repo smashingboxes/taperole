@@ -1,3 +1,7 @@
 ---
 dependencies:
-  - zzet.rbenv
+  - role: zzet.rbenv
+    rbenv_plugins:
+      - name: ruby-build
+        repo: git://github.com/sstephenson/ruby-build.git
+        version: v20141225

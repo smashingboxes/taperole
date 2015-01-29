@@ -1,6 +1,3 @@
-- name: Symlink to new rbenv install location
-  file: path=/home/deployer/.rbenv state=link src=/usr/local/rbenv
-
 - name: Check out application
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ app_path }}

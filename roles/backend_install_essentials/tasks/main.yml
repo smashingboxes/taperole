@@ -5,6 +5,10 @@
     - libmagickcore-dev
     - libmagickwand-dev
 
+# zzet.rbenv puts all the rbenv stuff in profile for some reason
+# so we gotta use login shells to do this stuff
 - name: Install bundler
-  gem: executable=/usr/local/rbenv/shims/gem name=bundler user_install=no
-  notify: rbenv rehash
+  shell: bash -lc "gem install bundler"
+
+- name: Rbenv rehash
+  shell: bash -lc "rbenv rehash"

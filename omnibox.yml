@@ -12,9 +12,10 @@
     - nginx
     - backend_install_essentials
     - deployer_user
-    - frontend_deploy
-    - backend_config
+    - backend_checkout
     - unicorn_install
+    - backend_config
     - database_load
     - unicorn_activate
+    - frontend_deploy
     - delayed_job
