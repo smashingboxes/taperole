@@ -11,4 +11,4 @@
   name: ANXS.postgresql
 
 - src: leonelgalan.node
-  version: 0.2
+  version: '0.2'
