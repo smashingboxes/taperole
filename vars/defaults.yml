@@ -25,3 +25,7 @@ database_password: 286755fad04869ca523320acce0dc6a4
 enabled_delayed_job: false
 
 precompile_assets: true
+
+# Sets server_name in the nginx sites-enabled file
+app_url: false
+
