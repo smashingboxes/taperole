@@ -4,6 +4,6 @@ dependencies:
   - role: deployer_user
   - role: leonelgalan.node
     npm_packages:
-      - coffee-script
-      - bower
-      - gulp
+      - name: coffee-script
+      - name: bower
+      - name: gulp
