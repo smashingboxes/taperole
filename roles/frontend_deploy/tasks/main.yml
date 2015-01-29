@@ -11,6 +11,14 @@
 - name: Install node packages for web FE
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{fe_app_path}}
+           bash -lc "npm install"
+  tags: [deploy, fe]
+  when: (fe_app_checkout is defined and fe_app_checkout.changed) or
+        force_fe_build|default(false)
+
+- name: Install bower packages for web FE
+  remote_user: deployer
+  command: chdir={{fe_app_path}}
            bash -lc "bower install"
   tags: [deploy, fe]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
@@ -19,7 +27,7 @@
 - name: Build FE app
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{fe_app_path}}
-           bash -lc "smash build"
+           bash -lc "gulp"
   tags: [deploy, fe]
   when: (fe_app_checkout is defined and fe_app_checkout.changed) or
         force_fe_build|default(false)

@@ -27,8 +27,8 @@ dev_key_files:
 
 #
 # Database configs
-#
-# database_password: somepassword
+# echo 'password' | md5
+# database_password: 286755fad04869ca523320acce0dc6a4
 
 #
 # Delayed Job

@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - { role: backend_checkout }
-  - { role: deployer_user }
+  - role: backend_checkout
+  - role: deployer_user
