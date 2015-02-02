@@ -2,6 +2,9 @@ module TapeBoxer
   class Installer < ExecutionModule
     TapeBoxer.register_module :installer, self
 
+    action :dependencies,
+           proc { dependencies },
+           'Install dependencies'
     action :install,
       proc {install},
       'Creates all nessisary hosts and config files'
@@ -15,8 +18,19 @@ module TapeBoxer
     end
 
     protected
+
+    def dependencies
+      puts 'Dependencies:'
+      if system "ansible-galaxy install -r #{sb_dir}/requirements.yml --force"
+        print 'Installing/updating dependencies: '
+        puts '✔'.green
+      else
+        puts '✘'.red
+      end
+    end
+
     def install
-      `ansible-galaxy install -r #{sb_dir}/requirements.yml --force`
+      dependencies
       make_custom_roles
       copy_example 'site_vars.example.yml', 'site_vars.yml'
       copy_example 'hosts.example', 'hosts'
