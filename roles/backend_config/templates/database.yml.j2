@@ -1,7 +1,7 @@
-{{ app_env }}:
+{{ be_app_env }}:
   adapter: postgresql
   encoding: unicode
-  database: {{ app_name }}_{{ app_env }}
+  database: {{ app_name }}_{{ be_app_env }}
   username: deployer
   password: {{ database_password }}
   pool: 5

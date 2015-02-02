@@ -1,4 +1,3 @@
 ---
 dependencies:
-  - role: backend_checkout
   - role: unicorn_install

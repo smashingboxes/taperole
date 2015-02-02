@@ -22,10 +22,10 @@
   tags: [configure_unicorn]
 
 - name: Set up unicorn log dir
-  file: path={{app_path}}/log state=directory owner=deployer
+  file: path={{be_app_path}}/log state=directory owner=deployer
   tags: [configure_unicorn]
 
 - name: Install unicorn config
   template: src=unicorn.rb.j2
-            dest={{app_path}}/config/unicorn.rb
+            dest={{be_app_path}}/config/unicorn.rb
   tags: [configure_unicorn]

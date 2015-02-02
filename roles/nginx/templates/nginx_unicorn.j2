@@ -1,22 +1,19 @@
+{% if be_app_repo is defined %}
 upstream unicorn {
   server unix:{{unicorn_sockfile}} fail_timeout=0;
 }
+{% endif %}
 
 server {
   listen 80 default deferred;
 
-{% if app_url %}
-  server_name {{app_url}};
-{% else %}
   # server_name example.com;
-{% endif %}
 
-{% if fe_app %}
-  root {{ fe_app_path}}/dist;
+{% if fe_app_local_path %}
+  root {{ fe_app_path }};
 {% else %}
   root {{ app_path }}/public;
 {% endif %}
-
 
   if (-f $document_root/system/maintenance.html) {
     return 503;
@@ -33,6 +30,7 @@ server {
     add_header Cache-Control public;
   }
 
+{% if be_app_repo is defined %}
   try_files $uri/index.html $uri @unicorn;
   location @unicorn {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -40,6 +38,7 @@ server {
     proxy_redirect off;
     proxy_pass http://unicorn;
   }
+{% endif %}
 
   error_page 500 502 503 504 /500.html;
   client_max_body_size 4G;

@@ -6,7 +6,7 @@
   apt: name=nginx state=present
   tags: [nginx]
 
-- name: Configure nginx
+- name: Configure Backend App nginx
   template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
   notify: restart nginx
   tags: [nginx]

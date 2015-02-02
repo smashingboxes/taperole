@@ -1,19 +1,21 @@
 - name: Check out application
   remote_user: "{{ deployer_user.name }}"
-  git: dest={{ app_path }}
-       repo={{ app_repo }}
-       version={{ app_branch }}
+  git: dest={{ be_app_path }}
+       repo={{ be_app_repo }}
+       version={{ be_app_branch }}
        accept_hostkey=true
   register: app_checkout
-  tags: [deploy]
+  tags: [be_deploy]
 
 - name: check that secrets is ignored
-  shell: cat {{ app_path }}/.gitignore | grep {{ item }}
+  shell: cat {{ be_app_path }}/.gitignore | grep {{ item }}
   with_items:
     - config/secrets.yml
   register: secrets_ignore_check
   ignore_errors: true
+  tags: [be_deploy]
 
 - name: ignore secrets
-  shell: /bin/bash -c 'echo "config/secrets.yml" > {{ app_path }}/.git/info/exclude'
+  shell: /bin/bash -c 'echo "config/secrets.yml" > {{ be_app_path }}/.git/info/exclude'
   when: secrets_ignore_check|failed
+  tags: [be_deploy]

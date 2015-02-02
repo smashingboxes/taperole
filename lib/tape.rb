@@ -56,10 +56,6 @@ module TapeBoxer
 
     protected
 
-    def sb_dir
-      File.realpath(File.join(__dir__, '../'))
-    end
-
     def require_opt(name)
       unless opts[name.to_sym]
         raise UnspecifiedOption, "Option --#{name} must be specified to do this!"
@@ -67,6 +63,10 @@ module TapeBoxer
     end
 
     private
+    def tape_dir
+      File.realpath(File.join(__dir__, '../'))
+    end
+
     def local_dir
       Dir.pwd
     end
