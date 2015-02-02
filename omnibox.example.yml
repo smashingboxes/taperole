@@ -4,7 +4,10 @@
 
   vars_files:
     - vars/defaults.yml
-    - "{{lookup('env', 'PWD')}}/site_vars.yml"
+
+  roles_path:
+    - roles
+    - "{{lookup('env', 'PWD')}}/roles"
 
   roles:
     - general

@@ -17,8 +17,8 @@ module TapeBoxer
     protected
     def install
       `ansible-galaxy install -r #{sb_dir}/requirements.yml --force`
-      make_custom_roles
-      copy_example 'site_vars.example.yml', 'site_vars.yml'
+      mkdir 'roles'
+      copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'hosts.example', 'hosts'
       mkdir 'dev_keys'
       print 'Are you going to user vagrant? (y/n): '
@@ -28,7 +28,7 @@ module TapeBoxer
     end
 
     def uninstall
-      rm 'site_vars.yml'
+      rm 'omnibox.yml'
       rm 'roles'
       rm 'hosts'
       rm 'dev_keys'
