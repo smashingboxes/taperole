@@ -7,7 +7,7 @@
 
 - src: lxhunter.apt
 
-- src: https://github.com/leonelgalan/postgresql
+- src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
 
 - src: leonelgalan.node
