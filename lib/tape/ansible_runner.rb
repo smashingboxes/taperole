@@ -62,6 +62,7 @@ class AnsibleRunner < ExecutionModule
     playbook = File.join(sb_dir, playbook)
     cmd = "ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag}"
     cmd += ' -vvvv' if opts.verbose
+    cmd += " -t #{opts.tags}" if opts.tags
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
   end
