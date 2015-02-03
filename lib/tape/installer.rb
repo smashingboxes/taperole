@@ -17,6 +17,7 @@ module TapeBoxer
     def install
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
+      copy_example 'deploy.example.yml', 'deploy.yml'
       copy_example 'hosts.example', 'hosts'
       mkdir 'dev_keys'
       print 'Are you going to user vagrant? (y/n): '
@@ -27,6 +28,7 @@ module TapeBoxer
 
     def uninstall
       rm 'omnibox.yml'
+      rm 'deploy.yml'
       rm 'roles'
       rm 'hosts'
       rm 'dev_keys'

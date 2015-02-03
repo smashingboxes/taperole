@@ -59,7 +59,7 @@ class AnsibleRunner < ExecutionModule
 
   def exec_ansible(playbook, args)
     enforce_roles_path!
-    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook #{playbook} -i #{inventory_file} -e tape_dir=#{tape_dir}"
+    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
     cmd += ' -vvvv' if opts.verbose
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
