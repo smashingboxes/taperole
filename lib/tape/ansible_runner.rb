@@ -43,7 +43,6 @@ class AnsibleRunner < ExecutionModule
   action :everything, proc {ansible}, "This does it all."
 
   def initialize(*args)
-    ENV['ANSIBLE_CONFIG'] = File.join(sb_dir, 'ansible.cfg')
     super
   end
 
@@ -59,11 +58,21 @@ class AnsibleRunner < ExecutionModule
   end
 
   def exec_ansible(playbook, args)
-    playbook = File.join(sb_dir, playbook)
-    cmd = "ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag}"
+    enforce_roles_path!
+    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook #{playbook} -i #{inventory_file} -e tape_dir=#{tape_dir}"
     cmd += ' -vvvv' if opts.verbose
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
+  end
+
+  def enforce_roles_path!
+    Dir.mkdir('.tape') unless Dir.exists?('.tape')
+    File.open('.tape/ansible.cfg', 'w') do |f|
+      f.puts '[defaults]'
+      f.puts "roles_path=./roles:#{tape_dir}/roles"
+      f.puts '[ssh_connection]'
+      f.puts 'ssh_args = -o ForwardAgent=yes'
+    end
   end
 
   def hosts_flag

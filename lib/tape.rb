@@ -67,6 +67,10 @@ module TapeBoxer
     end
 
     private
+    def tape_dir
+      File.expand_path("../..", __FILE__)
+    end
+
     def local_dir
       Dir.pwd
     end

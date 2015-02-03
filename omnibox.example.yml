@@ -3,11 +3,27 @@
   user: root
 
   vars_files:
-    - vars/defaults.yml
+    - "{{tape_dir}}/vars/defaults.yml"
 
-  roles_path:
-    - roles
-    - "{{lookup('env', 'PWD')}}/roles"
+  vars:
+    app_name:
+    app_repo:
+    app_env: production
+    app_branch: master
+
+    fe_app: false                                              # Do you want to deploy/provision a fe app?
+    fe_app_repo:
+    fe_app_branch: master
+
+    dev_key_files:
+      - dev_keys/key.pub
+
+    # Database configs
+    # echo 'password' | md5
+    database_password: 286755fad04869ca523320acce0dc6a4
+
+    enabled_delayed_job: false
+
 
   roles:
     - general
