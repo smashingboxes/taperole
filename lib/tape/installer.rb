@@ -15,6 +15,7 @@ module TapeBoxer
 
     protected
     def install
+      `ansible-galaxy install -r #{tape_dir}/requirements.yml --force`
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'deploy.example.yml', 'deploy.yml'
@@ -78,7 +79,7 @@ module TapeBoxer
         if File.exists?("#{local_dir}/#{cp_file}")
           puts '✘ (Exists)'.green
         else
-          FileUtils.cp("#{sb_dir}/#{file}", "#{local_dir}/#{cp_file}")
+          FileUtils.cp("#{tape_dir}/#{file}", "#{local_dir}/#{cp_file}")
           puts '✔'.green
         end
       rescue Exception => e
