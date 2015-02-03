@@ -15,7 +15,8 @@ module TapeBoxer
 
     protected
     def install
-      `ansible-galaxy install -r #{tape_dir}/requirements.yml --force`
+      puts "Installing ansible galaxy roles".pink
+      `ansible-galaxy install -r #{tape_dir}/requirements.yml -p #{tape_dir}/vendor --force`
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'deploy.example.yml', 'deploy.yml'
