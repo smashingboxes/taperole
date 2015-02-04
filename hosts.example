@@ -1,7 +1,7 @@
 // Base Example
 [omnibox]
-0.0.0.0 app_env=SOME_ENV app_branch=SOME_BRANCH 
+0.0.0.0 app_env=SOME_ENV be_app_branch=SOME_BRANCH 
 
 // Vagrant Example
 [omnibox]
-localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+192.168.13.37 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

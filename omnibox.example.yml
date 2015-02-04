@@ -4,19 +4,7 @@
 
   vars_files:
     - "{{tape_dir}}/vars/defaults.yml"
-
-  vars:
-    app_name:
-    app_repo:
-    app_env: production
-    app_branch: master
-
-    fe_app: false                                              # Do you want to deploy/provision a fe app?
-    fe_app_repo:
-    fe_app_branch: master
-
-    dev_key_files:
-      - dev_keys/key.pub
+    - tape_vars.yml
 
   roles:
     - general

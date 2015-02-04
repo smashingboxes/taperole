@@ -2,7 +2,7 @@
   service: name=unicorn_{{app_name}} state=stopped
 
 - name: Reset DB
-  command: chdir={{ app_path }}
+  command: chdir={{ be_app_path }}
            bash -lc "bundle exec rake db:drop db:create RAILS_ENV={{app_env}}"
   register: db_reset
 

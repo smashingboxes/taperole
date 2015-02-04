@@ -2,11 +2,12 @@
   template: src=unicorn_upstart.j2
             dest=/etc/init/unicorn_{{ app_name}}.conf
   register: unicorn_upstart_installation
+  when: be_app
   tags: [configure_unicorn]
 
 - name: register unicorn upstart script
   command: initctl reload-configuration
-  when: unicorn_upstart_installation.changed
+  when: be_app and unicorn_upstart_installation.changed
   tags: [configure_unicorn]
 
 - name: Give deployer user access to unicorn upstart jobs
@@ -19,13 +20,16 @@
     - restart
     - status
     - reload
+  when: be_app
   tags: [configure_unicorn]
 
 - name: Set up unicorn log dir
-  file: path={{app_path}}/log state=directory owner=deployer
+  file: path={{be_app_path}}/log state=directory owner=deployer
+  when: be_app
   tags: [configure_unicorn]
 
 - name: Install unicorn config
   template: src=unicorn.rb.j2
-            dest={{app_path}}/config/unicorn.rb
+            dest={{be_app_path}}/config/unicorn.rb
+  when: be_app
   tags: [configure_unicorn]

@@ -5,17 +5,13 @@ upstream unicorn {
 server {
   listen 80 default deferred;
 
-{% if app_url %}
-  server_name {{app_url}};
+{% if be_app_url %}
+  server_name {{ be_app_url }};
 {% else %}
   # server_name example.com;
 {% endif %}
 
-{% if fe_app %}
-  root {{ fe_app_path}}/dist;
-{% else %}
-  root {{ app_path }}/public;
-{% endif %}
+  root {{ be_app_path }}/public;
 
 
   if (-f $document_root/system/maintenance.html) {

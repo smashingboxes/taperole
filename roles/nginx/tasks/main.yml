@@ -6,10 +6,17 @@
   apt: name=nginx state=present
   tags: [nginx]
 
-- name: Configure nginx
+- name: Configure Backend App nginx
   template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
   notify: restart nginx
   tags: [nginx]
+  when: be_app_repo is defined
+
+- name: Configure Frontend App nginx
+  template: src=nginx_fe_app.j2 dest=/etc/nginx/sites-enabled/{{ fe_app_name }}
+  notify: restart nginx
+  tags: [nginx]
+  when: fe_app_local_path is defined
 
 - name: Restart nginx
   service: name=nginx state=restarted

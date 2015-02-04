@@ -32,4 +32,4 @@
         force_db_reset or
         (app_checkout is defined and app_checkout.changed) and
         enabled_delayed_job
-  tags: [configure_dj_runner, deploy, reset_db]
+  tags: [configure_dj_runner, be_deploy, reset_db]

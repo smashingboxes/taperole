@@ -34,10 +34,10 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t bundle -e force_bundle=true'},
     "Bundles the gems running on the app servers"
   action :fe_deploy,
-    proc {ansible '-t fe -e force_fe_build=true'},
+    proc {ansible_deploy '-t fe_deploy'},
     "Re-deploys fe code"
   action :deploy,
-    proc {ansible_deploy},
+    proc {ansible_deploy '-t be_deploy'},
     "Checks out app code, installs dependencies and restarts unicorns for "\
     "both FE and BE code."
   action :everything, proc {ansible}, "This does it all."
@@ -53,8 +53,8 @@ class AnsibleRunner < ExecutionModule
     exec_ansible('omnibox.yml', cmd_str)
   end
 
-  def ansible_deploy
-    exec_ansible('deploy.yml', '-t deploy')
+  def ansible_deploy(cmd_str = '')
+    exec_ansible('deploy.yml', cmd_str)
   end
 
   def exec_ansible(playbook, args)
@@ -69,7 +69,7 @@ class AnsibleRunner < ExecutionModule
     Dir.mkdir('.tape') unless Dir.exists?('.tape')
     File.open('.tape/ansible.cfg', 'w') do |f|
       f.puts '[defaults]'
-      f.puts "roles_path=./roles:#{tape_dir}/roles"
+      f.puts "roles_path=./roles:#{tape_dir}/roles:#{tape_dir}/vendor"
       f.puts '[ssh_connection]'
       f.puts 'ssh_args = -o ForwardAgent=yes'
     end

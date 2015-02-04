@@ -20,6 +20,7 @@ module TapeBoxer
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'deploy.example.yml', 'deploy.yml'
+      copy_example 'tape_vars.example.yml', 'tape_vars.yml'
       copy_example 'hosts.example', 'hosts'
       mkdir 'dev_keys'
       print 'Are you going to user vagrant? (y/n): '
@@ -31,6 +32,7 @@ module TapeBoxer
     def uninstall
       rm 'omnibox.yml'
       rm 'deploy.yml'
+      rm 'tape_vars.yml'
       rm 'roles'
       rm 'hosts'
       rm 'dev_keys'
@@ -53,20 +55,6 @@ module TapeBoxer
       rescue Exception => e
         puts '✘'.red
         raise e
-      end
-    end
-
-    def make_custom_roles
-      mkdir 'roles'
-      touch 'roles/before_deploy.yml'
-      touch 'roles/after_deploy.yml'
-      touch 'roles/before_database.yml'
-      touch 'roles/before_general.yml'
-      touch 'roles/before_web.yml'
-      touch 'roles/before_ruby.yml'
-      touch 'roles/before_app_server.yml'
-      File.opne('Gemfile', 'a') do |f|
-        f.puts '.tape'
       end
     end
 

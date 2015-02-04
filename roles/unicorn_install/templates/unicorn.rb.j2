@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 worker_processes {{ unicorn_workers }} 
-working_directory '{{ app_path }}'
-pid '{{ app_path }}/tmp/unicorn.pid'
-stderr_path '{{ app_path }}/log/unicorn.log'
-stdout_path '{{ app_path }}/log/unicorn.log'
+working_directory '{{ be_app_path }}'
+pid '{{ be_app_path }}/tmp/unicorn.pid'
+stderr_path '{{ be_app_path }}/log/unicorn.log'
+stdout_path '{{ be_app_path }}/log/unicorn.log'
 
 preload_app true
 
@@ -27,7 +27,7 @@ before_fork do |server, worker|
 
   # Lock up a file so our upstart script knows we're running even if
   # the parent hot-restarts
-  lockfile = File.open("{{ app_path}}/tmp/unicorn.lock", 'w')
+  lockfile = File.open("{{ be_app_path}}/tmp/unicorn.lock", 'w')
   exit unless lockfile.flock(File::LOCK_SH)
 end
 

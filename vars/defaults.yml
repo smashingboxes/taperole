@@ -1,5 +1,7 @@
-app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
-fe_app_path: "/home/{{ deployer_user.name }}/{{ app_name}}_fe"
+be_app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
+
+fe_app_name: "{{ app_name }}_fe"
+fe_app_path: "/home/{{ deployer_user.name }}/{{ fe_app_name }}"
 
 deployer_user:
   name: deployer
@@ -12,8 +14,6 @@ local_dir: "{{lookup('env', 'PWD')}}"
 unicorn_workers: "{{ansible_processor_cores * 2}}"
 unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
 force_unicorn_restart: true
-
-dev_key_files: []
 
 swap_file:
   path: /swp
