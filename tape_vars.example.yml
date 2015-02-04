@@ -1,14 +1,14 @@
 app_name:
 
 # Backend App Configs
+# Uncomment for BE App
 # be_app_repo:
 # be_app_env: production
 # be_app_branch: master
-# be_app_url: #optional
 
 # Frontend App Configs
-# fe_app_local_path:
-# fe_app_url: #optional
+# Uncomment for FE App
+# fe_app_local_path: /path/to/built/js/app/
 
 dev_key_files:
   - dev_keys/key.pub
