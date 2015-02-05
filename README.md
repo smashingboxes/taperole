@@ -26,8 +26,8 @@ gem 'tape', github: 'smashingboxes/tape', group: :development
 0.0.0.0
 ```
 
-* Fill in missing values in `site_vars.yml`
-* Copy all developers public keys into some dir and specify that dir inside `site_vars.yml` (dev_key_files)
+* Fill in missing values in `tape_vars.yml`
+* Copy all developers public keys into some dir and specify that dir inside `tape_vars.yml` (dev_key_files)
 * `tape ansible everything`
 
 ### Custom roles
@@ -79,7 +79,7 @@ localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 
 The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
 
-3. Update `site_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
+3. Update `tape_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
 4. `tape ansible everything -l vagrant`
 
 
