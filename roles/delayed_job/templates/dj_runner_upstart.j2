@@ -4,7 +4,7 @@ start on virtual-filesystems
 stop on runlevel [06]
 
 env PATH={{ rbenv_root }}/shims:{{ rbenv_root }}/bin:/usr/bin:/sbin:/bin
-env RAILS_ENV={{app_env}}
+env RAILS_ENV={{be_app_env}}
 setuid {{ deployer_user.name }}
 setgid {{ deployer_user.name }}
 

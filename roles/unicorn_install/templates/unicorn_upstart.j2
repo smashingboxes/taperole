@@ -5,7 +5,7 @@ stop on runlevel [06]
 
 env PATH={{ rbenv_root }}/shims:{{ rbenv_root }}/bin:/usr/bin:/sbin:/bin
 
-env RAILS_ENV={{app_env}}
+env RAILS_ENV={{be_app_env}}
 
 setuid {{ deployer_user.name }}
 setgid {{ deployer_user.name }}
@@ -16,7 +16,7 @@ respawn limit 5 5
 
 script
   trap "cat {{be_app_path}}/tmp/unicorn.pid | xargs kill -USR2" HUP
-  bundle exec unicorn -c config/unicorn.rb -E {{app_env}} &&
+  bundle exec unicorn -c config/unicorn.rb -E {{be_app_env}} &&
     flock -x 0 < {{be_app_path}}/tmp/unicorn.lock
 end script
 

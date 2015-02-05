@@ -5,14 +5,14 @@
 - name: Precompile Assets
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
-           bash -lc "bundle exec rake assets:precompile RAILS_ENV={{app_env}}"
+           bash -lc "bundle exec rake assets:precompile RAILS_ENV={{be_app_env}}"
   tags: [precompile_assets,be_deploy]
   when: precompile_assets
 
 - name: Migrate DB
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
-           bash -lc "bundle exec rake db:migrate RAILS_ENV={{app_env}}"
+           bash -lc "bundle exec rake db:migrate RAILS_ENV={{be_app_env}}"
   tags: [be_deploy,migrate,db_reset]
   when: (app_checkout is defined and app_checkout.changed)
         or rake.force_migrate 
@@ -21,7 +21,7 @@
 - name: Seed DB
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
-           bash -lc "bundle exec rake db:seed RAILS_ENV={{app_env}}"
+           bash -lc "bundle exec rake db:seed RAILS_ENV={{be_app_env}}"
   tags: [be_deploy,seed,db_reset]
   when: (app_checkout is defined and app_checkout.changed)
         or rake.force_seed

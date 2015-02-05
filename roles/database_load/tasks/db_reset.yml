@@ -3,7 +3,7 @@
 
 - name: Reset DB
   command: chdir={{ be_app_path }}
-           bash -lc "bundle exec rake db:drop db:create RAILS_ENV={{app_env}}"
+           bash -lc "bundle exec rake db:drop db:create RAILS_ENV={{be_app_env}}"
   register: db_reset
 
 - name: DB Reset Failed

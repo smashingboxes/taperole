@@ -6,7 +6,7 @@
 - name: Install bundle gems
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
-           bash -lc "RAILS_ENV={{app_env}} bundle install
+           bash -lc "RAILS_ENV={{be_app_env}} bundle install
              --without test development contests_development --deployment"
   tags: [be_deploy, bundle]
 
