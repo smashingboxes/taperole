@@ -18,7 +18,7 @@ gem 'tape', github: 'smashingboxes/tape', group: :development
 ```
 
 * `bundle install`
-* `smasing_boxer installer install`
+* `tape installer install`
 * Updated the hosts file with the IP address of your server
 
 ```
