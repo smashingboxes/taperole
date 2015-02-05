@@ -5,16 +5,14 @@
 
 
 ## Deploying & provisioning with tape
-It is advised that, if you are provisioned your box with an older version of ansible, you stand up a clean box.
-
-* **Use Unbuntu precise64 (12.04 x64)**
+**Use Unbuntu precise64 (12.04 x64)**
 
 ### Basics
 
 * Add the following to your gemfile.
 
 ```ruby
-gem 'tape', github: 'smashingboxes/tape', group: :development
+gem 'tape', github: 'smashingboxes/tape', group: :development, tag: <DESIRED_VERSION>
 ```
 
 * `bundle install`
@@ -33,27 +31,18 @@ gem 'tape', github: 'smashingboxes/tape', group: :development
 ### Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
 
-**App-Specific Provisioning Roles**
+You must then specify the roles you want to use in `omnibox.yml` or `deploy.yml`
 
-* `before_database`
-* `before_general`
-* `before_web`
-* `before_ruby`
-* `before_app_server`
-
-**App-Specific Deploy Roles**
-
-* `before_deploy`
-* `after_deploy`
+[Read the Ansible docs on playbook roles here](http://docs.ansible.com/playbooks_roles.html)
 
 ### Multistage
 You can setup multistage by defining your hosts file as follows
 
 ```
 [production]
-0.0.0.0
+0.0.0.0 be_app_env=SOME_ENV be_app_branch=SOME_BRANCH 
 [staging]
-0.0.0.0
+0.0.0.0 be_app_env=SOME_ENV be_app_branch=SOME_BRANCH 
 [omnibox:children]
 production
 staging
@@ -70,14 +59,15 @@ tape ansible deploy -l staging
 
 
 1. `vagrant up` or `tape vagrant create`
-2. Put the following into your hosts file:
+2. Put the following into your [hosts inventory file](http://docs.ansible.com/intro_inventory.html):
 
 ```
 [vagrant]
-localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+<192.168.13.37> ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
 
 The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
+You can speicfy a port using the `ansible_ssh_port` in your hosts inventory file.
 
 3. Update `tape_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
 4. `tape ansible everything -l vagrant`
