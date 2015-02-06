@@ -9,10 +9,10 @@ server {
 
   # server_name example.com;
 
-{% if fe_app_local_path %}
+{% if fe_app_local_path is defined%}
   root {{ fe_app_path }};
 {% else %}
-  root {{ app_path }}/public;
+  root {{ be_app_path }}/public;
 {% endif %}
 
   if (-f $document_root/system/maintenance.html) {
