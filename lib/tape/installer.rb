@@ -51,7 +51,7 @@ module TapeBoxer
         FileUtils.mkdir name
         puts '✔'.green
       rescue Errno::EEXIST
-        puts '✘ (Exists)'.green
+        puts '✘ (Exists)'.yellow
       rescue Exception => e
         puts '✘'.red
         raise e
