@@ -5,4 +5,4 @@
     dest={{ fe_app_path }}
   tags: [fe_deploy]
   register: fe_app_checkout
-  when: fe_app_path is defined
+  when: fe_app_local_path is defined
