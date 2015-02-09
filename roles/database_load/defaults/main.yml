@@ -1,5 +1,3 @@
 rake:
   force_seed: false
   force_migrate: false
-force_unicorn_restart: false
-force_unicorn_reload: false

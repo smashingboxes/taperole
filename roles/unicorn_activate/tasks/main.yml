@@ -14,12 +14,9 @@
   when: force_unicorn_restart
 
 - name: stop unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=stopped
+  command: bash -lc "pkill -9 -f unicorn"
+  when: force_unicorn_stop
   tags: [unicorn_stop]
-
-- name: start unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=started
-  tags: [unicorn_start]
 
 - name: Ensure unicorn is running
   sudo_upstart: name=unicorn_{{app_name}} state=started

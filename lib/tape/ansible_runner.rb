@@ -16,7 +16,7 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t unicorn_restart -e force_unicorn_restart=true'}
     "Restarts the unicorns running on the app servers"
   action :stop_unicorn,
-    proc {ansible '-t unicorn_stop'}
+    proc {ansible '-t unicorn_stop -e force_unicorn_stop=true'}
     "Stops the unicorns running on the app servers"
   action :start_unicorn,
     proc {ansible '-t unicorn_start'}
