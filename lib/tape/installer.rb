@@ -49,11 +49,11 @@ module TapeBoxer
       print "#{name}: "
       begin
         FileUtils.mkdir name
-        puts '✔'.green
+        success
       rescue Errno::EEXIST
-        puts '✘ (Exists)'.yellow
+        exists
       rescue Exception => e
-        puts '✘'.red
+        error
         raise e
       end
     end
@@ -66,15 +66,27 @@ module TapeBoxer
       print "#{cp_file}: "
       begin
         if File.exists?("#{local_dir}/#{cp_file}")
-          puts '✘ (Exists)'.green
+          exists
         else
           FileUtils.cp("#{tape_dir}/#{file}", "#{local_dir}/#{cp_file}")
-          puts '✔'.green
+          success
         end
       rescue Exception => e
-        puts '✘'.red
+        error
         raise e
       end
+    end
+
+    def success
+      puts '✔'.green
+    end
+
+    def error
+      puts '✘'.red
+    end
+
+    def exists
+      puts '✘ (Exists)'.yellow
     end
   end
 end
