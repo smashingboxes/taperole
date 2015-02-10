@@ -1,3 +1,0 @@
-- name: update unicorn init
-  command: update-rc.d -f unicorn_{{ app_name }} defaults
-  when: be_app

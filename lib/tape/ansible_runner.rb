@@ -7,16 +7,13 @@ class AnsibleRunner < ExecutionModule
     proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
     "Configures and restarts the delayed job runner"
   action :configure_unicorn,
-    proc {ansible '-t configure_unicorn -e force_unicorn_restart=true'},
+    proc {ansible '-t configure_unicorn'},
     "Configures and restarts the unicorn app server"
-  action :reload_unicorn,
-    proc {ansible '-t unicorn_reload -e force_unicorn_reload=true'},
-    "Reloads the unicorns running on the app servers"
   action :restart_unicorn,
-    proc {ansible '-t unicorn_restart -e force_unicorn_restart=true'}
+    proc {ansible '-t unicorn_restart'}
     "Restarts the unicorns running on the app servers"
   action :stop_unicorn,
-    proc {ansible '-t unicorn_stop -e force_unicorn_stop=true'}
+    proc {ansible '-t unicorn_stop -e kill_unicorn=true'}
     "Stops the unicorns running on the app servers"
   action :start_unicorn,
     proc {ansible '-t unicorn_start'}
