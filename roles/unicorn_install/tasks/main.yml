@@ -3,12 +3,10 @@
             dest=/etc/init.d/unicorn_{{app_name}}
             mode=u=rw,g=rx,o=rx
   register: unicorn_init_installation
-  tags: [configure_unicorn]
 
 - name: register unicorn upstart script
   command: initctl reload-configuration
   when: unicorn_init_installation.changed
-  tags: [configure_unicorn]
 
 - name: Give deployer user access to unicorn upstart jobs
   lineinfile: 'dest=/etc/sudoers
@@ -16,13 +14,10 @@
                line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /sbin/{{item}} unicorn_{{app_name}}"'
   with_items:
     - service
-  tags: [configure_unicorn]
 
 - name: Set up unicorn log dir
   file: path={{be_app_path}}/log state=directory owner=deployer
-  tags: [configure_unicorn]
 
 - name: Install unicorn config
   template: src=unicorn.rb.j2
             dest={{be_app_path}}/config/unicorn.rb
-  tags: [configure_unicorn]
