@@ -20,7 +20,8 @@ module TapeBoxer
 
     def dependencies
       puts 'Dependencies:'
-      if system "ansible-galaxy install -r #{sb_dir}/requirements.yml --force"
+
+      if system "ansible-galaxy install -r #{tape_dir}/requirements.yml -p #{tape_dir}/vendor --force"
         print 'Installing/updating dependencies: '
         puts '✔'.green
       else
