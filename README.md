@@ -9,6 +9,8 @@
 
 ### Basics
 
+**Install**
+
 * Add the following to your gemfile.
 
 ```ruby
@@ -27,6 +29,13 @@ gem 'tape', github: 'smashingboxes/tape', group: :development, tag: <DESIRED_VER
 * Fill in missing values in `tape_vars.yml`
 * Copy all developers public keys into some dir and specify that dir inside `tape_vars.yml` (dev_key_files)
 * `tape ansible everything`
+
+**Upgrade**
+
+```
+bundle upgrade tape
+tape installer install
+```
 
 ### Custom roles
 You can write app specific roles in the roles files storred in the `roles` directory
