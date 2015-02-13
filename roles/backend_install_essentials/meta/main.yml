@@ -5,4 +5,4 @@ dependencies:
     rbenv_plugins:
       - name: ruby-build
         repo: git://github.com/sstephenson/ruby-build.git
-        version: v20141225
+        version: 2.2.0
