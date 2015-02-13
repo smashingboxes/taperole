@@ -11,3 +11,12 @@ Please give details regarding your PR in the following format. It really helps w
 
 ![example pull request]( http://i.imgur.com/HJq8DHc.png )
 
+##Opening Issues
+
+###Basic details
+
+Please include the following in the Issues you open
+
+* OS Version
+* ansible version
+* tape version
