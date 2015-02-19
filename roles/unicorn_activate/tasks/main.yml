@@ -7,10 +7,10 @@
   tags: [unicorn_restart,be_deploy]
 
 - name: Ensure unicorn is running
-  service: name=unicorn_{{app_name}} state=started
+  service: name=unicorn_{{app_name}} state=started enabled=yes
   tags: [unicorn_restart,be_deploy,unicorn_start]
 
 - name: Ensure unicorn is stopped
-  command: bash -lc "pkill -9 -f unicorn"
+  command: bash -lc "service unicorn_{{ app_name }} stop"
   when: kill_unicorn
   tags: [unicorn_stop]

@@ -31,11 +31,11 @@ start)
   $CMD
   ;;
 stop)
-  sig QUIT && exit 0
+  sig QUIT && echo "Stopping" && exit 0
   echo >&2 "Not running"
   ;;
 force-stop)
-  sig TERM && exit 0
+  sig TERM && echo "Forcing a stop" && exit 0
   echo >&2 "Not running"
   ;;
 restart|reload)
