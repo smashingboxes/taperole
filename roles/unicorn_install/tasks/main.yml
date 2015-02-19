@@ -1,19 +1,22 @@
-- name: Install unicorn upstart script
+- name: Install unicorn init.d script
   template: src=unicorn_init.j2
             dest=/etc/init.d/unicorn_{{app_name}}
             mode=u=rw,g=rx,o=rx
   register: unicorn_init_installation
 
-- name: register unicorn upstart script
+- name: register unicorn init.d script
   command: initctl reload-configuration
   when: unicorn_init_installation.changed
 
 - name: Give deployer user access to unicorn upstart jobs
   lineinfile: 'dest=/etc/sudoers
                state=present
-               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /sbin/{{item}} unicorn_{{app_name}}"'
+               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /etc/init.d/unicorn_{{app_name}} {{item}}"'
   with_items:
-    - service
+    - start
+    - stop
+    - upgrade
+    - restart
 
 - name: Set up unicorn log dir
   file: path={{be_app_path}}/log state=directory owner=deployer
