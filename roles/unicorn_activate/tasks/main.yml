@@ -14,3 +14,8 @@
   command: bash -lc "service unicorn_{{ app_name }} stop"
   when: kill_unicorn
   tags: [unicorn_stop]
+
+- name: Force stop unicorn
+  command: bash -lc "pkill -9 -f unicorn"
+  when: kill_unicorn
+  tags: [unicorn_force_stop]

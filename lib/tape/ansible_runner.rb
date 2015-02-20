@@ -12,6 +12,9 @@ class AnsibleRunner < ExecutionModule
   action :stop_unicorn,
     proc {ansible '-t unicorn_stop -e kill_unicorn=true'}, 
     "Stops the unicorns running on the app servers"
+  action :force_stop_unicorn,
+    proc {ansible '-t unicorn_force_stop -e kill_unicorn=true'}, 
+    "Stops the unicorns running on the app servers"
   action :start_unicorn,
     proc {ansible '-t unicorn_start'},
     "Starts the unicorns running on the app servers"
