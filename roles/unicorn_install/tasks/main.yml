@@ -15,8 +15,12 @@
   with_items:
     - start
     - stop
-    - upgrade
+    - force-stop
     - restart
+- name: Give deployer user access to kill
+  lineinfile: 'dest=/etc/sudoers
+               state=present
+               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /bin/kill"'
 
 - name: Set up unicorn log dir
   file: path={{be_app_path}}/log state=directory owner=deployer

@@ -4,7 +4,9 @@ pid "{{ be_app_path }}/tmp/unicorn.pid"
 stderr_path "{{ be_app_path }}/log/unicorn.log"
 stdout_path "{{ be_app_path }}/log/unicorn.log"
 
-preload_app true
+# Please read this and understand the risk you take by enabling preload_app
+# http://unicorn.bogomips.org/Unicorn/Configurator.html#method-i-preload_app
+preload_app false
 
 timeout 30
 

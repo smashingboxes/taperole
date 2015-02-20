@@ -23,7 +23,7 @@ oldsig () {
 case $action in
 start)
   sig 0 && echo >&2 "Already running" && exit 0
-  $CMD
+  rm -f $PID && $CMD
   ;;
 stop)
   sig QUIT && echo "Stopping" && exit 0
