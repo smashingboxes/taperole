@@ -30,8 +30,7 @@ stop)
   echo >&2 "Unicorn master process with ID `cat $PID` not found (see: $PID)"
   ;;
 force-stop)
-  sig TERM && echo "Forcing a stop" && exit 0
-  echo >&2 "Not running"
+  pkill -9 -f "unicorn master" && echo "Forcing a stop\n" && rm -f $PID && echo "Cleaning up pid" && exit 0
   ;;
 restart|reload)
   sig HUP && echo reloaded OK && exit 0
