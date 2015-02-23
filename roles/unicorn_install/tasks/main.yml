@@ -17,6 +17,7 @@
     - stop
     - force-stop
     - restart
+
 - name: Give deployer user access to kill
   lineinfile: 'dest=/etc/sudoers
                state=present
