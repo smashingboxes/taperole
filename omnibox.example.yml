@@ -20,4 +20,5 @@
     - frontend_deploy
     - monit
     # - delayed_job
+    # - sidekiq
     # - redis

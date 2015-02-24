@@ -1,0 +1,14 @@
+- stat: path="{{ be_app_path }}/tmp/sidekiq.pid"
+  register: sidekiq_pid
+  tags: [be_deploy, unicorn_stop, unicorn_start]
+
+- name: Stop sidekiq
+  remote_user: "{{deployer_user.name}}"
+  monit: name=sidekiq state=stopped
+  tags: [unicorn_stop]
+  when: sidekiq_pid.stat.exists
+
+- name: Start sidekiq
+  remote_user: "{{deployer_user.name}}"
+  monit: name=sidekiq state=started
+  tags: [be_deploy, unicorn_start]
