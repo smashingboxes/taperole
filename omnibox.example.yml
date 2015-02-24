@@ -18,4 +18,6 @@
     - database_load
     - unicorn_activate
     - frontend_deploy
-    - delayed_job
+    - monit
+    # - delayed_job
+    # - redis

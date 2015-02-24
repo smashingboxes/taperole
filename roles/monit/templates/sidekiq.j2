@@ -1,0 +1,4 @@
+check process sidekiq
+  with pidfile {{ be_app_path }}/tmp/sidekiq.pid
+  start program = "/bin/bash -lc 'cd {{ be_app_path }} && bundle exec sidekiq -d -L log/sidekiq.log -e {{ be_app_env }} -P tmp/sidekiq.pid'"
+  stop program = "/bin/bash -lc 'cd {{ be_app_path }} && bundle exec sidekiqctl stop tmp/sidekiq.pid'"
