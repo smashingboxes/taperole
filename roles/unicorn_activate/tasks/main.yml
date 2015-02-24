@@ -4,17 +4,17 @@
 
 - name: Ensure unicorn is running
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} start"
+  monit: name=unicorn state=started
   tags: [be_deploy,unicorn_start]
 
 - name: Restart Unicorn
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} restart"
+  monit: name=unicorn state=restarted
   tags: [unicorn_restart,be_deploy]
 
 - name: Ensure unicorn is stopped
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} stop"
+  monit: name=unicorn state=stopped
   when: kill_unicorn
   tags: [unicorn_stop]
 

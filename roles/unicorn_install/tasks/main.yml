@@ -29,3 +29,13 @@
 - name: Install unicorn config
   template: src=unicorn.rb.j2
             dest={{be_app_path}}/config/unicorn.rb
+
+- name: Register monit config files
+  template: src=unicorn_monit.j2
+            dest=/etc/monit/conf.d/unicorn
+            mode=u=rw,g=r,o=r
+  register: unicorn_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: unicorn_monit_config.changed

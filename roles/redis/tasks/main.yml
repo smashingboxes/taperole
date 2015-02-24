@@ -12,4 +12,4 @@
 
 - name: Reload Monit
   command: bash -lc "monit reload"
-  when: monit_config.changed
+  when: redis_monit_config.changed

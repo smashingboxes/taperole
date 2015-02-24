@@ -8,9 +8,7 @@
   with_items:
    - memcached
    - nginx
-   - redis
    - sidekiq
-   - unicorn
    - web_interface
 
 - name: Reload monit
