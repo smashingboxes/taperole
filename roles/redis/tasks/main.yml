@@ -1,0 +1,15 @@
+- name: Get PPA for latest Redis
+  apt_repository: repo='ppa:rwky/redis' state=present
+
+- name: Install Redis
+  apt: name=redis-server state=latest
+
+- name: Register with monit
+  template: src=redis.j2
+            dest=/etc/monit/conf.d/redis
+            mode=u=rw,g=r,o=r
+  register: redis_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: monit_config.changed
