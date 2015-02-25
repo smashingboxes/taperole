@@ -1,0 +1,2 @@
+start_sidekiq_cmd: "/bin/bash -lc 'cd {{ be_app_path }} && bundle exec sidekiq -d -L log/sidekiq.log -e {{ be_app_env }} -P tmp/sidekiq.pid'"
+stop_sidekiq_cmd: "/bin/bash -lc 'cd {{ be_app_path }} && bundle exec sidekiqctl stop tmp/sidekiq.pid'"

@@ -1,18 +1,19 @@
-- stat: path="{{ be_app_path }}/tmp/sidekiq.pid"
-  register: sidekiq_pid
-  tags: [be_deploy, unicorn_stop, unicorn_start]
+- name: Register with monit
+  template: src=sidekiq.j2
+            dest=/etc/monit/conf.d/sidekiq
+            mode=u=rw,g=r,o=r
+  register: sidekiq_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: sidekiq_monit_config.changed
 
 - name: Stop sidekiq
   remote_user: "{{deployer_user.name}}"
-  command:
-    chdir={{be_app_path}}
-    bash -lc "bundle exec sidekiqctl shutdown {{ sidekiq_pid }}"
-  tags: [unicorn_stop]
-  when: sidekiq_pid.stat.exists
+  command: "{{ stop_sidekiq_cmd }}"
+  tags: [be_deploy, unicorn_stop]
 
 - name: Start sidekiq
   remote_user: "{{deployer_user.name}}"
-  command:
-    chdir={{be_app_path}}
-    bash -lc "bundle exec sidekiq -d -L log/sidekiq.log -e {{be_app_env}} -P {{ sidekiq_pid }}"
+  command: "{{ start_sidekiq_cmd }}"
   tags: [be_deploy, unicorn_start]
