@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 TIMEOUT=${TIMEOUT-60}
 RBENV_ROOT="{{ rbenv_root }}"
 PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
@@ -21,10 +23,19 @@ oldsig () {
   test -s $old_pid && kill -$1 `cat $old_pid`
 }
 
+run () {
+  if [ "$(id -un)" = "$APP_USER" ]; then
+    eval $1
+  else
+    echo "false"
+    su -c "$1" - $AS_USER
+  fi
+}
+
 case $action in
 start)
   sig 0 && echo >&2 "Already running" && exit 0
-  rm -f $PID && su --login $APP_USER -c "$CMD"
+  run "rm -f $PID && $CMD"
   ;;
 stop)
   sig QUIT && echo "Stopping" && exit 0
@@ -36,7 +47,7 @@ force-stop)
 restart|reload)
   sig HUP && echo reloaded OK && exit 0
   echo >&2 "Couldn't reload, starting '$CMD' instead"
-  su --login $APP_USER -c "$CMD"
+  run "$CMD"
   ;;
 upgrade)
   if sig USR2 && sleep 2 && sig 0 && oldsig QUIT
@@ -56,7 +67,7 @@ upgrade)
     exit 0
   fi
   echo >&2 "Couldn't upgrade, starting '$CMD' instead"
-  su --login $APP_USER -c "$CMD"
+  run "$CMD"
   ;;
 reopen-logs)
   sig USR1
