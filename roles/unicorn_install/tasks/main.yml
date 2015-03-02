@@ -2,26 +2,9 @@
   template: src=unicorn_init.j2
             dest=/etc/init.d/unicorn_{{app_name}}
             mode=u=rw,g=rx,o=rx
-  register: unicorn_init_installation
 
 - name: register unicorn init.d script
   command: initctl reload-configuration
-  when: unicorn_init_installation.changed
-
-- name: Give deployer user access to unicorn upstart jobs
-  lineinfile: 'dest=/etc/sudoers
-               state=present
-               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /etc/init.d/unicorn_{{app_name}} {{item}}"'
-  with_items:
-    - start
-    - stop
-    - force-stop
-    - restart
-
-- name: Give deployer user access to kill
-  lineinfile: 'dest=/etc/sudoers
-               state=present
-               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /bin/kill"'
 
 - name: Set up unicorn log dir
   file: path={{be_app_path}}/log state=directory owner=deployer

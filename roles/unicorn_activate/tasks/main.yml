@@ -4,22 +4,22 @@
 
 - name: Ensure unicorn is running
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} start"
+  command: bash -lc "sudo monit start unicorn"
   tags: [be_deploy,unicorn_start]
 
 - name: Restart Unicorn
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} restart"
+  command: bash -lc "sudo monit restart unicorn"
   tags: [unicorn_restart,be_deploy]
 
 - name: Ensure unicorn is stopped
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} stop"
+  command: bash -lc "sudo monit restart unicorn"
   when: kill_unicorn
   tags: [unicorn_stop]
 
 - name: Force stop unicorn
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "service unicorn_{{ app_name }} force-stop"
+  command: bash -lc "service unicorn_{{ app_name }} stop"
   when: kill_unicorn
   tags: [unicorn_force_stop]

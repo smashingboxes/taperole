@@ -1,2 +1,2 @@
 - name: restart nginx
-  service: name=nginx state=restarted
+  command: bash -lc "sudo monit restart nginx"

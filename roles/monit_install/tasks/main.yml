@@ -1,0 +1,20 @@
+- name: Install monit
+  apt: name=monit state=present
+
+- name: Register monit config files
+  template: src={{ item }}.j2
+            dest=/etc/monit/conf.d/{{ item }}
+            mode=u=rw,g=r,o=r
+  with_items:
+   - memcached
+   - web_interface
+  register: nginx_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: nginx_monit_config.changed
+
+- name: Give deployer user access to monit
+  lineinfile: 'dest=/etc/sudoers
+               state=present
+               line="{{ deployer_user.name }} ALL = (ALL) ALL, NOPASSWD: /usr/bin/monit"'
