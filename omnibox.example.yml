@@ -1,6 +1,6 @@
 ---
 - hosts: omnibox
-  user: ubuntu
+  user: deployer
   sudo: true
 
   vars_files:

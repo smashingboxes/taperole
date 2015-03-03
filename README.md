@@ -4,7 +4,9 @@
 ## Deploying & provisioning with tape
 **Use Ubuntu Server 14.04 LTS x64**
 
-**Enable ssh access via root user**
+**Provision with [packer](https://packer.io/)**
+
+```packer build -var 'aws_access_key=XXXXX' -var 'aws_secret_key=XXXXX' -var 'do_api_key=XXXXX' -var 'do_client_id=XXXXX' packer.json```
 
 ### Basics
 

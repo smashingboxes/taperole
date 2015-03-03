@@ -1,0 +1,40 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "do_api_key": "",
+    "do_client_id": ""
+  },
+  {
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "support/ec2.sh",
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
+      "pause_before": "30s",
+      "only": ["amazon-ebs"]
+    },
+    {
+      "type": "shell",
+      "script": "support/do.sh",
+      "pause_before": "30s",
+      "only": ["digitalocean"]
+    }]
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami": "ami-9a562df2",
+      "instance_type": "m3.medium",
+      "ssh_username": "ubuntu",
+      "ami_name": "packer-image {{timestamp}}"
+    },
+    {
+      "type": "digitalocean",
+      "api_key": "{{user `do_api_key`}}",
+      "client_id": "{{user `do_client_id`}}"
+    }]
+}

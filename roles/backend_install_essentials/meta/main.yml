@@ -2,7 +2,3 @@
 dependencies:
   - role: bennojoy.memcached
   - role: zzet.rbenv
-    rbenv_plugins:
-      - name: ruby-build
-        repo: git://github.com/sstephenson/ruby-build.git
-        version: 2.2.0
