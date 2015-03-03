@@ -2,26 +2,24 @@
   file: state=directory path={{be_app_path}}/tmp/unicorn owner={{ deployer_user.name }}
   tags: [be_deploy]
 
-- name: reload unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=reloaded
+- name: Ensure unicorn is running
   remote_user: "{{ deployer_user.name }}"
-  tags: [be_deploy,unicorn_reload]
-  when: (app_checkout is defined and app_checkout.changed) or force_unicorn_reload
+  command: bash -lc "sudo monit start unicorn"
+  tags: [be_deploy,unicorn_start]
 
-- name: restart unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=restarted
+- name: Restart Unicorn
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc "sudo monit restart unicorn"
   tags: [unicorn_restart,be_deploy]
-  when: force_unicorn_restart
 
-- name: stop unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=stopped
+- name: Ensure unicorn is stopped
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc "sudo monit restart unicorn"
+  when: kill_unicorn
   tags: [unicorn_stop]
 
-- name: start unicorn
-  sudo_upstart: name=unicorn_{{app_name}} state=started
-  tags: [unicorn_start]
-
-- name: Ensure unicorn is running
-  sudo_upstart: name=unicorn_{{app_name}} state=started
+- name: Force stop unicorn
   remote_user: "{{ deployer_user.name }}"
-  tags: [unicorn_start,be_deploy]
+  command: bash -lc "service unicorn_{{ app_name }} stop"
+  when: kill_unicorn
+  tags: [unicorn_force_stop]

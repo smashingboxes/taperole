@@ -6,23 +6,20 @@ class AnsibleRunner < ExecutionModule
   action :configure_dj_runner,
     proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
     "Configures and restarts the delayed job runner"
-  action :configure_unicorn,
-    proc {ansible '-t configure_unicorn -e force_unicorn_restart=true'},
-    "Configures and restarts the unicorn app server"
-  action :reload_unicorn,
-    proc {ansible '-t unicorn_reload -e force_unicorn_reload=true'},
-    "Reloads the unicorns running on the app servers"
   action :restart_unicorn,
-    proc {ansible '-t unicorn_restart -e force_unicorn_restart=true'}
+    proc {ansible '-t unicorn_restart'}, 
     "Restarts the unicorns running on the app servers"
   action :stop_unicorn,
-    proc {ansible '-t unicorn_stop'}
+    proc {ansible '-t unicorn_stop -e kill_unicorn=true'}, 
+    "Stops the unicorns running on the app servers"
+  action :force_stop_unicorn,
+    proc {ansible '-t unicorn_force_stop -e kill_unicorn=true'}, 
     "Stops the unicorns running on the app servers"
   action :start_unicorn,
-    proc {ansible '-t unicorn_start'}
-    "Stops the unicorns running on the app servers"
+    proc {ansible '-t unicorn_start'},
+    "Starts the unicorns running on the app servers"
   action :restart_nginx,
-    proc {ansible '-t restart_nginx'}
+    proc {ansible '-t restart_nginx'},
     "Restarts Nginx"
   action :configure_deployer_user,
     proc {ansible '-t deployer'},
@@ -61,6 +58,7 @@ class AnsibleRunner < ExecutionModule
     enforce_roles_path!
     cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
     cmd += ' -vvvv' if opts.verbose
+    cmd += " -t #{opts.tags}" if opts.tags
     STDERR.puts "Executing: #{cmd}" if opts.verbose
     Kernel.exec(cmd)
   end

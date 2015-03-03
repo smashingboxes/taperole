@@ -2,6 +2,9 @@ module TapeBoxer
   class Installer < ExecutionModule
     TapeBoxer.register_module :installer, self
 
+    action :dependencies,
+           proc { dependencies },
+           'Install dependencies'
     action :install,
       proc {install},
       'Creates all nessisary hosts and config files'
@@ -14,9 +17,21 @@ module TapeBoxer
     end
 
     protected
+
+    def dependencies
+      puts 'Dependencies:'
+
+      if system "ansible-galaxy install -r #{tape_dir}/requirements.yml -p #{tape_dir}/vendor --force"
+        print 'Installing/updating dependencies: '
+        puts '✔'.green
+      else
+        puts '✘'.red
+      end
+    end
+
     def install
-      puts "Installing ansible galaxy roles".pink
-      `ansible-galaxy install -r #{tape_dir}/requirements.yml -p #{tape_dir}/vendor --force`
+      dependencies
+      File.open('.gitignore', 'a') { |f| f.puts '.tape' }
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'deploy.example.yml', 'deploy.yml'

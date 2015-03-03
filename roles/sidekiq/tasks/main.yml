@@ -1,0 +1,19 @@
+- name: Register with monit
+  template: src=sidekiq.j2
+            dest=/etc/monit/conf.d/sidekiq
+            mode=u=rw,g=r,o=r
+  register: sidekiq_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: sidekiq_monit_config.changed
+
+- name: Stop sidekiq
+  remote_user: "{{deployer_user.name}}"
+  command: bash -lc "sudo monit stop sidekiq"
+  tags: [be_deploy, unicorn_stop]
+
+- name: Start sidekiq
+  remote_user: "{{deployer_user.name}}"
+  command: bash -lc "sudo monit start sidekiq"
+  tags: [be_deploy, unicorn_start]

@@ -9,6 +9,7 @@
 
   roles:
     - general
+    - monit_install
     - postgres
     - nginx
     - backend_install_essentials
@@ -19,4 +20,7 @@
     - database_load
     - unicorn_activate
     - frontend_deploy
-    - delayed_job
+    # - delayed_job
+    # - sidekiq
+    # - redis
+    - monit_activate # Run Last
