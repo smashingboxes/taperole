@@ -2,15 +2,13 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "do_api_key": "",
-    "do_client_id": ""
+    "do_api_token": ""
   },
-  {
   "provisioners": [
     {
       "type": "shell",
       "script": "support/ec2.sh",
-      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
       "pause_before": "30s",
       "only": ["amazon-ebs"]
     },
@@ -19,8 +17,8 @@
       "script": "support/do.sh",
       "pause_before": "30s",
       "only": ["digitalocean"]
-    }]
-  },
+    }
+  ],
   "builders": [
     {
       "type": "amazon-ebs",
@@ -34,7 +32,6 @@
     },
     {
       "type": "digitalocean",
-      "api_key": "{{user `do_api_key`}}",
-      "client_id": "{{user `do_client_id`}}"
+      "api_token": "{{user `do_api_token`}}"
     }]
 }
