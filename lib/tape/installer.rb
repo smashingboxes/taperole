@@ -31,7 +31,7 @@ module TapeBoxer
 
     def install
       dependencies
-      File.open('.gitignore', 'a') { |f| f.puts '.tape' }
+      File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
       mkdir 'roles'
       copy_example 'omnibox.example.yml', 'omnibox.yml'
       copy_example 'deploy.example.yml', 'deploy.yml'
