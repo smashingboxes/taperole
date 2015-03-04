@@ -1,6 +1,7 @@
 ---
 - hosts: omnibox
-  user: root
+  user: deployer
+  sudo: true
 
   vars_files:
     - "{{tape_dir}}/vars/defaults.yml"
