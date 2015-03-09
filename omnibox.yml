@@ -19,3 +19,4 @@
     - unicorn_activate
     - frontend_deploy
     - delayed_job
+    - after_deploy
