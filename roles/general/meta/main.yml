@@ -1,10 +1,4 @@
-#TODO Don't install npm
 ---
 dependencies:
   - role: jnv.unattended-upgrades
   - role: deployer_user
-  - role: leonelgalan.node
-    npm_packages:
-      - name: coffee-script
-      - name: bower
-      - name: gulp
