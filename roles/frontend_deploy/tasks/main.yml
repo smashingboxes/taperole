@@ -1,7 +1,7 @@
 - name: rsync the FE app
   remote_user: "{{ deployer_user.name }}"
   synchronize:
-    src={{ fe_app_local_path }}
+    src={{ fe_app_local_path }}/
     dest={{ fe_app_path }}
   tags: [fe_deploy]
   register: fe_app_checkout

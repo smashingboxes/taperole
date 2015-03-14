@@ -6,13 +6,12 @@
             dest=/etc/monit/conf.d/{{ item }}
             mode=u=rw,g=r,o=r
   with_items:
-   - memcached
    - web_interface
-  register: nginx_monit_config
+  register: web_interface_monit_config
 
 - name: Reload Monit
   command: bash -lc "monit reload"
-  when: nginx_monit_config.changed
+  when: web_interface_monit_config.changed
 
 - name: Give deployer user access to monit
   lineinfile: 'dest=/etc/sudoers

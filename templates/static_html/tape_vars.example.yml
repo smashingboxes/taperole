@@ -1,0 +1,7 @@
+app_name:
+
+# App Configs
+fe_app_local_path: /path/to/built/js/app
+
+dev_key_files:
+  - dev_keys/key.pub

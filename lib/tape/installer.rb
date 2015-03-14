@@ -33,15 +33,39 @@ module TapeBoxer
       dependencies
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
       mkdir 'roles'
-      copy_example 'omnibox.example.yml', 'omnibox.yml'
-      copy_example 'deploy.example.yml', 'deploy.yml'
-      copy_example 'tape_vars.example.yml', 'tape_vars.yml'
-      copy_example 'hosts.example', 'hosts'
+      if fe_app? && !rails_app?
+        puts '🔎  JS/HTML app detected'.pink
+        copy_static_app_examples
+      else rails_app?
+        puts '🔎  Rails app detected'.pink
+        copy_basic_examples
+      end
+      copy_example 'templates/base/hosts.example', 'hosts'
       mkdir 'dev_keys'
-      print 'Are you going to user vagrant? (y/n): '
+      print 'Are you going to use vagrant? (y/n): '
       if gets.chomp == 'y'
         copy_example 'Vagrantfile', 'Vagrantfile'
       end
+    end
+
+    def fe_app?
+      !Dir["#{local_dir}/gulpfile.*"].empty?
+    end
+
+    def rails_app?
+      !Dir["#{local_dir}/config.ru"].empty?
+    end
+
+    def copy_static_app_examples
+      copy_example 'templates/static_html/omnibox.example.yml', 'omnibox.yml'
+      copy_example 'templates/static_html/deploy.example.yml', 'deploy.yml'
+      copy_example 'templates/static_html/tape_vars.example.yml', 'tape_vars.yml'
+    end
+
+    def copy_basic_examples
+      copy_example 'templates/base/omnibox.example.yml', 'omnibox.yml'
+      copy_example 'templates/base/deploy.example.yml', 'deploy.yml'
+      copy_example 'templates/base/tape_vars.example.yml', 'tape_vars.yml'
     end
 
     def uninstall

@@ -1,0 +1,12 @@
+#TODO Make sure that secrets is ignored
+---
+- hosts: omnibox
+
+  vars_files:
+    - "{{tape_dir}}/vars/defaults.yml"
+    - tape_vars.yml
+
+  user: "{{ deployer_user.name }}"
+
+  roles:
+    - frontend_deploy

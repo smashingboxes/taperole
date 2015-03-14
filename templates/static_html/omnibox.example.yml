@@ -1,0 +1,15 @@
+---
+- hosts: omnibox
+  user: root
+
+  vars_files:
+    - "{{tape_dir}}/vars/defaults.yml"
+    - tape_vars.yml
+
+  roles:
+    - general
+    - monit_install
+    - nginx
+    - deployer_user
+    - frontend_deploy
+    - monit_activate # Run Last

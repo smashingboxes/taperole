@@ -6,6 +6,15 @@
   apt: name=nginx state=present
   tags: [nginx]
 
+- name: Ditch default nginx site enabled
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  tags: [nginx]
+
+- name: Configure App nginx
+  template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
+  notify: restart nginx
+  tags: [nginx]
+
 - name: Install monit nginx config
   template: src=nginx_monit.j2
             dest=/etc/monit/conf.d/nginx
@@ -16,15 +25,6 @@
   command: bash -lc "monit reload"
   when: nginx_monit_config.changed
 
-- name: Configure Backend App nginx
-  template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
-  notify: restart nginx
-  tags: [nginx]
-
 - name: Restart nginx
   command: bash -lc "sudo monit restart nginx"
   tags: [restart_nginx]
-
-- name: Ditch default nginx site enabled
-  file: path=/etc/nginx/sites-enabled/default state=absent
-  tags: [nginx]
