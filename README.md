@@ -10,21 +10,9 @@
 
 **Install**
 
-* Add the following to your gemfile.
-
-```ruby
-gem 'tape', github: 'smashingboxes/tape', group: :development, tag: <DESIRED_VERSION>
-```
-
-* `bundle install`
-* `tape installer install`
+* `gem install taperole` or `gem 'taperole'`
+* run `tape installer install` in project repo
 * Updated the hosts file with the IP address of your server
-
-```
-[omnibox]
-0.0.0.0
-```
-
 * Fill in missing values in `tape_vars.yml`
 * Copy all developers public keys into some dir and specify that dir inside `tape_vars.yml` (dev_key_files)
 * `tape ansible everything`
