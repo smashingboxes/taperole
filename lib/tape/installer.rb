@@ -2,9 +2,6 @@ module TapeBoxer
   class Installer < ExecutionModule
     TapeBoxer.register_module :installer, self
 
-    action :dependencies,
-           proc { dependencies },
-           'Install dependencies'
     action :install,
       proc {install},
       'Creates all nessisary hosts and config files'
@@ -18,19 +15,7 @@ module TapeBoxer
 
     protected
 
-    def dependencies
-      puts 'Dependencies:'
-
-      if system "ansible-galaxy install -r #{tape_dir}/requirements.yml -p #{tape_dir}/vendor --force"
-        print 'Installing/updating dependencies: '
-        puts '✔'.green
-      else
-        puts '✘'.red
-      end
-    end
-
     def install
-      dependencies
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
       mkdir 'roles'
       if fe_app? && !rails_app?

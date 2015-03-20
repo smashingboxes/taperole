@@ -1,0 +1,13 @@
+---
+language: python
+python: 2.7
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-apt python-pycurl
+install:
+  - pip install ansible
+script:
+  - echo localhost > inventory
+  - ansible-galaxy install --role-file=requirements.yml --roles-path=roles/ --force
+  - ansible-playbook --syntax-check -i inventory site.yml
+  - ansible-playbook -i inventory site.yml --connection=local --sudo
