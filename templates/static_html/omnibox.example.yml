@@ -8,8 +8,8 @@
 
   roles:
     - general
+    - deployer_user
     - monit_install
     - nginx
-    - deployer_user
     - frontend_deploy
     - monit_activate # Run Last

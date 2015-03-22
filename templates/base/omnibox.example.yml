@@ -8,11 +8,11 @@
 
   roles:
     - general
+    - deployer_user
     - monit_install
     - postgres
     - nginx
     - backend_install_essentials
-    - deployer_user
     - backend_checkout
     - unicorn_install
     - backend_config
