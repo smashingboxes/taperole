@@ -1,35 +1,19 @@
-- name: Install upstart job
-  template: src=dj_runner_upstart.j2
-            dest=/etc/init/dj_runner_{{app_name}}.conf
-  tags: [configure_dj_runner]
-  register: dj_runner_installation
-  when: enabled_delayed_job
+- name: Install DJ monit bin command
+  template: src=dj_monit_runner.j2
+            dest=/usr/bin/dj_monit_runner
+            mode=u=rwx,g=rwx,o=r
 
-- name: register unicorn upstart script
-  command: initctl reload-configuration
-  when: dj_runner_installation.changed and
-        enabled_delayed_job
-  tags: [configure_dj_runner]
+- name: Install DJ monit config
+  template: src=dj_monit_config.j2
+            dest=/etc/monit/config.d/delayed_jobs
+            mode=u=rw,g=r,o=r
+  register: dj_monit_config
 
-- name: Give deployer user access to DJ upstart jobs
-  lineinfile: 'dest=/etc/sudoers
-               state=present
-               line="{{ deployer_user.name }} ALL = (root) NOPASSWD: /sbin/{{item}} dj_runner_{{app_name}}"'
-  with_items:
-    - start
-    - stop
-    - restart
-    - status
-    - reload
-  tags: [configure_dj_runner]
-  when: enabled_delayed_job
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: dj_monit_config.changed
 
-- name: restart delayed job runner
-  sudo_upstart: name=dj_runner_{{app_name}} state=restarted
+- name: Restart Delayed Job
   remote_user: "{{ deployer_user.name }}"
-  when: force_dj_runner_restart or
-        (dj_runner_installation is defined and dj_runner_installation.changed) or
-        force_db_reset or
-        (app_checkout is defined and app_checkout.changed) and
-        enabled_delayed_job
-  tags: [configure_dj_runner, be_deploy, reset_db]
+  command: bash -lc "sudo monit restart delayed_job"
+  tags: [be_deploy]
