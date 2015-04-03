@@ -13,4 +13,4 @@
     - database_load
     - unicorn_activate
     - frontend_deploy
-    - delayed_job
+    # - delayed_job
