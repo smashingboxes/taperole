@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/smashingboxes/tape.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
+[![Stories in Ready](https://badge.waffle.io/smashingboxes/taperole.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
 # Infrastructure Management
 
 ## Deploying & provisioning with tape
