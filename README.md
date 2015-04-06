@@ -36,9 +36,9 @@ You can setup multistage by defining your hosts file as follows
 
 ```
 [production]
-0.0.0.0 be_app_env=SOME_ENV be_app_branch=SOME_BRANCH 
+0.0.0.0 be_app_env=production be_app_branch=SOME_BRANCH
 [staging]
-0.0.0.0 be_app_env=SOME_ENV be_app_branch=SOME_BRANCH 
+0.0.0.0 be_app_env=staging be_app_branch=SOME_BRANCH
 [omnibox:children]
 production
 staging
