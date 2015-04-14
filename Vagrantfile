@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure 2 do |config|
-  config.vm.box = 'hashicorp/precise64'
+  config.vm.box = 'ubuntu/trusty64'
 
   name = %x[basename `git rev-parse --show-toplevel`].chomp
   config.vm.define "#{name}_vagrant_box"
