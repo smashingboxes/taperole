@@ -5,7 +5,7 @@
   register: sidekiq_monit_config
 
 - name: Reload Monit
-  command: bash -lc "monit reload"
+  command: bash -lc "monit reload && sleep 2"
   when: sidekiq_monit_config.changed
 
 - name: Stop sidekiq
