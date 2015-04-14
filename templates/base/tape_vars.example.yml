@@ -2,8 +2,6 @@ app_name:
 
 # Rails App Configs
 be_app_repo:
-be_app_env: production
-be_app_branch: master
 
 # HTML/JS App Configs
 # Uncomment if you want to deploy a JS/HTML App
