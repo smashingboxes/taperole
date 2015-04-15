@@ -4,6 +4,7 @@
        repo={{ be_app_repo }}
        version={{ be_app_branch }}
        accept_hostkey=true
+       force=yes
   register: app_checkout
   tags: [be_deploy]
 
