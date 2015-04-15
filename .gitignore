@@ -3,3 +3,4 @@
 site_vars.yml
 hosts
 *.gem
+.tape
