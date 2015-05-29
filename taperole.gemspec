@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "taperole"
-  spec.version = '1.1.4'
+  spec.version = '1.1.5'
   spec.authors = ['Jack Forrest', 'Smashing Boxes', 'Brandon Mathis']
   spec.email = ['jack@smashingboxes.com', 'brandon@sbox.es']
   spec.summary = 'A tool for provisioning and deploying boxes for hosting Rails apps'
