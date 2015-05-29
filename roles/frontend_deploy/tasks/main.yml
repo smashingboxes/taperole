@@ -1,8 +1,30 @@
-- name: rsync the FE app
+# - name: rsync the FE app
+#   remote_user: "{{ deployer_user.name }}"
+#   synchronize:
+#     src={{ fe_app_local_path }}/
+#     dest={{ fe_app_path }}
+#   tags: [fe_deploy]
+#   register: fe_app_checkout
+#   when: fe_app_local_path is defined
+
+
+- name: clone the FE app
   remote_user: "{{ deployer_user.name }}"
-  synchronize:
-    src={{ fe_app_local_path }}/
-    dest={{ fe_app_path }}
+  git: dest={{ fe_app_path }}
+       repo={{ fe_app_repo }}
+       version={{ fe_app_branch }}
+       accept_hostkey=true
+       force=yes
   tags: [fe_deploy]
-  register: fe_app_checkout
-  when: fe_app_local_path is defined
+
+- name: NPM install
+  command: bash -lc
+  command: chdir={{ fe_app_path }}
+    bash -lc 'npm install'
+  tags: [fe_deploy]
+
+- name: Build FE
+  command: bash -lc
+  command: chdir={{ fe_app_path }}
+    bash -lc 'gulp build'
+  tags: [fe_deploy]

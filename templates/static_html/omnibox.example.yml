@@ -9,6 +9,7 @@
   roles:
     - general
     - deployer_user
+    - frontend_install_essentials
     - monit_install
     - nginx
     - frontend_deploy
