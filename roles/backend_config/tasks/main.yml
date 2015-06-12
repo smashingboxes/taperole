@@ -7,7 +7,7 @@
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
            bash -lc "RAILS_ENV={{be_app_env}} bundle install
-           --without test development --binstubs --deployment"
+           --without test development --no-binstubs --deployment"
   tags: [be_deploy, bundle]
 
 - name: Ensure secrets.yml file present
