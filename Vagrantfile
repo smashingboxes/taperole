@@ -19,7 +19,7 @@ Vagrant.configure 2 do |config|
 
   config.vm.provision :shell, inline: <<-SCRIPT
     sudo su
-    mkdir ~/.ssh/
+    mkdir -p ~/.ssh/
     cp /home/vagrant/.ssh/authorized_keys ~/.ssh/
     chmod 600 ~/.ssh/authorized_keys
   SCRIPT
