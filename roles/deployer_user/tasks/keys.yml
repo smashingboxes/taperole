@@ -1,8 +1,12 @@
-# - name: Ensure key files exist
-#   fail: msg="Key file {{local_dir + '/' + item}} is empty!"
-#   when: lookup('file', local_dir + '/' + item)|default(None) == None
-#   with_items: dev_key_files
-#   tags: [deployer]
+- name: Create deployer user ssh dir
+  file: path="/home/{{ deployer_user.name }}/.ssh"
+    state=directory
+    owner="{{ deployer_user.name }}"
+    mode=600
+
+
+- name: Copy of root ssh keys
+  command: "cp /root/.ssh/authorized_keys /home/{{ deployer_user.name }}/.ssh/authorized_keys"
 
 - name: Ensure devs keys are present
   authorized_key: key="{{ lookup('file', local_dir + '/' + item) }}"
@@ -16,4 +20,3 @@
                   manage_dir=yes
                   state=present
                   user=deployer
-  # tags: [deployer]
