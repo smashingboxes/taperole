@@ -1,13 +1,3 @@
-# - name: rsync the FE app
-#   remote_user: "{{ deployer_user.name }}"
-#   synchronize:
-#     src={{ fe_app_local_path }}/
-#     dest={{ fe_app_path }}
-#   tags: [fe_deploy]
-#   register: fe_app_checkout
-#   when: fe_app_local_path is defined
-
-
 - name: clone the FE app
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ fe_app_path }}
@@ -18,9 +8,17 @@
   tags: [fe_deploy]
 
 - name: NPM install
+  remote_user: "{{ deployer_user.name }}"
   command: bash -lc
   command: chdir={{ fe_app_path }}
-    bash -lc 'npm install'
+    bash -lc 'test -e package.json && npm install'
+  tags: [fe_deploy]
+
+- name: Bower install
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc
+  command: chdir={{ fe_app_path }}
+    bash -lc 'test -e bower.json && bower install'
   tags: [fe_deploy]
 
 - name: Build FE

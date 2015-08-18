@@ -9,7 +9,7 @@ server {
 
   # server_name example.com;
 
-{% if fe_app_local_path is defined%}
+{% if fe_app_repo is defined%}
   root {{ fe_app_path }}/dist;
 {% else %}
   root {{ be_app_path }}/public;
