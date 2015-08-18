@@ -2,7 +2,7 @@
   file: path="/home/{{ deployer_user.name }}/.ssh"
     state=directory
     owner="{{ deployer_user.name }}"
-    mode=600
+    mode=744
 
 
 - name: Copy of root ssh keys
