@@ -22,7 +22,7 @@
   tags: [fe_deploy]
 
 - name: Build FE
-  command: bash -lc
+  remote_user: "{{ deployer_user.name }}"
   command: chdir={{ fe_app_path }}
     bash -lc 'gulp build'
   tags: [fe_deploy]
