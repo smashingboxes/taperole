@@ -8,7 +8,7 @@ PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 APP_ROOT="{{be_app_path}}"
 APP_USER="{{ deployer_user.name }}"
 PID="$APP_ROOT/tmp/unicorn.pid"
-CMD="$APP_ROOT/bin/unicorn -E {{be_app_env}} -D -c $APP_ROOT/config/unicorn.rb"
+CMD="bundle exec unicorn -E {{be_app_env}} -D -c $APP_ROOT/config/unicorn.rb"
 
 action="$1"
 old_pid="$PID.oldbin"
