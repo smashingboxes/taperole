@@ -12,7 +12,7 @@
 
 * `$ gem install taperole` or `gem 'taperole'`
 * `$ brew install ansible`
-* Create a (Digital Ocean Droplet)[https://www.digitalocean.com/]
+* Create a [Digital Ocean Droplet](https://www.digitalocean.com/)
 * Run `tape installer install` in project repo
 * Update your hosts file with the IP address of your server (this can be found in your Droplet). If you go down to "Multistage", you'll see an excellent example of what your hosts file should look like.
 * Fill in missing values in `tape_vars.yml`. Should look something like this:
