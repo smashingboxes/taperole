@@ -10,12 +10,23 @@
 
 **Install**
 
-* `gem install taperole` or `gem 'taperole'`
-* run `tape installer install` in project repo
-* Updated the hosts file with the IP address of your server
-* Fill in missing values in `tape_vars.yml`
-* Copy all developers public keys into some dir and specify that dir inside `tape_vars.yml` (dev_key_files)
-* `tape ansible everything`
+* `$ gem install taperole` or `gem 'taperole'`
+* `$ brew install ansible`
+* Create a (Digital Ocean Droplet)[https://www.digitalocean.com/]
+* Run `tape installer install` in project repo
+* Update your hosts file with the IP address of your server (this can be found in your Droplet). If you go down to "Multistage", you'll see an excellent example of what your hosts file should look like.
+* Fill in missing values in `tape_vars.yml`. Should look something like this:
+```
+app_name: [app name]
+
+be_app_repo: [git repo]
+
+dev_key_files:
+  - dev_keys/name1.pub
+  - dev_keys/name2.pub
+```
+* Copy all developers public keys into a new directory (dev_keys is a good example for the name of that directory). Then specify that dir inside `tape_vars.yml` (dev_key_files)
+* `$ tape ansible everything`
 
 **Upgrade**
 
