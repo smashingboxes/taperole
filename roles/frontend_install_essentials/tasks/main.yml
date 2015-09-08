@@ -1,3 +1,7 @@
 - name: Ensure gulp is installed
   npm: name=gulp state=present global=yes
   when: fe_app_repo is defined
+
+- name: Ensure bower is installed
+  npm: name=bower state=present global=yes
+  when: fe_app_repo is defined
