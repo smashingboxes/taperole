@@ -41,6 +41,14 @@ module TapeBoxer
       self.class.actions
     end
 
+    def fe_app?
+      !Dir["#{local_dir}/gulpfile.*"].empty?
+    end
+
+    def rails_app?
+      !Dir["#{local_dir}/config.ru"].empty?
+    end
+
     def execute_action(action)
       action = action.to_sym
       unless actions.include?(action)

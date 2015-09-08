@@ -40,7 +40,9 @@ class AnsibleRunner < ExecutionModule
     proc {ansible_deploy '-t be_deploy,fe_deploy'},
     "Checks out app code, installs dependencies and restarts unicorns for "\
     "both FE and BE code."
-  action :everything, proc {ansible}, "This does it all."
+  action :everything,
+    proc { ansible if valid_preconfigs },
+    "This does it all."
 
   def initialize(*args)
     super
@@ -48,6 +50,25 @@ class AnsibleRunner < ExecutionModule
 
   protected
   attr_reader :opts
+
+  def valid_preconfigs
+    if rails_app?
+      return valid_gems
+    end
+  end
+
+  def valid_gems
+    has_gem_in_gemfile('unicorn')
+  end
+
+  def has_gem_in_gemfile(name)
+    if open('Gemfile').grep(/#{name}/).empty?
+      puts "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
+      false
+    else
+      true
+    end
+  end
 
   def ansible(cmd_str = '')
     exec_ansible('omnibox.yml', cmd_str)
