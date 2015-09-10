@@ -17,7 +17,6 @@ module TapeBoxer
 
     def install
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
-      mkdir 'roles'
       if fe_app? && !rails_app?
         puts '🔎  JS/HTML app detected'.pink
         copy_static_app_examples
@@ -25,6 +24,7 @@ module TapeBoxer
         puts '🔎  Rails app detected'.pink
         copy_basic_examples
       end
+      mkdir 'roles'
       copy_example 'templates/base/hosts.example', 'hosts'
       mkdir 'dev_keys'
       print 'Are you going to use vagrant? (y/n): '
