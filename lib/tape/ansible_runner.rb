@@ -71,11 +71,11 @@ class AnsibleRunner < ExecutionModule
   end
 
   def ansible(cmd_str = '')
-    exec_ansible('omnibox.yml', cmd_str)
+    exec_ansible("#{tapefiles_dir}/omnibox.yml", cmd_str)
   end
 
   def ansible_deploy(cmd_str = '')
-    exec_ansible('deploy.yml', cmd_str)
+    exec_ansible("#{tapefiles_dir}/deploy.yml", cmd_str)
   end
 
   def exec_ansible(playbook, args)
@@ -89,9 +89,11 @@ class AnsibleRunner < ExecutionModule
 
   def enforce_roles_path!
     Dir.mkdir('.tape') unless Dir.exists?('.tape')
-    File.open('.tape/ansible.cfg', 'w') do |f|
+    File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
       f.puts '[defaults]'
-      f.puts "roles_path=./roles:#{tape_dir}/roles:#{tape_dir}/vendor"
+      f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
+      f.puts "inventory=#{tapefiles_dir}/hosts"
+      f.puts "retries-dir=/dev/null"
       f.puts '[ssh_connection]'
       f.puts 'ssh_args = -o ForwardAgent=yes'
     end
@@ -102,7 +104,7 @@ class AnsibleRunner < ExecutionModule
   end
 
   def inventory_file
-    opts.inventory_file || "#{local_dir}/hosts"
+    opts.inventory_file || "#{tapefiles_dir}/hosts"
   end
 end
 end
