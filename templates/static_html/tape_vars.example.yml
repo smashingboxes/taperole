@@ -3,6 +3,3 @@ app_name:
 # App Configs
 fe_app_repo:
 fe_app_branch: master
-
-dev_key_files:
-  - dev_keys/key.pub
