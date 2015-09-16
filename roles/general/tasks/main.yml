@@ -1,4 +1,4 @@
-- name: apt-get udpate upgrade
+- name: apt-get update upgrade
   apt: update_cache=yes  upgrade=safe
   tags: [update, upgrade]
 
