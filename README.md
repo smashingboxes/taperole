@@ -36,7 +36,7 @@ tape installer install
 ```
 
 ### Custom roles
-You can write app specific roles in the roles files storred in the `roles` directory
+You can write app specific roles in the roles files stored in the `roles` directory
 
 You must then specify the roles you want to use in `omnibox.yml` or `deploy.yml`
 
@@ -55,7 +55,7 @@ production
 staging
 ```
 
-then use the `-l` option to specify the staging
+Then use the `-l` option to specify the staging
 
 ```sh
 tape ansible deploy -l staging
@@ -65,30 +65,19 @@ tape ansible deploy -l staging
 ### With vagrant
 
 
-1. `vagrant up` or `tape vagrant create`
+1. `vagrant up`
 2. Put the following into your [hosts inventory file](http://docs.ansible.com/intro_inventory.html):
 
 ```
 [vagrant]
-<192.168.13.37> ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
 
 The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
-You can speicfy a port using the `ansible_ssh_port` in your hosts inventory file.
+You can specify a port using the `ansible_ssh_port` in your hosts inventory file.
 
 3. Update `tape_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
 4. `tape ansible everything -l vagrant`
-
-
-### With QEMU
-
-1. `tape qemu create --name fe_test`
-2. `tape qemu start --name fe_test -p2255`
-3. `ssh-add ./id_rsa_sb_basebox`
-4. `echo 'localhost:2255' >test_hosts`
-5. `tape ansible everything`
-
-Run `tape -h` for a quick rundown of the tool's modules and options.
 
 ## Development
 
