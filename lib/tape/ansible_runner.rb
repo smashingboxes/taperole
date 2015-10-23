@@ -94,6 +94,7 @@ class AnsibleRunner < ExecutionModule
       f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
       f.puts "inventory=#{tapefiles_dir}/hosts"
       f.puts "retries-dir=/dev/null"
+      f.puts "retry_files_enabled = False"
       f.puts '[ssh_connection]'
       f.puts 'ssh_args = -o ForwardAgent=yes'
     end
