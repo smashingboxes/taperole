@@ -3,6 +3,8 @@ be_app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_name: "{{ app_name }}_fe"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ fe_app_name }}"
 
+tapefiles_dir: "./taperole"
+
 deployer_user:
   name: deployer
   groups:

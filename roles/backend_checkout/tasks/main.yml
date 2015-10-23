@@ -1,3 +1,7 @@
+- name: Ensure repo is defined
+  fail: msg="app_repo is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
+  when: app_repo is undefined
+
 - name: Check out application
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ be_app_path }}
