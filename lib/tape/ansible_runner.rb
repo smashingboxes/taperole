@@ -1,3 +1,13 @@
+class Something
+  def method arg1, arg2
+    return arg1
+  end
+end
+
+def madMethodName
+  "String"
+end
+
 # Executes ansible commands
 module TapeBoxer
 class AnsibleRunner < ExecutionModule
@@ -87,14 +97,16 @@ class AnsibleRunner < ExecutionModule
     Kernel.exec(cmd)
   end
 
-  def enforce_roles_path!
+  
+  def enforce_roles_path!     
     Dir.mkdir('.tape') unless Dir.exists?('.tape')
+
     File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
       f.puts '[defaults]'
       f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
       f.puts "inventory=#{tapefiles_dir}/hosts"
       f.puts "retries-dir=/dev/null"
-      f.puts "retry_files_enabled = False"
+      f.puts "retry_files_enabled = False"          
       f.puts '[ssh_connection]'
       f.puts 'ssh_args = -o ForwardAgent=yes'
     end

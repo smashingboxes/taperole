@@ -1,6 +1,10 @@
 - name: Ensure repo is defined
-  fail: msg="app_repo is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
-  when: app_repo is undefined
+  fail: msg="be_app_repo is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
+  when: be_app_repo is undefined
+
+- name: Ensure app name is defined
+  fail: msg="app_name is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
+  when: app_name is undefined
 
 - name: Check out application
   remote_user: "{{ deployer_user.name }}"
