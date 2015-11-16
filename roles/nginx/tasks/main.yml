@@ -25,7 +25,7 @@
   when: nginx_monit_config.changed
 
 - name: Stop nginx
-  command: bash -lc "service nginx stop"
+  command: bash -lc "monit stop nginx"
   tags: [restart_nginx]
 
 - name: Start nginx
