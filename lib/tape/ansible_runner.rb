@@ -87,7 +87,6 @@ class AnsibleRunner < ExecutionModule
     Kernel.exec(cmd)
   end
 
-
   def enforce_roles_path!
     Dir.mkdir('.tape') unless Dir.exists?('.tape')
 
