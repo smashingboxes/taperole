@@ -1,6 +1,8 @@
 [![Stories in Ready](https://badge.waffle.io/smashingboxes/taperole.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
 # Infrastructure Management
 
+[![Join the chat at https://gitter.im/smashingboxes/taperole](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/smashingboxes/taperole?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Deploying & provisioning with tape
 **Use Unbuntu precise64 (12.04 x64)** 
 
