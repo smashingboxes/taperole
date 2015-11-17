@@ -1,49 +1,43 @@
-class Something
-  def method(arg1, arg2)
-    arg1
-  end
-end
-
 # Executes ansible commands
 module TapeBoxer
 class AnsibleRunner < ExecutionModule
   TapeBoxer.register_module :ansible, self
 
   action :configure_dj_runner,
-         proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
+         proc { ansible '-t configure_dj_runner -e force_dj_runner_restart=true' },
          "Configures and restarts the delayed job runner"
   action :restart_unicorn,
-         proc {ansible '-t unicorn_restart'},
+         proc { ansible '-t unicorn_restart' },
          "Restarts the unicorns running on the app servers"
   action :stop_unicorn,
-         proc {ansible '-t unicorn_stop -e kill_unicorn=true'},
+         proc { ansible '-t unicorn_stop -e kill_unicorn=true' },
          "Stops the unicorns running on the app servers"
   action :force_stop_unicorn,
-         proc {ansible '-t unicorn_force_stop -e kill_unicorn=true'},
+         proc { ansible '-t unicorn_force_stop -e kill_unicorn=true' },
          "Stops the unicorns running on the app servers"
   action :start_unicorn,
-         proc {ansible '-t unicorn_start'},
+         proc { ansible '-t unicorn_start' },
          "Starts the unicorns running on the app servers"
   action :restart_nginx,
-         proc {ansible '-t restart_nginx'},
+         proc { ansible '-t restart_nginx' },
          "Restarts Nginx"
   action :configure_deployer_user,
-         proc {ansible '-t deployer'},
+         proc { ansible '-t deployer' },
          "Ensures the deployer user is present and configures his SSH keys"
   action :reset_db,
-         proc {ansible '-t db_reset -e force_db_reset=true'},
+         proc { ansible '-t db_reset -e force_db_reset=true' },
          "wipes and re-seeds the DB"
   action :bundle,
-         proc {ansible '-t bundle -e force_bundle=true'},
+         proc { ansible '-t bundle -e force_bundle=true' },
          "Bundles the gems running on the app servers"
   action :be_deploy,
-         proc {ansible_deploy '-t be_deploy'},
+         proc { ansible_deploy '-t be_deploy' },
          "Re-deploys fe code"
   action :fe_deploy,
-         proc {ansible_deploy '-t fe_deploy'},
+         proc { ansible_deploy '-t fe_deploy' },
          "Re-deploys fe code"
   action :deploy,
-         proc {ansible_deploy '-t be_deploy,fe_deploy'},
+         proc { ansible_deploy '-t be_deploy,fe_deploy' },
          "Checks out app code, installs dependencies and restarts unicorns for "\
          "both FE and BE code."
   action :everything,
