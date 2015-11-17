@@ -14,7 +14,7 @@
                   state=present
                   user=deployer
   with_fileglob:
-    - "{{local_dir}}/dev_keys/*"
+    - "{{tapefiles_dir}}/dev_keys/*"
 
 - name: Ensure DO pubkey is present
   authorized_key: key="{{ lookup('file', 'id_rsa_digital_ocean.pub') }}"
