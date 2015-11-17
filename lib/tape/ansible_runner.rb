@@ -1,11 +1,7 @@
 class Something
-  def method arg1, arg2
-    return arg1
+  def method(arg1, arg2)
+    arg1
   end
-end
-
-def madMethodName
-  "String"
 end
 
 # Executes ansible commands
@@ -14,45 +10,45 @@ class AnsibleRunner < ExecutionModule
   TapeBoxer.register_module :ansible, self
 
   action :configure_dj_runner,
-    proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
-    "Configures and restarts the delayed job runner"
+         proc {ansible '-t configure_dj_runner -e force_dj_runner_restart=true'},
+         "Configures and restarts the delayed job runner"
   action :restart_unicorn,
-    proc {ansible '-t unicorn_restart'}, 
-    "Restarts the unicorns running on the app servers"
+         proc {ansible '-t unicorn_restart'},
+         "Restarts the unicorns running on the app servers"
   action :stop_unicorn,
-    proc {ansible '-t unicorn_stop -e kill_unicorn=true'}, 
-    "Stops the unicorns running on the app servers"
+         proc {ansible '-t unicorn_stop -e kill_unicorn=true'},
+         "Stops the unicorns running on the app servers"
   action :force_stop_unicorn,
-    proc {ansible '-t unicorn_force_stop -e kill_unicorn=true'}, 
-    "Stops the unicorns running on the app servers"
+         proc {ansible '-t unicorn_force_stop -e kill_unicorn=true'},
+         "Stops the unicorns running on the app servers"
   action :start_unicorn,
-    proc {ansible '-t unicorn_start'},
-    "Starts the unicorns running on the app servers"
+         proc {ansible '-t unicorn_start'},
+         "Starts the unicorns running on the app servers"
   action :restart_nginx,
-    proc {ansible '-t restart_nginx'},
-    "Restarts Nginx"
+         proc {ansible '-t restart_nginx'},
+         "Restarts Nginx"
   action :configure_deployer_user,
-    proc {ansible '-t deployer'},
-    "Ensures the deployer user is present and configures his SSH keys"
+         proc {ansible '-t deployer'},
+         "Ensures the deployer user is present and configures his SSH keys"
   action :reset_db,
-    proc {ansible '-t db_reset -e force_db_reset=true'},
-    "wipes and re-seeds the DB"
+         proc {ansible '-t db_reset -e force_db_reset=true'},
+         "wipes and re-seeds the DB"
   action :bundle,
-    proc {ansible '-t bundle -e force_bundle=true'},
-    "Bundles the gems running on the app servers"
+         proc {ansible '-t bundle -e force_bundle=true'},
+         "Bundles the gems running on the app servers"
   action :be_deploy,
-    proc {ansible_deploy '-t be_deploy'},
-    "Re-deploys fe code"
+         proc {ansible_deploy '-t be_deploy'},
+         "Re-deploys fe code"
   action :fe_deploy,
-    proc {ansible_deploy '-t fe_deploy'},
-    "Re-deploys fe code"
+         proc {ansible_deploy '-t fe_deploy'},
+         "Re-deploys fe code"
   action :deploy,
-    proc {ansible_deploy '-t be_deploy,fe_deploy'},
-    "Checks out app code, installs dependencies and restarts unicorns for "\
-    "both FE and BE code."
+         proc {ansible_deploy '-t be_deploy,fe_deploy'},
+         "Checks out app code, installs dependencies and restarts unicorns for "\
+         "both FE and BE code."
   action :everything,
-    proc { ansible if valid_preconfigs },
-    "This does it all."
+         proc { ansible if valid_preconfigs },
+         "This does it all."
 
   def initialize(*args)
     super
@@ -97,8 +93,8 @@ class AnsibleRunner < ExecutionModule
     Kernel.exec(cmd)
   end
 
-  
-  def enforce_roles_path!     
+
+  def enforce_roles_path!
     Dir.mkdir('.tape') unless Dir.exists?('.tape')
 
     File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
@@ -106,7 +102,7 @@ class AnsibleRunner < ExecutionModule
       f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
       f.puts "inventory=#{tapefiles_dir}/hosts"
       f.puts "retries-dir=/dev/null"
-      f.puts "retry_files_enabled = False"          
+      f.puts "retry_files_enabled = False"
       f.puts '[ssh_connection]'
       f.puts 'ssh_args = -o ForwardAgent=yes'
     end
