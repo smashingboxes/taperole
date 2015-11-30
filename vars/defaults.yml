@@ -32,3 +32,5 @@ precompile_assets: true
 app_url: false
 
 nodejs_version: 4.2
+
+fe_build_command: gulp build

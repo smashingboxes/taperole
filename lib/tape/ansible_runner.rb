@@ -53,7 +53,11 @@ class AnsibleRunner < ExecutionModule
 
   def valid_preconfigs
     if rails_app?
-      return valid_gems
+      valid_gems
+    elsif fe_app?
+      true
+    else
+      false
     end
   end
 

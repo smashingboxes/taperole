@@ -28,5 +28,5 @@
   when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ fe_app_path }}
-    bash -lc 'gulp build'
+    bash -lc '{{ fe_build_command }}'
   tags: [fe_deploy]
