@@ -2,6 +2,9 @@ language: ruby
 
 sudo: true
 
+rvm:
+  - 2.2.3
+
 addons:
   apt:
     packages:
@@ -9,11 +12,10 @@ addons:
     - libssl-dev
     - libreadline-dev
     - zlib1g-dev
-    - software-properties-common
 
 # We need the newest version of ansible for tape
 before_install:
-  - sudo apt-add-repository ppa:ansible/ansible
+  - sudo apt-add-repository -y ppa:ansible/ansible
   - sudo apt-get update
   - sudo apt-get install ansible
 

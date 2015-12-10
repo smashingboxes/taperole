@@ -1,14 +1,3 @@
-# rbenv
-git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-source ~/.bashrc
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-
-# Ruby
-rbenv install 2.2.3
-# gem install bundler
-
 # setup ssh key
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 cat ~/.ssh/id_rsa.pub | sudo tee -a ~root/.ssh/authorized_keys
