@@ -20,6 +20,7 @@ before_install:
   - sudo apt-get install ansible -y
 
 install:
+  - cd $TRAVIS_BUILD_DIR && rake install
   - ./bin/travis_setup.sh
   - tape ansible everything
 

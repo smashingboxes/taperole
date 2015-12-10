@@ -7,7 +7,6 @@ git clone https://github.com/dkniffin/vanilla-rails-app.git ~/vanilla-rails-app
 cd ~/vanilla-rails-app/
 
 # Set up tape
-gem install --local $TRAVIS_BUILD_DIR/taperole.gem
 echo 'y' | tape installer install
 # TODO: add a silent flag for ^
 echo '[omnibox]' > hosts
