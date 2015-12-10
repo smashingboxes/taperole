@@ -12,12 +12,12 @@ addons:
     - libssl-dev
     - libreadline-dev
     - zlib1g-dev
-    - aptitude
 
 # We need the newest version of ansible for tape
 before_install:
   - sudo apt-add-repository -y ppa:ansible/ansible
   - sudo apt-get update -q
+  - sudo apt-get install aptitude -y
   - sudo apt-get install ansible -y
 
 install:
