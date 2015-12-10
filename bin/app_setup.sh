@@ -1,5 +1,6 @@
 # setup ssh key
 ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+sudo touch ~root/.ssh/authorized_keys
 cat ~/.ssh/id_rsa.pub | sudo tee -a ~root/.ssh/authorized_keys
 ssh-keyscan -H 0.0.0.0 >> ~/.ssh/known_hosts
 ssh-keyscan -H 127.0.0.1 >> ~/.ssh/known_hosts
