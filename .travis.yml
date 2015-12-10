@@ -1,0 +1,25 @@
+language: ruby
+
+sudo: true
+
+addons:
+  apt:
+    packages:
+    - git
+    - libssl-dev
+    - libreadline-dev
+    - zlib1g-dev
+    - software-properties-common
+
+# We need the newest version of ansible for tape
+before_install:
+  - sudo apt-add-repository ppa:ansible/ansible
+  - sudo apt-get update
+  - sudo apt-get install ansible
+
+install:
+  - ./bin/travis_setup.sh
+  - tape ansible everything
+
+script:
+  - curl localhost | grep 'Hello World!'
