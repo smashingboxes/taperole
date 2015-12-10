@@ -12,6 +12,7 @@ addons:
     - libssl-dev
     - libreadline-dev
     - zlib1g-dev
+    - aptitude
 
 # We need the newest version of ansible for tape
 before_install:
