@@ -7,6 +7,8 @@ ssh-keyscan -H 0.0.0.0 >> ~/.ssh/known_hosts
 ssh-keyscan -H 127.0.0.1 >> ~/.ssh/known_hosts
 ssh-keyscan -H localhost >> ~/.ssh/known_hosts
 
+ls -la /var/lib/apt/lists
+
 # Project
 git clone https://github.com/dkniffin/vanilla-rails-app.git ~/vanilla-rails-app
 cd ~/vanilla-rails-app/
