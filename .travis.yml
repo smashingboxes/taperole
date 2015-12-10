@@ -23,7 +23,7 @@ install:
   - gem build taperole.gemspec
   - gem install --local taperole
   - ./bin/app_setup.sh
-  - cd ~/vanilla-rails-app/ && tape ansible everything
+  - cd ~/vanilla-rails-app/ && tape ansible everything -vvvv
 
 script:
   - curl localhost | grep 'Hello World!'
