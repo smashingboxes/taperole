@@ -12,7 +12,7 @@ git clone https://github.com/dkniffin/vanilla-rails-app.git ~/vanilla-rails-app
 cd ~/vanilla-rails-app/
 
 # Set up tape
-echo 'n' | tape installer install
+echo 'y' | tape installer install
 # TODO: add a silent flag for ^
 echo '[omnibox]' > hosts
 echo '0.0.0.0 be_app_env=production be_app_branch=master' >> hosts
