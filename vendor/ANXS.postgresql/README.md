@@ -4,7 +4,7 @@ Ansible role which installs and configures PostgreSQL, extensions, databases and
 
 
 #### Requirements & Dependencies
-- Tested on Ansible 1.6 or higher.
+- Tested on Ansible 1.8.4 or higher.
 - ANXS.monit ([Galaxy](https://galaxy.ansible.com/list#/roles/502)/[GH](https://github.com/ANXS/monit)) if you want monit protection (in that case, you should set `monit_protection: true`)
 
 
@@ -27,6 +27,7 @@ postgresql_databases:
   - name: foobar
     hstore: yes         # flag to install the hstore extension on this database (yes/no)
     uuid_ossp: yes      # flag to install the uuid-ossp extension on this database (yes/no)
+    citext: yes         # flag to install the citext extension on this database (yes/no)
 
 # List of users to be created (optional)
 postgresql_users:
@@ -44,14 +45,17 @@ postgresql_user_privileges:
 
 There's a lot more knobs and bolts to set, which you can find in the defaults/main.yml
 
+
 #### Testing
 This project comes with a VagrantFile, this is a fast and easy way to test changes to the role, fire it up with `vagrant up`
 
 See [vagrant docs](https://docs.vagrantup.com/v2/) for getting setup with vagrant
 
+
 #### License
 
 Licensed under the MIT License. See the LICENSE file for details.
+
 
 #### Thanks
 

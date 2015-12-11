@@ -78,6 +78,14 @@ module TapeBoxer
     def local_dir
       Dir.pwd
     end
+
+    def tapefiles_dir
+      local_dir + '/taperole'
+    end
+
+    def tapecfg_dir
+      local_dir + '/.tape'
+    end
   end
 end
 

@@ -24,7 +24,11 @@
   command: bash -lc "monit reload && sleep 2"
   when: nginx_monit_config.changed
 
-- name: Restart nginx
+- name: Stop nginx
+  service: name=nginx state=stopped
+  tags: [restart_nginx]
+
+- name: Start nginx
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "sudo monit restart nginx"
+  command: bash -lc "sudo monit start nginx"
   tags: [restart_nginx]

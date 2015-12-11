@@ -1,5 +1,5 @@
-- name: stop unicorns
-  service: name=unicorn_{{app_name}} state=stopped
+- name: stop everything
+  command: bash -lc "monit stop all"
 
 - name: Reset DB
   command: chdir={{ be_app_path }}
@@ -11,4 +11,4 @@
   when: db_reset.stderr
 
 - name: start unicorns
-  service: name=unicorn_{{app_name}} state=started
+  command: bash -lc "monit start all"

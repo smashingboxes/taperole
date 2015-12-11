@@ -10,7 +10,10 @@
 - src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
 
-- src: leonelgalan.node
-  version: '0.2'
+- src: williamyeh.nodejs
 
 - src: bennojoy.memcached
+
+- src: jnv.mosh
+
+- src: tersmitten.htop

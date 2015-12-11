@@ -1,4 +1,5 @@
 - name: clone the FE app
+  when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ fe_app_path }}
        repo={{ fe_app_repo }}
@@ -8,6 +9,7 @@
   tags: [fe_deploy]
 
 - name: NPM install
+  when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc
   command: chdir={{ fe_app_path }}
@@ -15,6 +17,7 @@
   tags: [fe_deploy]
 
 - name: Bower install
+  when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc
   command: chdir={{ fe_app_path }}
@@ -22,7 +25,8 @@
   tags: [fe_deploy]
 
 - name: Build FE
+  when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ fe_app_path }}
-    bash -lc 'gulp build'
+    bash -lc '{{ fe_build_command }}'
   tags: [fe_deploy]

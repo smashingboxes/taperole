@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    apt_install_packages: ['sudo']
+    apt_config:
+      - { key: 'APT::Get::Show-Upgraded', value: 'true', file: '10general' }
+      - { key: 'APT::Install-Recommends', value: 'false', file: '10general' }
+      - { key: 'APT::Install-Suggests', value: 'false', file: '10general' }
+      - { key: 'APT::Periodic::Update-Package-Lists', value: '1', file: '10periodic' }
+      - { key: 'APT::Periodic::Download-Upgradeable-Packages', value: '1', file: '10periodic' }
+      - { key: 'APT::Periodic::AutocleanInterval', value: '7', file: '10periodic' }
+      - { key: 'APT::Periodic::Unattended-Upgrade', value: '1', file: '10periodic' }
+    apt_purge_packages: ['rpcbind']
+  roles:
+    - apt
+

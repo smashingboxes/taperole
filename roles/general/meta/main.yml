@@ -1,3 +1,5 @@
 ---
 dependencies:
   - role: jnv.unattended-upgrades
+  - role: jnv.mosh
+  - role: tersmitten.htop
