@@ -1,4 +1,4 @@
-### 1.3
+### 1.3.0
 * Puts all tape focused files for a repo into a taperole/ directory
 * Installs mosh
 * Installs htop
