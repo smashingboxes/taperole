@@ -19,6 +19,8 @@ before_install:
   - sudo apt-get update -q
   - sudo apt-get install aptitude -y
   - sudo apt-get install ansible -y
+  - sudo /etc/init.d/postgresql stop
+  - sudo apt-get uninstall postgresql
 
 install:
   - gem build taperole.gemspec
