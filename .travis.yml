@@ -22,7 +22,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - sudo apt-get remove postgresql
   - sudo ps -elf | grep post
-  - sudo ls -la /etc/init.d/postgresql
+  - sudo ls -la /etc/init.d/
 
 install:
   - gem build taperole.gemspec
