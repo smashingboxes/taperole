@@ -33,7 +33,7 @@ dev_key_files:
 **Upgrade**
 
 ```
-bundle upgrade tape
+bundle update taperole
 tape installer install
 ```
 
