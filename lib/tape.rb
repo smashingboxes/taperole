@@ -1,5 +1,7 @@
 require 'erb'
 require 'fileutils'
+require 'yaml'
+require_relative 'tape/notifiers/slack.rb'
 
 module TapeBoxer
   class InvalidAction < StandardError; end
@@ -21,6 +23,7 @@ module TapeBoxer
     attr_reader :opts
     def initialize(opts)
       @opts = opts
+      register_notifers
     end
 
     def self.actions
@@ -62,6 +65,10 @@ module TapeBoxer
       self.instance_eval &actions[action].proc
     end
 
+    def config
+      @config ||= YAML.load_file("#{tapefiles_dir}/tape_vars.yml")
+    end
+
     protected
 
     def require_opt(name)
@@ -71,6 +78,24 @@ module TapeBoxer
     end
 
     private
+
+    def register_notifers
+      if config["slack_webhook_url"]
+        add_observer(::SlackNotifier.new(self, config["slack_webhook_url"]))
+      end
+    end
+
+    def add_observer(observer)
+      @observers = [] unless @observers
+      @observers.push(observer)
+    end
+
+    def notify_observers(state)
+      @observers.each do |observer|
+        observer.update(state)
+      end
+    end
+
     def tape_dir
       File.realpath(File.join(__dir__, '../'))
     end
