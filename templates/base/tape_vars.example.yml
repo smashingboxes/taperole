@@ -7,3 +7,5 @@ be_app_repo:
 # Uncomment if you want to deploy a JS/HTML App
 # fe_app_repo:
 # fe_app_branch: master
+
+slack_webhook_url:

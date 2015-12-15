@@ -69,6 +69,17 @@ module TapeBoxer
       @config ||= YAML.load_file("#{tapefiles_dir}/tape_vars.yml")
     end
 
+    def deploy_info
+      branch = 'master'
+      {
+        app_name: config["app_name"],
+        user: `whoami`.chomp,
+        hosts: opts.host_pattern || 'default',
+        commit_sha: `git rev-parse origin/#{branch}`,
+        repo: config["be_app_repo"] || ''
+      }
+    end
+
     protected
 
     def require_opt(name)
@@ -81,7 +92,7 @@ module TapeBoxer
 
     def register_notifers
       if config["slack_webhook_url"]
-        add_observer(::SlackNotifier.new(self, config["slack_webhook_url"]))
+        add_observer(::SlackNotifier.new(config["slack_webhook_url"], deploy_info))
       end
     end
 

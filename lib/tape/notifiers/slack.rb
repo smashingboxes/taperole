@@ -1,16 +1,18 @@
 require 'slack-notifier'
 require 'pry'
 class SlackNotifier
-  def initialize(runner, webhook_url)
+  def initialize(webhook_url, deploy_info={})
     @notifier = Slack::Notifier.new webhook_url
+    @notifier.username = 'Tape'
+    @deploy_info = deploy_info
   end
 
-  def update(state)
-    @state = state
+  def update(status)
+    @status = status
     @notifier.ping "",
       # TODO: Fill in real icon url
-      icon_url: "https://image.freepik.com/free-icon/adhesive-tape_318-42276.png",
-      attachments: [attachments]
+      icon_url: 'https://image.freepik.com/free-icon/adhesive-tape_318-42276.png',
+      attachments: attachments
   end
 
   private
@@ -19,54 +21,54 @@ class SlackNotifier
     a = {}
     a[:text] = message
     a[:color] = color
-    a[:fields] = fields unless status == :start
-    a
+    a[:fields] = fields unless @status == :start
+    [a]
   end
 
   def fields
       [
-        { title: "Project", value: app_name, short: true },
-        { title: "Environment", value: environment, short: true },
-        { title: "Author", value: user, short: true },
-        { title: "Commit", value: commit_sha, short: true }
+        {
+          title: "Project",
+          value: project_link,
+          short: true
+        },
+        {
+          title: "Hosts/Env",
+          value: @deploy_info[:hosts],
+          short: true
+        },
+        {
+          title: "Author",
+          value: @deploy_info[:user],
+          short: true
+        }
       ]
   end
 
   def color
-    case @state[:status]
+    case @status
     when :start   then "#a9a9a9"
     when :success then "good"
     when :fail    then "danger"
     end
   end
 
+  def gh_link_base
+    @deploy_info[:repo].sub(/^git@github.com:/, 'http://github.com/').sub(/.git$/,'')
+  end
+
+  def project_link
+    "<#{gh_link_base}|#{@deploy_info[:app_name]}>"
+  end
+
   def message
-    case @state[:status]
-    when :start   then "A deploy has begun..."
-    when :success then "The deploy was successful!"
-    when :fail    then "The deploy failed!"
+    case @status
+    when :start
+      "#{@deploy_info[:user]} started deploying #{@deploy_info[:app_name]} to #{@deploy_info[:hosts]}"
+    when :success
+      "The deploy was successful!"
+    when :fail
+      "The deploy failed!"
     end
-  end
-
-  def status
-    @state[:status]
-  end
-
-  def app_name
-    @state[:runner].config["app_name"]
-  end
-
-  def user
-    `whoami`
-  end
-
-  def environment
-    # TODO
-    ""
-  end
-
-  def commit_sha
-    # TODO
-    ""
   end
 end

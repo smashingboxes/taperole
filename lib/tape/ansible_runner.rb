@@ -88,11 +88,11 @@ class AnsibleRunner < ExecutionModule
     cmd += ' -vvvv' if opts.verbose
     cmd += " -t #{opts.tags}" if opts.tags
     STDERR.puts "Executing: #{cmd}" if opts.verbose
-    notify_observers({ runner: self, status: :start})
+    notify_observers(:start)
     if Kernel.system(cmd)
-      notify_observers({ runner: self, status: :success})
+      notify_observers(:success)
     else
-      notify_observers({ runner: self, status: :fail})
+      notify_observers(:fail)
     end
   end
 
