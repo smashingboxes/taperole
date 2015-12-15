@@ -1,3 +1,4 @@
+require 'pathname'
 module TapeBoxer
   class Installer < ExecutionModule
     TapeBoxer.register_module :installer, self
@@ -102,7 +103,7 @@ module TapeBoxer
     end
 
     def mkdir(name)
-      print "#{Pathname.new(name).basename}: "
+      print "#{::Pathname.new(name).basename}: "
       begin
         FileUtils.mkdir name
         success
@@ -115,7 +116,7 @@ module TapeBoxer
     end
 
     def copy_example(file, cp_file)
-      print "#{Pathname.new(cp_file).basename}: "
+      print "#{::Pathname.new(cp_file).basename}: "
       begin
         if File.exist?("#{cp_file}")
           exists
