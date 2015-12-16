@@ -1,7 +1,7 @@
 require 'slack-notifier'
-require 'pry'
+
 class SlackNotifier
-  def initialize(webhook_url, deploy_info={})
+  def initialize(webhook_url, deploy_info)
     @notifier = Slack::Notifier.new webhook_url
     @notifier.username = 'Tape'
     @deploy_info = deploy_info

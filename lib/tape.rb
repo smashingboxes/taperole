@@ -23,7 +23,7 @@ module TapeBoxer
     attr_reader :opts
     def initialize(opts)
       @opts = opts
-      register_notifers
+      register_notifiers
     end
 
     def self.actions
@@ -75,7 +75,6 @@ module TapeBoxer
         app_name: config["app_name"],
         user: `whoami`.chomp,
         hosts: opts.host_pattern || 'default',
-        commit_sha: `git rev-parse origin/#{branch}`,
         repo: config["be_app_repo"] || ''
       }
     end
@@ -90,7 +89,7 @@ module TapeBoxer
 
     private
 
-    def register_notifers
+    def register_notifiers
       if config["slack_webhook_url"]
         add_observer(::SlackNotifier.new(config["slack_webhook_url"], deploy_info))
       end
