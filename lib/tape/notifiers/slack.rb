@@ -9,7 +9,8 @@ class SlackNotifier
 
   def update(status)
     @status = status
-    @notifier.ping "",
+    @notifier.ping
+      "",
       # TODO: Fill in real icon url
       icon_url: 'https://image.freepik.com/free-icon/adhesive-tape_318-42276.png',
       attachments: attachments
@@ -26,23 +27,23 @@ class SlackNotifier
   end
 
   def fields
-      [
-        {
-          title: "Project",
-          value: project_link,
-          short: true
-        },
-        {
-          title: "Hosts/Env",
-          value: @deploy_info[:hosts],
-          short: true
-        },
-        {
-          title: "Author",
-          value: @deploy_info[:user],
-          short: true
-        }
-      ]
+    [
+      {
+        title: "Project",
+        value: project_link,
+        short: true
+      },
+      {
+        title: "Hosts/Env",
+        value: @deploy_info[:hosts],
+        short: true
+      },
+      {
+        title: "Author",
+        value: @deploy_info[:user],
+        short: true
+      }
+    ]
   end
 
   def color
@@ -54,7 +55,7 @@ class SlackNotifier
   end
 
   def gh_link_base
-    @deploy_info[:repo].sub(/^git@github.com:/, 'http://github.com/').sub(/.git$/,'')
+    @deploy_info[:repo].sub(/^git@github.com:/, 'http://github.com/').sub(/.git$/, '')
   end
 
   def project_link
@@ -64,7 +65,10 @@ class SlackNotifier
   def message
     case @status
     when :start
-      "#{@deploy_info[:user]} started deploying #{@deploy_info[:app_name]} to #{@deploy_info[:hosts]}"
+      user  = @deploy_info[:user]
+      app   = @deploy_info[:app_name]
+      hosts = @deploy_info[:hosts]
+      "#{user} started deploying #{app} to #{hosts}"
     when :success
       "The deploy was successful!"
     when :fail

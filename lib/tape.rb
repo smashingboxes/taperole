@@ -70,7 +70,6 @@ module TapeBoxer
     end
 
     def deploy_info
-      branch = 'master'
       {
         app_name: config["app_name"],
         user: `whoami`.chomp,
