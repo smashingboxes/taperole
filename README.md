@@ -96,13 +96,13 @@ ansible-galaxy install -r requirements.yml --force
 We're assuming that you're starting with the following things installed and working on your local machine:
 * unix based operating system
 * ruby (version 1.9.3 or greater)
- Run `$ ruby --version`. You should see something like `ruby 2.2.3p173` in the output. If you see nothing or get an error, you need to install ruby. If you see something less than 1.9.3, you need to upgrade.
+** Run `$ ruby --version`. You should see something like `ruby 2.2.3p173` in the output. If you see nothing or get an error, you need to install ruby. If you see something less than 1.9.3, you need to upgrade.
 * an ssh key
- You'll need an ssh key to set up access to your server. GitHub has a [great tutorial](https://help.github.com/articles/generating-ssh-keys/) on this.
+** You'll need an ssh key to set up access to your server. GitHub has a [great tutorial](https://help.github.com/articles/generating-ssh-keys/) on this.
 * git and GitHub (or another remote host for your code)
- Here's a good article on how to get going with git: https://help.github.com/articles/set-up-git/.
+** Here's a good article on how to get going with git: https://help.github.com/articles/set-up-git/.
 * ansible
- On a mac, we suggesting using Homebrew to install ansible. Otherwise, please refer to the ansible documentation: http://docs.ansible.com/ansible/intro_installation.html.
+** On a mac, we suggest using Homebrew to install ansible(`brew install ansible`). Otherwise, please refer to the ansible documentation: http://docs.ansible.com/ansible/intro_installation.html.
 
 ### Rails Application Requirements
 
