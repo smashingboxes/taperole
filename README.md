@@ -42,20 +42,22 @@ You must then specify the roles you want to use in `omnibox.yml` or `deploy.yml`
 
 [Read the Ansible docs on playbook roles here](http://docs.ansible.com/playbooks_roles.html)
 
-### Multistage
+### Multistage (environments)
 You can setup multistage by defining your hosts file as follows
 
 ```
 [production]
 0.0.0.0 be_app_env=production be_app_branch=SOME_BRANCH
+
 [staging]
 0.0.0.0 be_app_env=staging be_app_branch=SOME_BRANCH
+
 [omnibox:children]
 production
 staging
 ```
 
-Then use the `-l` option to specify the staging
+Then use the `-l` option to specify the stage/environment
 
 ```sh
 tape ansible deploy -l staging
