@@ -12,7 +12,7 @@
 
 **Install**
 
-* `$ gem install taperole` or add `gem 'taperole'` to your Gemfile
+* `$ gem install taperole` or add `gem 'taperole', '~>1.3'` to your Gemfile
 * `$ brew install ansible`
 * Create a [Digital Ocean Droplet](https://www.digitalocean.com/) (or any Ubuntu 14.04 system with ssh access)
 * Run `tape installer install` in project repo
