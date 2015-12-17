@@ -36,7 +36,7 @@ tape installer install
 ```
 
 ### Custom roles
-You can write app specific roles in the roles files stored in the `roles` directory
+You can add app specific ansible roles to `<app_root>/roles`.
 
 You must then specify the roles you want to use in `omnibox.yml` or `deploy.yml`
 
