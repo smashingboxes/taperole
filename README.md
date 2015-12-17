@@ -28,6 +28,8 @@ be_app_repo: [git repo]
 
 **Upgrade**
 
+**NOTE: Upgrading tape on a machine is only supported for patch versions (ie 1.3.0 to 1.3.1). For minor or major versions, it is advised that you stand up a new box, and start from stratch.
+
 ```
 bundle update taperole
 tape installer install
