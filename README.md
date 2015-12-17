@@ -110,16 +110,18 @@ Your rails application must:
 * use posgres as the database
 * use unicorn as the app server
 * have access to the taperole gem
-Usually, your gemfile will include something like:
+
+Usually, your Gemfile will include something like:
 ```
 # Use postgresql as the database
 gem 'pg'
 
-# Use taperole for deployment
-gem 'taperole'
-
 # Use Unicorn as the app server
 gem 'unicorn'
+
+# Use taperole for deployment
+gem 'taperole', '~>1.3'
+
 ```
 Note: You can also `$ gem install taperole` and not put Taperole in your Gemfile.
 
