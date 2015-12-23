@@ -101,7 +101,7 @@ class AnsibleRunner < ExecutionModule
       f.puts "retries-dir=/dev/null"
       f.puts "retry_files_enabled = False"
       f.puts '[ssh_connection]'
-      f.puts 'ssh_args = -o ForwardAgent=yes'
+      f.puts 'ssh_args=-o ForwardAgent=yes'
     end
   end
 
