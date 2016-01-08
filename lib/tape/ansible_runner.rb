@@ -88,7 +88,12 @@ class AnsibleRunner < ExecutionModule
     cmd += ' -vvvv' if opts.verbose
     cmd += " -t #{opts.tags}" if opts.tags
     STDERR.puts "Executing: #{cmd}" if opts.verbose
-    Kernel.exec(cmd)
+    notify_observers(:start)
+    if Kernel.system(cmd)
+      notify_observers(:success)
+    else
+      notify_observers(:fail)
+    end
   end
 
   def enforce_roles_path!
