@@ -63,6 +63,15 @@ Then use the `-l` option to specify the stage/environment
 tape ansible deploy -l staging
 ```
 
+### Additional Configs
+#### Setup Server's Ruby Version
+*taperole/tapevars.yml*
+
+```
+rbenv:
+  ruby_version: 2.3.0
+```
+
 ## Testing
 ### With vagrant
 
