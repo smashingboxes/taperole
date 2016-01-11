@@ -152,7 +152,7 @@ To ensure you have ssh access as root to your server:
 `$ pwd` in the server and you should see `/root`.
 `$ exit` to get close your session.
 
-### Deploying with Taperole
+### Deploying a Rails Application with Taperole
 
 1. Confirm that `taperole`, `pg`, and `unicorn` are in your gemfile.
 2. `$ bundle`
@@ -175,19 +175,20 @@ be_app_repo: [git repo]
 dev_key_files:
   - dev_keys/your_name.pub
 ```
-7. Add this to your gitignore.
+7. Copy all developers public keys into the `dev_keys` directory.
+8. Add this to your gitignore.
 ```
 # Ignore this stuff for Taperole
 config/secrets.yml
 config/database.yml
 ```
-8. If it isn't automatically, comment out front end stuff:
+9. If it isn't automatically, comment out front end stuff:
  * `# fe_deploy` in omnibox.yml
  * `# - frontend_deploy` in deploy.yml
 
-9. git add and commit and push to master
-10. Run `$ tape ansible everything.` This will take a long time, so grab a sandwich or something.
-11. This should chug right along until it gets to
+10. git add and commit and push to master
+11. Run `$ tape ansible everything.` This will take a long time, so grab a sandwich or something.
+12. This should chug right along until it gets to
 ```
 TASK: [backend_config | Ask for secrets.yml] **********************************
 ok: [159.203.126.223] => {
@@ -195,15 +196,15 @@ ok: [159.203.126.223] => {
 }
 ```
 where it will hang. Don't cancel the deploy.
-12. Open a new terminal tab and generate a secret key by running `$ rake secret` from the root directory of your rails app. Don't lose this.
-13. Run `$ ssh deployer@0.0.0.0`
-14. Once you're in the server, `$ cd walkthrough/config`. If you `$ ls`, you should see that there is no `secrets.yml` file. `$ vi secrets.yml` to create it.
-15. When you're done secrets.yml should look something like:
+13. Open a new terminal tab and generate a secret key by running `$ rake secret` from the root directory of your rails app. Don't lose this.
+14. Run `$ ssh deployer@<ip_to_server>`
+15. Once you're in the server, `$ cd walkthrough/config`. If you `$ ls`, you should see that there is no `secrets.yml` file. `$ vi secrets.yml` to create it.
+16. When you're done secrets.yml should look something like:
 ```
 production:
   secret_key_base: thisisthesecretkeyyougeneratedinstep9
 ```
-16. Your deployment should automatically continue.
+17. Your deployment should automatically continue.
 
 
 ## Slack integration
