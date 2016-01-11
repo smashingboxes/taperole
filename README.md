@@ -205,3 +205,13 @@ production:
 ```
 16. Your deployment should automatically continue.
 
+
+## Slack integration
+
+Tape includes built-in support for posting messages to slack at the beginning and end of deployments.
+
+Here are the steps needed to enable this functionality:
+
+1. Start by setting up [an incoming webhook integration](https://my.slack.com/services/new/incoming-webhook/)
+2. Add that URL to `tape_vars.yml` as `slack_webhook_url`
+3. Profit.
