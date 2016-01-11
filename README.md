@@ -152,7 +152,7 @@ To ensure you have ssh access as root to your server:
 `$ pwd` in the server and you should see `/root`.
 `$ exit` to get close your session.
 
-### Deploying a Rails Application with Taperole
+### Provisioning/Deploying a Rails Application server with Taperole
 
 1. Confirm that `taperole`, `pg`, and `unicorn` are in your gemfile.
 2. `$ bundle`
@@ -206,6 +206,18 @@ production:
 ```
 17. Your deployment should automatically continue.
 
+
+### Deploying your latest changes
+
+To deploy your latest changes to your tape-provisioned server:
+
+```
+tape ansible deploy
+```
+
+This will git pull the latest changes from the tracking branch you specified and restart all services via monit.
+
+This command runs all Ansible roles specified in the deploy.yml playbook.
 
 ## Slack integration
 
