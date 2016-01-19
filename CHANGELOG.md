@@ -1,3 +1,5 @@
+### 1.3.5
+* Fix issue with missing opts for slack notifier failing ansible commands
 ### 1.3.3
 * Added slack notifications
 * Added fe build command to tape_vars.yml template
