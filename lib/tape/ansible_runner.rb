@@ -45,8 +45,8 @@ class AnsibleRunner < ExecutionModule
          "This does it all."
 
   def initialize(*args)
-    register_notifiers
     super
+    register_notifiers
   end
 
   protected
