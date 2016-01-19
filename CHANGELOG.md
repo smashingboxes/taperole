@@ -1,3 +1,6 @@
+### 1.3.6
+* Added support for ansible 2.0
+
 ### 1.3.5
 * Fix issue with missing opts for slack notifier failing ansible commands
 ### 1.3.3
