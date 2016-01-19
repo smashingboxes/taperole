@@ -1,3 +1,8 @@
+### 1.3.3
+* Added slack notifications
+* Added fe build command to tape_vars.yml template
+* Fixed issues where test for bower.json was returning 1 exit code
+
 ### 1.3.2
 * Fixes ssh_args to actually enable agent forwarding for everyone
 
