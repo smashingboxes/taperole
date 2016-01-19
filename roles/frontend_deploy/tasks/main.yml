@@ -13,7 +13,7 @@
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc
   command: chdir={{ fe_app_path }}
-    bash -lc 'test -e package.json && npm install'
+    bash -lc 'test -e package.json && npm install ; return 0'
   tags: [fe_deploy]
 
 - name: Bower install
