@@ -9,11 +9,12 @@ class SlackNotifier
 
   def update(status)
     @status = status
-    @notifier.ping
+    @notifier.ping(
       "",
       # TODO: Fill in real icon url
       icon_url: 'https://image.freepik.com/free-icon/adhesive-tape_318-42276.png',
       attachments: attachments
+    )
   end
 
   private

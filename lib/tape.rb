@@ -22,8 +22,7 @@ module TapeBoxer
   class ExecutionModule
     attr_reader :opts
     def initialize(opts)
-      @opts = opts
-      register_notifiers
+      @opts = opts || {}
     end
 
     def self.actions
