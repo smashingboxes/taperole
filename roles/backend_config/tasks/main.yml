@@ -30,5 +30,3 @@
            bash -lc "bundle exec rake assets:precompile RAILS_ENV={{be_app_env}}"
   tags: [precompile_assets,be_deploy]
   when: precompile_assets
-
-  tags: [be_deploy]
