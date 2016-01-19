@@ -72,6 +72,8 @@ module TapeBoxer
       {
         app_name: config["app_name"],
         user: `whoami`.chomp,
+        # FIXME: get host information corectly
+        # hosts: opts.host_pattern || 'default',
         hosts: opts.host_pattern || 'default',
         repo: config["be_app_repo"] || ''
       }
