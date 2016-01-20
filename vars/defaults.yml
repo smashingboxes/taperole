@@ -31,6 +31,4 @@ precompile_assets: true
 # Sets server_name in the nginx sites-enabled file
 app_url: false
 
-nodejs_version: 4.2
-
 fe_build_command: gulp build

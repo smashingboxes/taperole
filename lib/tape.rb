@@ -52,7 +52,6 @@ module TapeBoxer
       !Dir["#{local_dir}/config.ru"].empty?
     end
 
-
     def execute_action(action)
       action = action.to_sym
       unless actions.include?(action)
