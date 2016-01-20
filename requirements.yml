@@ -10,8 +10,6 @@
 - src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
 
-- src: williamyeh.nodejs
-
 - src: bennojoy.memcached
 
 - src: jnv.mosh

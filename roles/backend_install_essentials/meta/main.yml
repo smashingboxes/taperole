@@ -2,4 +2,4 @@
 dependencies:
   - role: bennojoy.memcached
   - role: zzet.rbenv
-  - role: williamyeh.nodejs
+  - role: node
