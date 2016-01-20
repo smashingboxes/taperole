@@ -18,11 +18,12 @@
 * Run `tape installer install` in project repo
 * Update your hosts file with the IP address of your server (this can be found in your Droplet). If you go down to "Multistage", you'll see an excellent example of what your hosts file should look like.
 * Fill in missing values in `tape_vars.yml`. Should look something like this:
-```
-app_name: [app name]
 
+```yaml
+app_name: [app name]
 be_app_repo: [git repo]
 ```
+
 * Copy all developers public keys into a new directory (dev_keys is a good example for the name of that directory).
 * `$ tape ansible everything`
 
@@ -30,10 +31,17 @@ be_app_repo: [git repo]
 
 **NOTE: Upgrading tape on a machine is only supported for patch versions (ie 1.3.0 to 1.3.1). For minor or major versions, it is advised that you stand up a new box, and start from stratch.
 
-```
+```bash
 bundle update taperole
 tape installer install
 ```
+
+### Configuration
+
+All default configurations found in `vars/defaults.yml` can be overridden in your local `taperole/tape_vars.yml` file
+
+**Default Node Version**: 4.2.x  
+**Default Ruby Version** 2.3.0  
 
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
@@ -61,15 +69,6 @@ Then use the `-l` option to specify the stage/environment
 
 ```sh
 tape ansible deploy -l staging
-```
-
-### Additional Configs
-#### Setup Server's Ruby Version
-*taperole/tapevars.yml*
-
-```
-rbenv:
-  ruby_version: 2.3.0
 ```
 
 ## Testing
