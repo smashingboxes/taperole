@@ -48,14 +48,6 @@ module TapeBoxer
       copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
     end
 
-    def fe_app?
-      !Dir["#{local_dir}/gulpfile.*"].empty?
-    end
-
-    def rails_app?
-      !Dir["#{local_dir}/config.ru"].empty?
-    end
-
     def copy_static_app_examples
       copy_example(
         'templates/static_html/omnibox.example.yml',

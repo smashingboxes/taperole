@@ -23,6 +23,7 @@ module TapeBoxer
     attr_reader :opts
     def initialize(opts)
       @opts = opts || {}
+      @observers = []
     end
 
     def self.actions
@@ -96,7 +97,6 @@ module TapeBoxer
     end
 
     def add_observer(observer)
-      @observers = [] unless @observers
       @observers.push(observer)
     end
 
