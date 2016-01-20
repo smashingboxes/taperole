@@ -1,16 +1,18 @@
 ---
 - src: jnv.unattended-upgrades
-  version: v1.0.1
+  version: v1.1.1
 
 - src: zzet.rbenv
-  version: 2.1.3
+  version: 2.1.7
 
 - src: lxhunter.apt
 
 - src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
+  version: v1.3.0
 
-- src: bennojoy.memcached
+- src: geerlingguy.memcached
+  version: 1.0.4
 
 - src: jnv.mosh
 

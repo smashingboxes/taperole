@@ -5,6 +5,9 @@ fe_app_path: "/home/{{ deployer_user.name }}/{{ fe_app_name }}"
 
 tapefiles_dir: "./taperole"
 
+rbenv:
+  ruby_version: 2.3.0
+
 deployer_user:
   name: deployer
   groups:
