@@ -1,3 +1,10 @@
+### 1.4.0
+* Install nvm which installed node
+* Update postgres role
+* Update rbenv role
+* New memcached role that supports ansible 2.0
+* Update unattended-upgrades role
+
 ### 1.3.6
 * Added support for ansible 2.0
 
