@@ -1,0 +1,12 @@
+- name: Install ufw
+  apt: name=ufw
+
+- name: Allow ssh through firewall
+  ufw: proto=tcp port=22 rule=allow
+
+- name: Set ufw policy
+  ufw: state=enabled direction=incoming policy=deny
+
+- name: Allow ports
+  ufw: proto=tcp port={{ item }} rule=allow
+  with_items: "{{ allowed_ports }}"

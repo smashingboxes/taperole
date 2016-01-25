@@ -41,7 +41,7 @@ class AnsibleRunner < ExecutionModule
          "Checks out app code, installs dependencies and restarts unicorns for "\
          "both FE and BE code."
   action :everything,
-         proc { valid_preconfigs ? ansible : puts("Not a Rails or JS app") },
+         proc { ansible if valid_preconfigs },
          "This does it all."
 
   def initialize(*args)
@@ -58,7 +58,7 @@ class AnsibleRunner < ExecutionModule
     elsif fe_app?
       true
     else
-      false
+      puts "Could not determine if application is Rails or JS"
     end
   end
 
