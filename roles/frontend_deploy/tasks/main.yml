@@ -8,18 +8,32 @@
        force=yes
   tags: [fe_deploy]
 
+- name: Detect package.json
+  command: chdir={{ fe_app_path }}
+    bash -lc 'test -e package.json'
+  register: npm_result
+  ignore_errors: true
+  tags: [fe_deploy]
+
 - name: NPM install
-  when: fe_app_repo is defined
+  when: fe_app_repo is defined and npm_result|success
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ fe_app_path }}
-    bash -lc 'test -e package.json && npm install ; return 0'
+    bash -lc 'npm install'
+  tags: [fe_deploy]
+
+- name: Detect bower.json
+  command: chdir={{ fe_app_path }}
+    bash -lc 'test -e bower.json'
+  register: bower_result
+  ignore_errors: true
   tags: [fe_deploy]
 
 - name: Bower install
-  when: fe_app_repo is defined
+  when: fe_app_repo is defined and bower_result|success
   remote_user: "{{ deployer_user.name }}"
-  command: chdir={{ fe_app_path }}
-    bash -lc 'test -e bower.json && bower install'
+  command: chdir={{ fe_app_path }} 
+    bash -lc 'bower install'
   tags: [fe_deploy]
 
 - name: Build FE
