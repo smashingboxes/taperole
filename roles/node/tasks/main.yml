@@ -17,11 +17,6 @@
   git: repo=https://github.com/creationix/nvm.git dest=/opt/nvm
   when: nvm_version|failed
 
-- name: Create node dir for all users
-  file:
-    dest=/usr/local/node
-    state=directory
-
 - name: Enable nvm for all users
   template: src=nvm.sh dest=/etc/profile.d/nvm.sh mode=755
 
