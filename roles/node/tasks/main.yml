@@ -27,9 +27,9 @@
 
 - name: Detect node
   command: bash -lc "node -v"
-  register: node_version
+  register: installed_node_version
   ignore_errors: yes
 
 - name: Install node 4.2 LTS and make it default node
-  command: bash -lc "nvm install 4.2 && nvm alias default 4.2"
-  when: node_version|failed
+  command: bash -lc "nvm install {{ node_version }} && nvm alias default {{ node_version }}"
+  when: installed_node_version|failed or installed_node_version != node_version
