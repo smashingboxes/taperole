@@ -2,4 +2,4 @@
 dependencies:
   - role: geerlingguy.memcached
   - role: zzet.rbenv
-  - role: node
+  - role: nodesource.node

@@ -32,6 +32,7 @@ precompile_assets: true
 app_url: false
 
 fe_build_command: gulp build
+node_version: 4.2
 
 allowed_ports:
   - 80
