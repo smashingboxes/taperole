@@ -1,3 +1,7 @@
+### 1.4.1
+* Blocks all ports on your server except 22, 80, 443
+* Installs node via nodesource
+
 ### 1.4.0
 * Install nvm which installed node
 * Update postgres role
