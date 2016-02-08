@@ -19,12 +19,15 @@ module TapeBoxer
     def install
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
       mkdir tapefiles_dir
-      if fe_app? && !rails_app?
+      if docker_app?
+        puts '🔎  Docker app specified'.pink
+        copy_examples :docker
+      elsif fe_app? && !rails_app?
         puts '🔎  JS/HTML app detected'.pink
-        copy_static_app_examples
-      else rails_app?
+        copy_examples :static_html
+      elsif rails_app?
         puts '🔎  Rails app detected'.pink
-        copy_basic_examples
+        copy_examples :rails_app
       end
       create_roles_dir
       create_inventory_file
@@ -48,34 +51,12 @@ module TapeBoxer
       copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
     end
 
-    def copy_static_app_examples
-      copy_example(
-        'templates/static_html/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/static_html/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/static_html/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
-    end
-
-    def copy_basic_examples
-      copy_example(
-        'templates/base/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/base/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/base/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+    def copy_examples(type)
+      Dir["templates/#{type}/*"].each do |file_name|
+        basename = File.basename file_name, ".example.yml"
+        to_file = "#{tapefiles_dir}/#{basename}.yml"
+        copy_example file_name, to_file
+      end
     end
 
     def uninstall

@@ -42,6 +42,10 @@ opt_parser = OptionParser.new do |opts|
       options.tags = t
     end
 
+  opts.on("-d", "--docker", "install with docker examples") do
+    options.docker = true
+  end
+
   opts.separator ''
   opts.separator "MODULES"
   TapeBoxer.registered_modules.values.each do |exec_module|
