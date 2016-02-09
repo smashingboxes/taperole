@@ -1,0 +1,12 @@
+- name: Install Docker
+  shell: wget -qO- https://get.docker.com/ | sh
+
+- name: Add Deployer to Docker Group
+  user: name={{ deployer_user.name }} groups=docker append=yes
+
+- name: Install Docker-Compose
+  shell: curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  creates: /usr/local/bin/docker-compose
+
+- name: Fix Docker-Compose permissions
+  file: path=/usr/local/bin/docker-compose mode="u+rx"

@@ -1,0 +1,8 @@
+- name: clone the app
+  when: docker_repo is defined
+  remote_user: "{{ deployer_user.name }}"
+  git: dest={{ docker_app_path }}
+       repo={{ docker_repo }}
+       version={{ docker_app_branch }}
+       accept_hostkey=true
+       force=yes
