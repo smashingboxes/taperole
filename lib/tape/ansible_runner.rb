@@ -36,6 +36,9 @@ class AnsibleRunner < ExecutionModule
   action :fe_deploy,
          proc { ansible_deploy '-t fe_deploy' },
          "Re-deploys fe code"
+  action :docker_deploy,
+         proc { ansible_deploy },
+         "Re-deploys docker code"
   action :deploy,
          proc { ansible_deploy '-t be_deploy,fe_deploy' },
          "Checks out app code, installs dependencies and restarts unicorns for "\

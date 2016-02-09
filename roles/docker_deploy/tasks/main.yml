@@ -1,8 +1,24 @@
 - name: clone the app
-  when: docker_repo is defined
+  when: docker_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ docker_app_path }}
-       repo={{ docker_repo }}
+       repo={{ docker_app_repo }}
        version={{ docker_app_branch }}
        accept_hostkey=true
        force=yes
+
+- name: Detect package.json
+  command: chdir={{ docker_app_path }}
+    bash -lc 'test -e package.json'
+  register: npm_result
+  ignore_errors: true
+
+- name: NPM install
+  when: fe_app_repo is defined and npm_result|success
+  remote_user: "{{ deployer_user.name }}"
+  command: chdir={{ docker_app_path }}
+    bash -lc 'npm install'
+
+- name: start docker-compose
+  command: chdir={{ docker_app_path }}
+    bash -lc 'docker-compose up -d'

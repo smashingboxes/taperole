@@ -34,7 +34,7 @@ module TapeBoxer
       create_ssh_keys_dir
       print 'Are you going to use vagrant? (y/n): '
       if gets.chomp == 'y'
-        copy_example 'Vagrantfile', 'Vagrantfile'
+        copy_example "#{tape_dir}/Vagrantfile", 'Vagrantfile'
       end
     end
 
@@ -48,11 +48,11 @@ module TapeBoxer
     end
 
     def create_inventory_file
-      copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
+      copy_example "#{tape_dir}/templates/base/hosts.example", "#{tapefiles_dir}/hosts"
     end
 
     def copy_examples(type)
-      Dir["templates/#{type}/*"].each do |file_name|
+      Dir["#{tape_dir}/templates/#{type}/*"].each do |file_name|
         basename = File.basename file_name, ".example.yml"
         to_file = "#{tapefiles_dir}/#{basename}.yml"
         copy_example file_name, to_file
@@ -94,7 +94,7 @@ module TapeBoxer
         if File.exist?("#{cp_file}")
           exists
         else
-          FileUtils.cp("#{tape_dir}/#{file}", "#{cp_file}")
+          FileUtils.cp("#{file}", "#{cp_file}")
           success
         end
       rescue Exception => e
