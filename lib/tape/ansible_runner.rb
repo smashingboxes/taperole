@@ -88,7 +88,10 @@ class AnsibleRunner < ExecutionModule
 
   def exec_ansible(playbook, args)
     enforce_roles_path!
-    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
+    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook " \
+          "-i #{inventory_file} " \
+          "#{playbook} #{args} #{hosts_flag} #{vault_pass_flag} " \
+          "-e tape_dir=#{tape_dir}"
     cmd += ' -vvvv' if opts.verbose
     cmd += " -t #{opts.tags}" if opts.tags
     STDERR.puts "Executing: #{cmd}" if opts.verbose
@@ -116,6 +119,14 @@ class AnsibleRunner < ExecutionModule
 
   def hosts_flag
     "-l #{opts.host_pattern}" if opts.host_pattern
+  end
+
+  def vault_pass_flag
+    if opts.ask_pass
+      "--ask-vault-pass"
+    elsif opts.pass_file
+      "--vault-password-file #{opts.pass_file}"
+    end
   end
 
   def inventory_file
