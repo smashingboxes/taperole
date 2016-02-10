@@ -1,0 +1,22 @@
+# Development Docker Setup Node Example
+
+# Redis
+# redis:
+#   image: redis
+
+# Postgres
+# db:
+#   image: postgres
+
+web:
+  build: .
+  command: npm start
+  # environment:
+    # REDIS_HOST: redis
+  # links:
+    # - redis
+    # - db
+  ports:
+    - "3000:3000"
+  volumes:
+    - .:/nodeapp

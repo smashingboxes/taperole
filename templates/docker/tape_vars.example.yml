@@ -1,4 +1,4 @@
-docker_app_name:
+app_name:
 
 # App Configs
 docker_app_repo:

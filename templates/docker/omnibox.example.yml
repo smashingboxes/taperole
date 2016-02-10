@@ -11,4 +11,5 @@
     - ufw
     - deployer_user
     - docker_install_essentials
+    - docker_checkout
     - docker_deploy

@@ -53,8 +53,9 @@ module TapeBoxer
 
     def copy_examples(type)
       Dir["#{tape_dir}/templates/#{type}/*"].each do |file_name|
-        basename = File.basename file_name, ".example.yml"
-        to_file = "#{tapefiles_dir}/#{basename}.yml"
+        basename = File.basename file_name
+        basename.gsub! /\.example/, ""
+        to_file = "#{tapefiles_dir}/#{basename}"
         copy_example file_name, to_file
       end
     end

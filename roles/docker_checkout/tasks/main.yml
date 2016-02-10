@@ -1,0 +1,18 @@
+- name: clone the app
+  when: docker_app_repo is defined
+  remote_user: "{{ deployer_user.name }}"
+  git: dest={{ docker_app_path }}
+       repo={{ docker_app_repo }}
+       version={{ docker_app_branch }}
+       accept_hostkey=true
+       force=yes
+
+- name: copy Dockerfile
+  command: chdir={{ docker_app_path }}
+           creates=Dockerfile
+           cp {{tapefiles_dir}}/Dockerfile ./
+
+- name: copy docker-compose file
+  command: chdir={{ docker_app_path }}
+           creates=docker-compose.production.yml
+           cp {{tapefiles_dir}}/docker-compose.production.yml ./

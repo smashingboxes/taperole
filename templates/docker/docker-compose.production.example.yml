@@ -1,0 +1,19 @@
+# Production Docker Setup Node
+# Redis
+# redis:
+#   image: redis
+
+# Postgres
+# db:
+#   image: postgres
+
+web:
+  build: .
+  command: npm start
+  # environment:
+  #   REDIS_HOST: redis
+  # links:
+  #   - redis
+  #   - db
+  ports:
+    - "80:3000"
