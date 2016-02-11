@@ -7,10 +7,12 @@
        accept_hostkey=true
        force=yes
 
-- command: git ls-files Dockerfile
+- command: chdir={{ docker_app_path }}
+           git ls-files Dockerfile
   register: docker_file
 
-- command: git ls-files docker-compose.production.yml
+- command: chdir={{ docker_app_path }}
+           git ls-files docker-compose.production.yml
   register: production_compose_file
 
 - name: copy Dockerfile
