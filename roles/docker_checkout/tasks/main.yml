@@ -16,9 +16,11 @@
   register: production_compose_file
 
 - name: copy Dockerfile
-  command: bash -lc "cp {{tapefiles_dir}}/Dockerfile {{docker_app_path}}"
+  command: chdir={{ docker_app_path }}
+           bash -lc "cp {{tapefiles_dir}}/Dockerfile {{docker_app_path}}"
   when: docker_file.stdout.find('Dockerfile') == -1
 
 - name: copy docker-compose file
-  command: bash -lc "cp {{tapefiles_dir}}/docker-compose.production.yml {{docker_app_path}}"
+  command: chdir={{ docker_app_path }}
+           bash -lc "cp {{tapefiles_dir}}/docker-compose.production.yml {{docker_app_path}}"
   when: docker_file.stdout.find('docker-compose.production.yml') == -1
