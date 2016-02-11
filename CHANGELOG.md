@@ -1,3 +1,6 @@
+### 1.4.2
+* Remove Mosh
+
 ### 1.4.1
 * Blocks all ports on your server except 22, 80, 443
 * Installs node via nodesource
