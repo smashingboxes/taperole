@@ -1,4 +1,0 @@
----
-mosh_pkg: mosh
-mosh_debian_use_backports: no
-mosh_debian_backports_target: "{{ansible_distribution_release}}-backports"
