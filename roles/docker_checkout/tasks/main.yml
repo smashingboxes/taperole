@@ -19,12 +19,12 @@
 
 - name: copy Dockerfile
   command: chdir={{ docker_app_path }}
-           bash -lc "cp {{tapefiles_dir}}/Dockerfile {{docker_app_path}}"
+           bash -lc "/bin/cp {{tapefiles_dir}}/Dockerfile {{docker_app_path}}"
   remote_user: "{{ deployer_user.name }}"
   when: docker_file.stdout.find('Dockerfile') == -1
 
 - name: copy docker-compose file
   command: chdir={{ docker_app_path }}
-           bash -lc "cp {{tapefiles_dir}}/docker-compose.production.yml {{docker_app_path}}"
+           bash -lc "/bin/cp {{tapefiles_dir}}/docker-compose.production.yml {{docker_app_path}}"
   remote_user: "{{ deployer_user.name }}"
   when: docker_file.stdout.find('docker-compose.production.yml') == -1
