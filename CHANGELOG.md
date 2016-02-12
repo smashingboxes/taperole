@@ -1,3 +1,7 @@
+### 1.4.3
+* Update nodesource ansible galaxy role
+* Install latest version of node 4.x
+
 ### 1.4.2
 * Remove Mosh
 
