@@ -23,7 +23,7 @@ class AnsibleRunner < ExecutionModule
          "Restarts Nginx"
   action :configure_deployer_user,
          proc { ansible '-t deployer' },
-         "Ensures the deployer user is present and configures his SSH keys"
+         "Ensures the deployer user is present and configures its SSH keys"
   action :reset_db,
          proc { ansible '-t db_reset -e force_db_reset=true' },
          "wipes and re-seeds the DB"
