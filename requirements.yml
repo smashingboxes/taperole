@@ -14,8 +14,6 @@
 - src: geerlingguy.memcached
   version: 1.0.4
 
-- src: jnv.mosh
-
 - src: tersmitten.htop
 
 - src: nodesource.node
