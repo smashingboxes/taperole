@@ -1,3 +1,7 @@
-- name: build and start containers
+- name: build new container
+  command: chdir={{ docker_app_path }}
+    docker-compose -fdocker-compose.production.yml build
+
+- name: start new container
   command: chdir={{ docker_app_path }}
     docker-compose -fdocker-compose.production.yml up -d
