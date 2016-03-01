@@ -27,6 +27,11 @@ opt_parser = OptionParser.new do |opts|
       options.port = p
     end
 
+  opts.on('-bBOOK', "--book=PLAYBOOK",
+    String, "A custom playbook to run") do |p|
+      options.book = p
+    end
+
   opts.on("-h", "--help", "Show this help") do
     STDERR.puts opts
     exit 0
