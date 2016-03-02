@@ -43,6 +43,9 @@ class AnsibleRunner < ExecutionModule
   action :everything,
          proc { valid_preconfigs ? ansible : puts("Not a Rails or JS app") },
          "This does it all."
+  action :playbook,
+         proc { ansible_custom_playbook },
+         "Run a custom playbook"
 
   def initialize(*args)
     super
@@ -81,6 +84,10 @@ class AnsibleRunner < ExecutionModule
 
   def ansible_deploy(cmd_str = '')
     exec_ansible("#{tapefiles_dir}/deploy.yml", cmd_str)
+  end
+
+  def ansible_custom_playbook(cmd_str = '')
+    exec_ansible("#{tapefiles_dir}/#{opts.book}", cmd_str)
   end
 
   def exec_ansible(playbook, args)
