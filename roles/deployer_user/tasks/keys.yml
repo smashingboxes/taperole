@@ -9,15 +9,9 @@
   command: "cp /root/.ssh/authorized_keys /home/{{ deployer_user.name }}/.ssh/authorized_keys"
 
 - name: Ensure devs keys are present
-  authorized_key: key=
+  authorized_key: key={{ lookup('file', item) }}
                   manage_dir=yes
                   state=present
                   user=deployer
   with_fileglob:
-    - "{{tapefiles_dir}}/dev_keys/*"
-
-- name: Ensure DO pubkey is present
-  authorized_key: key="{{ lookup('file', 'id_rsa_digital_ocean.pub') }}"
-                  manage_dir=yes
-                  state=present
-                  user=deployer
+    - "./dev_keys/*"
