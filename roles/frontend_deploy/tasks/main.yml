@@ -1,3 +1,16 @@
+- name: Check if there are commited changes on {{ fe_app_branch }}
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc "git fetch origin && git diff --name-only origin/{{ fe_app_branch }}"
+  args:
+    chdir: "{{fe_app_path}}"
+  register: changes_on_remote
+  tags: [fe_deploy]
+
+- name: Inform User if there are no changes
+  debug: msg={{no_changes_found_error.split('\n')}}
+  when: changes_on_remote.stdout_lines == []
+  tags: [fe_deploy]
+
 - name: clone the FE app
   when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
