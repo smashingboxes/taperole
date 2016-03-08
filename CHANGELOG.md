@@ -1,3 +1,9 @@
+### 1.5.0
+* Self-signed SSL is now on by default
+* Port 80 redirects to 443
+* You can now build custom playbooks with then `tape ansible playbook -b playbook.yml` command
+* Dev Keys folder is working again!
+
 ### 1.4.3
 * Update nodesource ansible galaxy role
 * Install latest version of node 4.x
