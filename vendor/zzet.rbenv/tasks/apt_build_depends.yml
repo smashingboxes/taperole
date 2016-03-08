@@ -1,9 +1,16 @@
+- name: update apt cache
+  apt: update_cache=yes
+  sudo: true
+  tags:
+    - rbenv
+
 - name: install build depends
   apt: pkg={{ item }} state=present install_recommends=no
   with_items:
     - build-essential
     - git
     - libcurl4-openssl-dev
+    - libffi-dev
     - libreadline-dev
     - libssl-dev
     - libxml2-dev

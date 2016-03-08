@@ -39,3 +39,4 @@ Thumbs.db
 .vagrant
 vagrant_*
 
+.kitchen

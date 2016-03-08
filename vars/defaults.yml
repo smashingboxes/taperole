@@ -3,6 +3,8 @@ be_app_path: "/home/{{ deployer_user.name }}/{{ app_name }}"
 fe_app_name: "{{ app_name }}_fe"
 fe_app_path: "/home/{{ deployer_user.name }}/{{ fe_app_name }}"
 
+tapefiles_dir: "./taperole"
+
 deployer_user:
   name: deployer
   groups:
@@ -29,3 +31,13 @@ precompile_assets: true
 # Sets server_name in the nginx sites-enabled file
 app_url: false
 
+fe_build_command: gulp build
+
+allowed_ports:
+  - 80
+  - 443
+
+no_changes_found_error: |
+  ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
+  No Changes detected on remote branch proceeding with deploy anyway
+  ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️

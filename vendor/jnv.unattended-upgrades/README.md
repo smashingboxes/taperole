@@ -16,10 +16,16 @@ If you set `unattended_mail` to an e-mail address, make sure `mailx` command is 
 
 The role requires unattended-upgrades version 0.70 and newer, which is available since Debian Wheezy and Ubuntu 12.04 respectively. This is due to [Origins Patterns](#origins-patterns) usage; if this is not available on your system, you may use [the first version of the role](https://github.com/jnv/ansible-role-unattended-upgrades/tree/v0.1).
 
+### Automatic Reboot
+
+If you enable automatic reboot feature (`unattended_automatic_reboot`), the role will install `update-notifier-common` package, which is required for detecting and executing reboot after the upgrade.
+
+**NOTE:** This feature is not currently supported on Debian Jessie, due to a missing replacement for the said package. Attempt to enable this feature on unsupported system will cause a failure. See [the discussion in #6](https://github.com/jnv/ansible-role-unattended-upgrades/issues/6) for more details.
+
 ## Role Variables
 
 * `unattended_origins_patterns`: array of origins patterns to determine whether the package can be automatically installed, for more details see [Origins Patterns](#origins-patterns) below.
-    * Default for Debian: `['origin=Debian,archive=${distro_codename},label=Debian-Security']`
+    * Default for Debian: `['origin=Debian,codename=${distro_codename},label=Debian-Security']`
     * Default for Ubuntu: `['origin=Ubuntu,archive=${distro_codename}-security,label=Ubuntu']`
 * `unattended_package_blacklist`: packages which won't be automatically upgraded
     * Default: `[]`
@@ -82,7 +88,7 @@ By default, only security updates are allowed for both Ubuntu and Debian. You ca
 ```yaml
 # Archive based matching
 unattended_origins_patterns:
-  - 'origin=Debian,archive=${distro_codename},label=Debian-Security' # resolves to archive=jessie
+  - 'origin=Debian,codename=${distro_codename},label=Debian-Security' # resolves to codename=jessie
   - 'o=Debian,a=stable'
   - 'o=Debian,a=stable-updates'
   - 'o=Debian,a=proposed-updates'

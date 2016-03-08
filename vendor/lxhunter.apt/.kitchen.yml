@@ -1,0 +1,67 @@
+---
+driver:
+  name: docker
+  binary: /usr/local/bin/docker
+
+provisioner:
+  name: ansible_playbook
+  ansible_verbose: true
+  ansible_verbosity: 1
+  hosts: test-kitchen
+  require_ansible_omnibus: false
+  require_chef_omnibus: false
+  require_ansible_repo: false
+
+platforms:
+  - name: debian-8
+    driver_config:
+      provision_command:
+        - apt-get update && apt-get install git ruby build-essential python-setuptools python-netaddr -y
+        - apt-get install python-pip python-dev git -y
+        - pip install PyYAML jinja2 paramiko python-slugify
+        - cd /tmp && git clone https://github.com/ansible/ansible.git --recursive
+        - cd /tmp/ansible && make install
+        - mkdir /etc/ansible && cp /tmp/ansible/examples/hosts /etc/ansible/
+  - name: debian-7
+    driver_config:
+      provision_command:
+        - apt-get update && apt-get install git ruby build-essential python-setuptools python-netaddr -y
+        - apt-get install python-pip python-dev git -y
+        - pip install PyYAML jinja2 paramiko python-slugify
+        - cd /tmp && git clone https://github.com/ansible/ansible.git --recursive
+        - cd /tmp/ansible && make install
+        - mkdir /etc/ansible && cp /tmp/ansible/examples/hosts /etc/ansible/
+  - name: ubuntu-14.04
+    driver_config:
+      provision_command:
+        - apt-get update && apt-get install git ruby build-essential python-setuptools python-netaddr -y
+        - apt-get install python-pip python-dev git -y
+        - pip install PyYAML jinja2 paramiko python-slugify
+        - cd /tmp && git clone https://github.com/ansible/ansible.git --recursive
+        - cd /tmp/ansible && make install
+        - mkdir /etc/ansible && cp /tmp/ansible/examples/hosts /etc/ansible/
+  - name: ubuntu-14.10
+    driver_config:
+      provision_command:
+        - apt-get update && apt-get install git ruby build-essential python-setuptools python-netaddr -y
+        - apt-get install python-pip python-dev git -y
+        - pip install PyYAML jinja2 paramiko python-slugify
+        - cd /tmp && git clone https://github.com/ansible/ansible.git --recursive
+        - cd /tmp/ansible && make install
+        - mkdir /etc/ansible && cp /tmp/ansible/examples/hosts /etc/ansible/
+  - name: ubuntu-15.04
+    driver_config:
+      provision_command:
+        - apt-get update && apt-get install git ruby build-essential python-setuptools python-netaddr -y
+        - apt-get install python-pip python-dev git -y
+        - pip install PyYAML jinja2 paramiko python-slugify
+        - cd /tmp && git clone https://github.com/ansible/ansible.git --recursive
+        - cd /tmp/ansible && make install
+        - mkdir /etc/ansible && cp /tmp/ansible/examples/hosts /etc/ansible/
+
+suites:
+  - name: default
+
+# Fix for: https://github.com/neillturner/kitchen-ansible/issues/66
+verifier:
+  ruby_bindir: '/usr/bin'

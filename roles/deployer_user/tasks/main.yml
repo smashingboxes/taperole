@@ -12,7 +12,7 @@
 # It's possible for the deployer's homedir to get created on accident by
 # a deploy script or something getting run before this.  This just ensures
 # the env is sane moving forward
-- name: Ensure deployer user owns his own homedir
+- name: Ensure deployer user owns its own homedir
   file: path=/home/deployer state=directory owner=deployer
 
 - include: keys.yml

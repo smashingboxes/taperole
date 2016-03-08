@@ -1,15 +1,11 @@
 Description
 ===========
 
-[![Build Status](https://travis-ci.org/lxhunter/apt.png?branch=master)](https://travis-ci.org/lxhunter/apt)
-
 `apt` is an ansible role which was built to help you with:
 
  * updating the apt-cache
- * control if you want `recommended` packages
- * control if you want `suggested` packages
+ * lets you control the configuration of apt by modifing the content of `/etc/apt/apt.conf.d`
  * optionally install additional packages
- * optionally configure unattended upgrades
 
 I use the role as part of my common setup.
 
@@ -18,17 +14,28 @@ I hope it helps!
 Testing
 ===========
 
-For your convience I also added vagrant to some testing, please find attached a vagrant file for ubuntu1310-i386
+For your convience I also added test-kitchen for testing, please find attached the test kitchen.yml file for:
 
+* Debian Jessie
+* Debian Squeeze
+* Ubuntu Vivid Vervet
+* Ubuntu Trusty Tahr
+* Ubuntu Utopic Unicorn
 
 ```lang
 $ ansible-galaxy install lxhunter.apt
 $ cd /usr/local/etc/ansible/roles/lxhunter.apt
-$ vagrant up
+$ kitchen test
 ```
 
-If you need more base images have look at the wonderful project:
-* [basebox-packer](https://github.com/misheska/basebox-packer)
+#### Requirements for test kitchen
+
+I used homebrew with rbenv for ruby on osx.
+
+required:
+```shell
+$ gem install test-kitchen kitchen-docker kitchen-ansible kitchen-vagrant
+```
 
 Requirements
 ===========
@@ -36,32 +43,33 @@ Requirements
 This role requires Ansible 1.4 or higher.
 
 Tested and supported:
-* Ubuntu saucy
+* Debian Jessie
+* Debian Squeeze
+* Ubuntu Vivid Vervet
+* Ubuntu Trusty Tahr
+* Ubuntu Utopic Unicorn
 
 Optional Variables
 ===========
 
 These are the turning knobs and their default values, if you like to change em, just go ahead.
 
-```lang
-# group_vars/all.yml
-
-# Sets the amount of time the cache is valid (5m)
+```yaml
+# Default: Sets the amount of time the cache is valid (5m)
 apt_cache_valid_time: 3600
+
 # apt by default does not specify whether or not “recommended” packages should be installed.
-apt_install_recommends: false
 # apt by default does not specify whether or not “suggested” packages should be installed.
-apt_install_suggests: false
+apt_config:
+  - { key: 'APT::Install-Recommends', value: 'false', file: '10general' }
+  - { key: 'APT::Install-Suggests', value: 'false', file: '10general' }
 
 # Optional: Array of additional packages
-apt_install_packages: []
+apt_install_packages: ['sudo']
 
-# Optional: attributes for unattended upgrades config
-apt_unattended_upgrades_config:
-  - { key: 'APT::Periodic::Update-Package-Lists', value: '1' }
-  - { key: 'APT::Periodic::Download-Upgradeable-Packages', value: '1' }
-  - { key: 'APT::Periodic::AutocleanInterval', value: '7' }
-  - { key: 'APT::Periodic::Unattended-Upgrade', value: '1' }
+# Optional: Array of packages to be purged
+apt_purge_packages: ['rpcbind']
+
 ```
 
 Examples
@@ -69,7 +77,7 @@ Examples
 
 Like so you can include the role in your setup:
 
-```lang
+```shell
 # playbook.yml
 
 - { role: lxhunter.apt }

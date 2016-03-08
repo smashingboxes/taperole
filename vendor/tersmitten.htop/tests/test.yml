@@ -1,0 +1,6 @@
+---
+# test file for htop
+- hosts: localhost
+  remote_user: root
+  roles:
+    - ansible-htop

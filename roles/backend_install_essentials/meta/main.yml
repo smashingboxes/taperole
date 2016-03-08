@@ -1,5 +1,5 @@
 ---
 dependencies:
-  - role: bennojoy.memcached
+  - role: geerlingguy.memcached
   - role: zzet.rbenv
-  - role: leonelgalan.node
+  - role: nodesource.node

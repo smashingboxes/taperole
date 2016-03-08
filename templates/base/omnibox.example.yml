@@ -8,6 +8,7 @@
 
   roles:
     - general
+    - ufw
     - deployer_user
     - monit_install
     - postgres
