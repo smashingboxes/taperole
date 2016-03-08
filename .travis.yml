@@ -1,0 +1,35 @@
+language: ruby
+
+sudo: true
+
+rvm:
+  - 2.2.3
+
+addons:
+  apt:
+    packages:
+    - git
+    - libssl-dev
+    - libreadline-dev
+    - zlib1g-dev
+
+# We need the newest version of ansible for tape
+before_install:
+  - sudo apt-get update -q
+  # Remove the PostgreSQL installed by Travis
+  - sudo apt-get purge pgdg-keyring '^postgresql.*' -y
+  - sudo apt-get autoremove -y -qq
+  - sudo rm -rf /etc/postgresql
+  - sudo rm -rf /var/lib/postgresql
+  - sudo rm -f /etc/apt/sources.list.d/pgdg-source.list
+
+install:
+  - pip install ansible
+  - gem build taperole.gemspec
+  - gem install --local taperole
+  - ./bin/app_setup.sh
+
+script:
+  - cd ~/vanilla-rails-app/
+  - echo localhost > inventory
+  - tape ansible everything -vvvv
