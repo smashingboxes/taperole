@@ -15,19 +15,21 @@ addons:
 
 # We need the newest version of ansible for tape
 before_install:
-  - sudo apt-add-repository -y ppa:ansible/ansible
   - sudo apt-get update -q
-  - sudo apt-get install aptitude -y
-  - sudo apt-get install ansible -y
-  - sudo /etc/init.d/postgresql stop
-  - sudo apt-get remove postgresql
-  - sudo dpkg --get-selections | grep post
+  # Remove the PostgreSQL installed by Travis
+  - sudo apt-get purge pgdg-keyring '^postgresql.*' -y
+  - sudo apt-get autoremove -y -qq
+  - sudo rm -rf /etc/postgresql
+  - sudo rm -rf /var/lib/postgresql
+  - sudo rm -f /etc/apt/sources.list.d/pgdg-source.list
 
 install:
+  - pip install ansible
   - gem build taperole.gemspec
   - gem install --local taperole
   - ./bin/app_setup.sh
-  - cd ~/vanilla-rails-app/ && tape ansible everything -vvvv
 
 script:
-  - curl localhost | grep 'Hello World!'
+  - cd ~/vanilla-rails-app/
+  - echo localhost > inventory
+  - tape ansible everything -vvvv
