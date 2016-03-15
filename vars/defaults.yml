@@ -37,6 +37,8 @@ allowed_ports:
   - 80
   - 443
 
+nodejs_version: "4.x"
+
 no_changes_found_error: |
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
   No Changes detected on remote branch proceeding with deploy anyway

@@ -1,14 +1,20 @@
+- name: Check if path exists
+  stat: path={{ be_app_path }}
+  register: be_app_path_stat
+  tags: [be_deploy]
+
 - name: Check if there are commited changes on {{ be_app_branch }}
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "git fetch origin && git diff --name-only origin/{{ be_app_branch }}"
   args:
     chdir: "{{be_app_path}}"
   register: changes_on_remote
+  when: be_app_path_stat.stat.exists
   tags: [be_deploy]
 
 - name: Inform User if there are no changes
   debug: msg={{no_changes_found_error.split('\n')}}
-  when: changes_on_remote.stdout_lines == []
+  when: be_app_path_stat.stat.exists and changes_on_remote.stdout_lines == []
   tags: [be_deploy]
 
 - name: Check out application
