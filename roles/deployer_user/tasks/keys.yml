@@ -1,12 +1,19 @@
 - name: Create deployer user ssh dir
-  file: path="/home/{{ deployer_user.name }}/.ssh"
+  file: path=/home/{{ deployer_user.name }}/.ssh
     state=directory
-    owner="{{ deployer_user.name }}"
+    owner={{ deployer_user.name }}
     mode=744
 
 
 - name: Copy of root ssh keys
   command: "cp /root/.ssh/authorized_keys /home/{{ deployer_user.name }}/.ssh/authorized_keys"
+
+- name: Ensure deployer owns the authorized keys file
+  file: path="/home/{{ deployer_user.name }}/.ssh/authorized_keys"
+    state=file
+    owner={{ deployer_user.name }}
+    mode=600
+
 
 - name: Ensure devs keys are present
   authorized_key: key={{ lookup('file', item) }}
