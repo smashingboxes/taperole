@@ -1,5 +1,5 @@
 ---
 dependencies:
-  # - role: geerlingguy.memcached
-  # - role: zzet.rbenv
+  - role: geerlingguy.memcached
+  - role: zzet.rbenv
   - role: node
