@@ -4,6 +4,12 @@ sudo: true
 
 rvm:
   - 2.2.3
+language: python
+python: "2.7"
+
+env:
+  matrix:
+    - ANSIBLE_VERSION="2.0.0.2"
 
 addons:
   apt:
@@ -24,7 +30,7 @@ before_install:
   - sudo rm -f /etc/apt/sources.list.d/pgdg-source.list
 
 install:
-  - pip install ansible
+  - pip install ansible=="$ANSIBLE_VERSION"
   - gem build taperole.gemspec
   - gem install --local taperole
   - ./bin/app_setup.sh
