@@ -1,41 +1,9 @@
-language: ruby
-
-sudo: true
-
-rvm:
-  - 2.2.3
 language: python
+
 python: "2.7"
 
-env:
-  matrix:
-    - ANSIBLE_VERSION="2.0.0.2"
-
-addons:
-  apt:
-    packages:
-    - git
-    - libssl-dev
-    - libreadline-dev
-    - zlib1g-dev
-
-# We need the newest version of ansible for tape
-before_install:
-  - sudo apt-get update -q
-  # Remove the PostgreSQL installed by Travis
-  - sudo apt-get purge pgdg-keyring '^postgresql.*' -y
-  - sudo apt-get autoremove -y -qq
-  - sudo rm -rf /etc/postgresql
-  - sudo rm -rf /var/lib/postgresql
-  - sudo rm -f /etc/apt/sources.list.d/pgdg-source.list
-
-install:
-  - pip install ansible=="$ANSIBLE_VERSION"
-  - gem build taperole.gemspec
-  - gem install --local taperole
-  - ./bin/app_setup.sh
+services:
+  - docker
 
 script:
-  - cd ~/vanilla-rails-app/
-  - echo localhost > inventory
-  - tape ansible everything -vvvv
+  - docker build .
