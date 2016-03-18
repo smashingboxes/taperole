@@ -29,4 +29,5 @@ RUN chown deployer:users /home/deployer -R
 ADD test/rails/start_rails.sh /
 
 # Set command that runs the rails app
-CMD ["test/start_rails.sh"]
+WORKDIR /
+CMD ["/start_rails.sh"]
