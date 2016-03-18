@@ -22,9 +22,9 @@ RUN sed -i '/ufw/d' taperole/omnibox.yml
 # Run Tape
 RUN echo '[omnibox]' > taperole/hosts
 RUN echo 'localhost ansible_connection=local be_app_env=production be_app_branch=master' >> taperole/hosts
-RUN tape ansible everything
-RUN chown deployer:users /home/deployer -R
-ADD test/start_rails.sh /
+# RUN tape ansible everything
+# RUN chown deployer:users /home/deployer -R
+# ADD test/start_rails.sh /
 
 # Set command that runs the rails app
 CMD ["test/start_rails.sh"]

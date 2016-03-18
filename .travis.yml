@@ -6,4 +6,5 @@ services:
   - docker
 
 script:
-  - docker build -f test/rails/Dockerfile . | grep -q Hello
+  - docker build -f test/rails/Dockerfile -t imagetest .
+  - docker run -i -t $(docker images -q imagetest) /start.sh | grep "Hello"
