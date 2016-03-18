@@ -2,7 +2,6 @@ FROM brandonmathis/taperole:latest
 
 # add playbooks to the image. This might be a git repo instead
 ADD . /taperole
-RUN truncate -s 0 /taperole/roles/general/tasks/swapfile.yml
 
 # Install Tape
 WORKDIR /taperole
@@ -18,6 +17,9 @@ ADD ./test/rails/tape_vars.yml taperole/tape_vars.yml
 # FIXME
 # Disable ufw bc docker gets mad about iptables
 RUN sed -i '/ufw/d' taperole/omnibox.yml
+
+# We dont have swap access on travis. Chill this role out
+RUN truncate -s 0 /taperole/roles/general/tasks/swapfile.yml
 
 # Run Tape
 RUN echo '[omnibox]' > taperole/hosts
