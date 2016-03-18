@@ -73,6 +73,7 @@ tape ansible deploy -l staging
 ### With vagrant
 
 
+1. `echo 'y' | tape installer install`
 1. `vagrant up`
 2. Put the following into your [hosts inventory file](http://docs.ansible.com/intro_inventory.html):
 
