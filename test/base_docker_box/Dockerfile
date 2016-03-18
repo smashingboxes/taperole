@@ -7,7 +7,7 @@ CMD ["bash"]
 RUN apt-get -y update
 
 # Install ansible dependencies
-RUN apt-get install -y python-dev git aptitude sudo wget make zlib1g-dev libssl-dev build-essential libreadline-dev libyaml-dev libxml2-dev libcurl4-openssl-dev python-software-properties libffi-dev
+RUN apt-get install -y python-dev git aptitude sudo wget make zlib1g-dev libssl-dev build-essential libreadline-dev libyaml-dev libxml2-dev libcurl4-openssl-dev python-software-properties libffi-dev curl
 
 # Install Ruby
 WORKDIR /tmp
@@ -36,25 +36,3 @@ ENV PATH /tmp/ansible/bin:/usr/sbin:/sbin:/usr/bin:/bin:$PATH
 ENV ANSIBLE_LIBRARY /tmp/ansible/library
 ENV PYTHONPATH /tmp/ansible/lib:$PYTHON_PATH
 
-# add playbooks to the image. This might be a git repo instead
-ADD . /taperole
-
-# Install Tape
-WORKDIR /taperole
-RUN gem build taperole.gemspec
-RUN gem install slack-notifier
-RUN gem install --local taperole
-
-# Configure tape
-WORKDIR /taperole/vanilla-rails-app
-RUN echo 'n' | tape installer install
-ADD test/tape_vars.yml taperole/tape_vars.yml
-
-# FIXME
-# Disable ufw bc docker gets mad about iptables
-RUN sed -i '/ufw/d' taperole/omnibox.yml
-
-# Run Tape
-RUN echo '[omnibox]' > taperole/hosts
-RUN echo 'localhost ansible_connection=local be_app_env=production be_app_branch=master' >> taperole/hosts
-RUN tape ansible everything
