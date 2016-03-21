@@ -1,1 +1,0 @@
-export SECRET_KEY_BASE='xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
