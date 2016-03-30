@@ -1,8 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/smashingboxes/taperole.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
 # Infrastructure Management
 
-[![Slack Status](https://taperole-slack.herokuapp.com/badge.svg)](https://taperole-slack.herokuapp.com/)
-
 ## Deploying & provisioning with tape
 **Use Unbuntu precise64 (14.04 x64)**
 
@@ -75,6 +73,7 @@ tape ansible deploy -l staging
 ### With vagrant
 
 
+1. `echo 'y' | tape installer install`
 1. `vagrant up`
 2. Put the following into your [hosts inventory file](http://docs.ansible.com/intro_inventory.html):
 
@@ -88,6 +87,16 @@ You can specify a port using the `ansible_ssh_port` in your hosts inventory file
 
 3. Update `tape_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
 4. `tape ansible everything -l vagrant`
+
+### With Docker
+1. Setup your machine to work with Docker. We recommend [Docker Machine](https://docs.docker.com/machine/)
+
+**Test Rails**
+
+2. `docker build -f test/rails/Dockerfile -t tapetest .`
+3. `docker run -i -t $(docker images -q imagetest) /start_rails.sh | grep "Hello"`
+
+If the last command resulted in a `<h1>Hello</h1>` then your Rails application deployed successfully!
 
 ## Development
 
