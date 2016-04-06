@@ -1,0 +1,7 @@
+- name: build new container
+  command: chdir={{ docker_app_path }}
+    docker-compose build --no-cache web
+
+- name: start new container
+  command: chdir={{ docker_app_path }}
+    docker-compose up --no-deps -d web

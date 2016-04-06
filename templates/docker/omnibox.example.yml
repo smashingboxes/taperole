@@ -1,0 +1,15 @@
+---
+- hosts: omnibox
+  user: root
+
+  vars_files:
+    - "{{tape_dir}}/vars/defaults.yml"
+    - tape_vars.yml
+
+  roles:
+    - general
+    - ufw
+    - deployer_user
+    - docker_install_essentials
+    - docker_checkout
+    - docker_deploy

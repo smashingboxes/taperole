@@ -1,0 +1,19 @@
+PATH
+  remote: .
+  specs:
+    taperole (1.4.1)
+      slack-notifier (~> 1.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    slack-notifier (1.5.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  taperole!
+
+BUNDLED WITH
+   1.11.2

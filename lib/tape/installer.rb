@@ -19,19 +19,22 @@ module TapeBoxer
     def install
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~/^\.tape$/ }
       mkdir tapefiles_dir
-      if fe_app? && !rails_app?
+      if docker_app?
+        puts '🔎  Docker app specified'.pink
+        copy_examples :docker
+      elsif fe_app? && !rails_app?
         puts '🔎  JS/HTML app detected'.pink
-        copy_static_app_examples
-      else rails_app?
+        copy_examples :static_html
+      elsif rails_app?
         puts '🔎  Rails app detected'.pink
-        copy_basic_examples
+        copy_examples :rails_app
       end
       create_roles_dir
       create_inventory_file
       create_ssh_keys_dir
       print 'Are you going to use vagrant? (y/n): '
       if gets.chomp == 'y'
-        copy_example 'Vagrantfile', 'Vagrantfile'
+        copy_example "#{tape_dir}/Vagrantfile", 'Vagrantfile'
       end
     end
 
@@ -45,37 +48,16 @@ module TapeBoxer
     end
 
     def create_inventory_file
-      copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
+      copy_example "#{tape_dir}/templates/base/hosts.example", "#{tapefiles_dir}/hosts"
     end
 
-    def copy_static_app_examples
-      copy_example(
-        'templates/static_html/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/static_html/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/static_html/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
-    end
-
-    def copy_basic_examples
-      copy_example(
-        'templates/base/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/base/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/base/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+    def copy_examples(type)
+      Dir["#{tape_dir}/templates/#{type}/*"].each do |file_name|
+        basename = File.basename file_name
+        basename.gsub!(/\.example/, "")
+        to_file = "#{tapefiles_dir}/#{basename}"
+        copy_example file_name, to_file
+      end
     end
 
     def uninstall
@@ -110,10 +92,10 @@ module TapeBoxer
     def copy_example(file, cp_file)
       print "#{::Pathname.new(cp_file).basename}: "
       begin
-        if File.exist?("#{cp_file}")
+        if File.exist?(cp_file)
           exists
         else
-          FileUtils.cp("#{tape_dir}/#{file}", "#{cp_file}")
+          FileUtils.cp(file, cp_file)
           success
         end
       rescue Exception => e

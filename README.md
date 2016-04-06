@@ -69,6 +69,48 @@ Then use the `-l` option to specify the stage/environment
 tape ansible deploy -l staging
 ```
 
+### Docker
+
+** Install **
+Follow instructions above but when intalling add the `-d` flag to indicate a
+docker project.
+
+```sh
+tape installer install -d
+```
+
+** Configure **
+Tape gives you three docker specific files.  They contain the defaults for
+running a Node.js app.
+
+* Dockerfile: This will be coppied to the correct place on the server.  It
+  will work as-is, but probably should be editted. Can be coppied to project root
+  to run docker in development
+* docker-compose.yml:  To be used in development. To use, copy to the root
+  directory
+* docker-compose.production.yml: This will be coppied to the correct place on
+  the server. Should be eddited to set up correct services (db, redis, etc) and
+  to correctly mount volumes and set environment variables
+
+** Test Docker Setup **
+
+[Install Docker](https://docs.docker.com/mac/)
+
+```sh
+cp taperole/Dockerfile .
+cp taperole/docker-compose.yml
+
+docker-compose up
+```
+
+browse to <docker-machine-ip-address>:3000
+
+** Deploying with Docker **
+See instructions for general setup below
+```sh
+tape ansible docker_deploy
+```
+
 ## Testing
 ### With vagrant
 
@@ -226,6 +268,41 @@ tape ansible deploy
 This will git pull the latest changes from the tracking branch you specified and restart all services via monit.
 
 This command runs all Ansible roles specified in the deploy.yml playbook.
+
+### Ansible Vault Usage
+
+Need secret things on your server.  You can use ansible-vault with custom roles
+
+```sh
+mkdir -p taperole/roles/sekrits/vars/
+mkdir -p taperole/roles/sekrits/tasks/
+```
+
+in taperole/roles/sekrits/vars/dont_look.yml
+```yaml
+sekrit_key: "1234"
+```
+
+in taperole/roles/sekrits/tasks/main.yml
+```yaml
+- include_vars: dont_look.yml
+
+- name: Use vars
+  command: do_eet -k {{ sekrit_key }}
+```
+
+Then encrypt it
+```sh
+ansible-vault encrypt taperole/roles/sekrits/vars/dont_look.yml
+```
+
+Commit that sucker to source control!
+
+When you run ansible commands you will need to use
+`--vault-password-file=<path_to_file>` or `--ask-vault-password` when you use an
+ansible command e.g. `tape ansible deploy`
+
+More info: [ansible-vault](http://docs.ansible.com/ansible/playbooks_vault.html#vault)
 
 ## Slack integration
 

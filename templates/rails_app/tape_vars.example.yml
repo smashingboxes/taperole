@@ -1,0 +1,12 @@
+app_name:
+
+# Rails App Configs
+be_app_repo:
+
+# HTML/JS App Configs
+# Uncomment if you want to deploy a JS/HTML App
+# fe_app_repo:
+# fe_app_branch: master
+# fe_build_command: gulp build
+
+slack_webhook_url:
