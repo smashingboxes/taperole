@@ -1,6 +1,6 @@
 - name: build new container
   command: chdir={{ docker_app_path }}
-    docker-compose build web --no-cache
+    docker-compose build --no-cache web
 
 - name: start new container
   command: chdir={{ docker_app_path }}
