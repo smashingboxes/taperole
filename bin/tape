@@ -11,6 +11,7 @@ opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: tape <module> <action> [options]"
 
   opts.on("-v", "--[no-]verbose", "Be loud") {|v| options.verbose = v}
+  opts.on("--ask-vault-pass", "Ask for Ansible vault password") { options.vault = true }
 
   opts.on("-i", "--inventory [INVENTORY_FILE]",
     String, "Do actions with the given inventory file") do |i|
