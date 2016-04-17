@@ -1,3 +1,8 @@
+- name: Disable gem install downloading documents
+  template: src=gemrc.j2
+            dest=/etc/gemrc
+            mode=u=rw,g=r,o=r
+
 - name: Install imagemagick
   apt: name={{ item }} state=present
   with_items:
