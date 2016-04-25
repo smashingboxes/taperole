@@ -6,6 +6,8 @@
 
 **Enable ssh access via root user**
 
+For a tutorial on getting started: [Taperole: the Smashing Boxes Way to Deploy Your Rails App](http://smashingboxes.com/blog/taperole-the-smashing-boxes-way-to-deploy-your-rails-app)
+
 ### Basics
 
 **Install**
@@ -38,8 +40,8 @@ tape installer install
 
 All default configurations found in `vars/defaults.yml` can be overridden in your local `taperole/tape_vars.yml` file
 
-**Default Node Version**: 4.2.x  
-**Default Ruby Version** 2.3.0  
+**Default Node Version**: 4.2.x
+**Default Ruby Version** 2.3.0
 
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
