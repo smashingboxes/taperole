@@ -2,7 +2,7 @@
 # Infrastructure Management
 
 ## Deploying & provisioning with tape
-**Use Unbuntu precise64 (14.04 x64)**
+**Use Unbuntu trusty64 (14.04 x64)**
 
 **Enable ssh access via root user**
 
