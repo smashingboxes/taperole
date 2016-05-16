@@ -13,3 +13,4 @@ dependencies:
         db: "{{ app_name }}_{{ be_app_env }}"
         role_attr_flags: CREATEDB,LOGIN,REPLICATION,SUPERUSER
     postgresql_ext_install_dev_headers: yes
+  - role: Stouts.backup

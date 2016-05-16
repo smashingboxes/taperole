@@ -2,6 +2,8 @@
 - src: jnv.unattended-upgrades
   version: v1.1.1
 
+- src: Stouts.backup
+
 - src: zzet.rbenv
   version: 2.1.7
 
