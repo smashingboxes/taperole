@@ -43,6 +43,9 @@ All default configurations found in `vars/defaults.yml` can be overridden in you
 **Default Node Version**: 4.2.x
 **Default Ruby Version** 2.3.0
 
+### Backups
+Backups are handled via [duply](http://duply.net/) and occur every night at 4am under the root user. You can configure your backup schedule and target where you want your backups stored at within your `taperole/tape_vars.yml` file.
+
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
 

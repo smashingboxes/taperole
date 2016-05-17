@@ -10,3 +10,15 @@ be_app_repo:
 # fe_build_command: gulp build
 
 slack_webhook_url:
+
+# Configure Postgresql Backups
+#
+# Store Backups on S3
+# backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
+#
+# Store Backups on Seperate server via rsync
+# backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
+#
+#
+# Adjust Cron Job Schedule (default is every night at 4am)
+# backup_schedule: "* */4 * * *"
