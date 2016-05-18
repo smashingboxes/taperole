@@ -14,4 +14,4 @@ dependencies:
         role_attr_flags: CREATEDB,LOGIN,REPLICATION,SUPERUSER
     postgresql_ext_install_dev_headers: yes
   - role: Stouts.backup
-    when: group_names[0] in backup_hosts
+    when: group_names[0] in backup_hosts # Allows user to pick which hosts have backups enabled (defaults to production)
