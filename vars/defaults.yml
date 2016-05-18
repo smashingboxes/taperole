@@ -45,6 +45,8 @@ no_changes_found_error: |
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
 
 # Postgres Backups
+backup_hosts:
+  - production
 backup_dir: file:///var/lib/postgresql/backups
 backup_schedule: 0 4 * * *
 backup_enabled: yes

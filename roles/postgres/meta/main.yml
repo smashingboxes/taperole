@@ -14,3 +14,4 @@ dependencies:
         role_attr_flags: CREATEDB,LOGIN,REPLICATION,SUPERUSER
     postgresql_ext_install_dev_headers: yes
   - role: Stouts.backup
+    when: inventory_hostname in backup_hosts
