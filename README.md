@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/smashingboxes/taperole.svg?branch=master)](https://travis-ci.org/smashingboxes/taperole)
 [![Stories in Ready](https://badge.waffle.io/smashingboxes/taperole.png?label=ready&title=Ready)](https://waffle.io/smashingboxes/tape)
 # Infrastructure Management
 
