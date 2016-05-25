@@ -1,0 +1,11 @@
+---
+rbenv:
+  env: system
+  version: v1.0.0
+  ruby_version: 2.3.0
+
+rbenv_repo: "https://github.com/rbenv/rbenv.git"
+
+rbenv_root: "/usr/local/rbenv"
+
+rbenv_users: []

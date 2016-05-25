@@ -23,7 +23,7 @@
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundler
-  shell: bash -lc "gem install bundler"
+  gem: name=bundler
 
 - name: Rbenv rehash
   shell: bash -lc "rbenv rehash"
