@@ -1,0 +1,10 @@
+fail_on_violations: true
+
+ruby:
+  config_file: config/style_guides/ruby.yml
+
+scss:
+  enabled: false
+
+AllCops:
+  RunRailsCops: false
