@@ -46,6 +46,8 @@ All default configurations found in `vars/defaults.yml` can be overridden in you
 ### Backups
 Backups are handled via [duply](http://duply.net/) and occur every night at 4am under the root user. You can configure your backup schedule and target where you want your backups stored at within your `taperole/tape_vars.yml` file.
 
+By default, all servers in your [production] group will have backups enabled
+
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
 

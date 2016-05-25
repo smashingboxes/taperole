@@ -19,6 +19,11 @@ slack_webhook_url:
 # Store Backups on Seperate server via rsync
 # backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
 #
-#
 # Adjust Cron Job Schedule (default is every night at 4am)
 # backup_schedule: "* */4 * * *"
+#
+# Change Which Servers are backed up
+# backup_hosts:
+#   - production
+#   - staging
+#   - qa
