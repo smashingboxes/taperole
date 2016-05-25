@@ -43,3 +43,22 @@ no_changes_found_error: |
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
   No Changes detected on remote branch proceeding with deploy anyway
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
+
+# Postgres Backups
+backup_hosts:
+  - production
+backup_dir: file:///var/lib/postgresql/backups
+backup_schedule: 0 4 * * *
+backup_enabled: yes
+backup_cron: yes
+backup_user: root
+
+backup_postgres_user: postgres
+backup_postgres_host: localhost
+
+backup_profiles:
+  - name: postgresql
+    schedule: "{{ backup_schedule }}"
+    source: postgresql://{{ app_name }}_{{ be_app_env }}
+    target: "{{ backup_dir }}"
+    user: root
