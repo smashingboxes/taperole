@@ -33,7 +33,7 @@
   become: yes
   become_user: '{{ rbenv_owner }}'
   git: >
-    repo=git@github.com:rbenv/ruby-build.git
+    repo=https://github.com/rbenv/ruby-build.git
     dest={{ rbenv_root }}/plugins/ruby-build
     accept_hostkey=yes
     force=yes
