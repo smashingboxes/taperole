@@ -1,3 +1,9 @@
+### 1.6.0
+* Added Hound
+* Documentation Updates
+* Added option to ask for ansible vault password so that we can use ansible vaults
+* Added postgresql backup functionality
+
 ### 1.5.0
 * Self-signed SSL is now on by default
 * Port 80 redirects to 443

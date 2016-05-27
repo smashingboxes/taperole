@@ -4,9 +4,6 @@
 
 - src: Stouts.backup
 
-- src: zzet.rbenv
-  version: 2.2.3
-
 - src: lxhunter.apt
 
 - src: https://github.com/ANXS/postgresql
