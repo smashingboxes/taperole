@@ -48,6 +48,11 @@ opt_parser = OptionParser.new do |opts|
       options.tags = t
     end
 
+  opts.on("-r", "--role=ROLE_NAME",
+    String, "name of the role to operate on") do |r|
+      options.role = r
+    end
+
   opts.separator ''
   opts.separator "MODULES"
   TapeBoxer.registered_modules.values.each do |exec_module|

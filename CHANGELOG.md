@@ -3,6 +3,8 @@
 * Documentation Updates
 * Added option to ask for ansible vault password so that we can use ansible vaults
 * Added postgresql backup functionality
+* Move ruby installation out of zzet ansible galaxy role
+* Added travis automated testing with Docker
 
 ### 1.5.0
 * Self-signed SSL is now on by default
