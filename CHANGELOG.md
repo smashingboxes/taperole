@@ -5,6 +5,7 @@
 * Added postgresql backup functionality
 * Move ruby installation out of zzet ansible galaxy role
 * Added travis automated testing with Docker
+* Added an overwrite command so that users can overwrite a role
 
 ### 1.5.0
 * Self-signed SSL is now on by default
