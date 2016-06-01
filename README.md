@@ -45,9 +45,30 @@ All default configurations found in `vars/defaults.yml` can be overridden in you
 **Default Ruby Version** 2.3.0
 
 ### Backups
-Backups are handled via [duply](http://duply.net/) and occur every night at 4am under the root user. You can configure your backup schedule and target where you want your backups stored at within your `taperole/tape_vars.yml` file.
+Backups are handled via [duply](http://duply.net/) and are configured via the [Stouts.backup](https://github.com/Stouts/Stouts.backup) ansible galaxy role. Bacups occur every night at 4am under the root user. You can configure your backup schedule and target where you want your backups stored at within your `taperole/tape_vars.yml` file.
 
-By default, all servers in your [production] group will have backups enabled
+The default location for backups is the `/var/lib/postgresql/backups` directory.
+
+All servers in your [production] group will have backups enabled by default.
+
+Detailed configurations can be made in your tape_vars.yml file.
+
+```
+# Store Backups on S3
+backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
+
+# Store Backups on Seperate server via rsync
+backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
+
+# Adjust Cron Job Schedule (default is every night at 4am)
+backup_schedule: "* */4 * * *"
+
+# Change Which Servers are backed up
+backup_hosts:
+  - production
+  - staging
+  - qa
+```
 
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
