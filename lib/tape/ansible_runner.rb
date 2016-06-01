@@ -46,6 +46,9 @@ class AnsibleRunner < ExecutionModule
   action :playbook,
          proc { ansible_custom_playbook },
          "Run a custom playbook"
+  action :rake,
+         proc { ansible_rake_task },
+         "Run a rake task"
 
   def initialize(*args)
     super
@@ -88,6 +91,10 @@ class AnsibleRunner < ExecutionModule
 
   def ansible_custom_playbook(cmd_str = '')
     exec_ansible("#{tapefiles_dir}/#{opts.book}", cmd_str)
+  end
+
+  def ansible_rake_task
+    exec_ansible("#{tapefiles_dir}/rake.yml", "--extra-vars \"task=#{opts.task}\"")
   end
 
   def exec_ansible(playbook, args)

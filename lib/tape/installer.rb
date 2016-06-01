@@ -49,33 +49,21 @@ module TapeBoxer
     end
 
     def copy_static_app_examples
-      copy_example(
-        'templates/static_html/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/static_html/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/static_html/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+      ["omnibox", "deploy", 'tape_vars', 'rake'].each do |base_filename|
+        copy_example(
+          "templates/static_html/#{base_filename}.example.yml",
+          "#{tapefiles_dir}/#{base_filename}.yml"
+        )
+      end
     end
 
     def copy_basic_examples
-      copy_example(
-        'templates/base/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/base/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/base/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+      ["omnibox", "deploy", 'tape_vars', 'rake'].each do |base_filename|
+        copy_example(
+          "templates/static_html/#{base_filename}.example.yml",
+          "#{tapefiles_dir}/#{base_filename}.yml"
+        )
+      end
     end
 
     def uninstall
