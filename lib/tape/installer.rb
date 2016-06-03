@@ -70,6 +70,7 @@ module TapeBoxer
       rm "#{tapefiles_dir}/omnibox.yml"
       rm "#{tapefiles_dir}/deploy.yml"
       rm "#{tapefiles_dir}/tape_vars.yml"
+      rm "#{tapefiles_dir}/rake.yml"
       rm "#{tapefiles_dir}/roles"
       rm "#{tapefiles_dir}/hosts"
       rm "#{tapefiles_dir}/dev_keys"
@@ -78,7 +79,7 @@ module TapeBoxer
 
     def rm(file)
       print 'Deleting '.red
-      FileUtils.rm_r "#{local_dir}/#{file}"
+      FileUtils.rm_r "#{local_dir}#{file}"
       puts file
     end
 
