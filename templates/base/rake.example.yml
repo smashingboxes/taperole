@@ -8,7 +8,7 @@
   user: "{{ deployer_user.name }}"
 
   tasks:
-  - name: Runnin rake {{ task }}
+  - name: Running rake {{ task }}
     command: bash -lc "bin/rake {{ task }}"
     register: rake_output
     args:

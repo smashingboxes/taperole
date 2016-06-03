@@ -261,7 +261,7 @@ This command runs all Ansible roles specified in the deploy.yml playbook.
 To run ad-hoc rake tasks, you can use the following:
 
 ```
-take ansible rake --task users:rank
+tape ansible rake --task users:rank
 ```
 
 ## Slack integration
