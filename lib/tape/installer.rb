@@ -49,7 +49,7 @@ module TapeBoxer
     end
 
     def copy_static_app_examples
-      ["omnibox", "deploy", 'tape_vars'].each do |base_filename|
+      %w(omnibox deploy tape_vars).each do |base_filename|
         copy_example(
           "templates/static_html/#{base_filename}.example.yml",
           "#{tapefiles_dir}/#{base_filename}.yml"
@@ -58,7 +58,7 @@ module TapeBoxer
     end
 
     def copy_basic_examples
-      ["omnibox", "deploy", 'tape_vars', 'rake'].each do |base_filename|
+      %w(omnibox deploy tape_vars rake).each do |base_filename|
         copy_example(
           "templates/base/#{base_filename}.example.yml",
           "#{tapefiles_dir}/#{base_filename}.yml"
