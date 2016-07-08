@@ -8,6 +8,7 @@
   user: "{{ deployer_user.name }}"
 
   roles:
+    - deployer_user
     - backend_checkout
     - backend_config
     - database_load
