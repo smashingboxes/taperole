@@ -61,6 +61,10 @@ opt_parser = OptionParser.new do |opts|
       opts.separator "    #{action.name}: #{action.description}"
     end
   end
+
+  opts.on("--task [TASK]", String, "name of the rake task to execute") do |t|
+    options.task = t
+  end
 end
 
 

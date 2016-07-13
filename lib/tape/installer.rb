@@ -49,39 +49,28 @@ module TapeBoxer
     end
 
     def copy_static_app_examples
-      copy_example(
-        'templates/static_html/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/static_html/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/static_html/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+      %w(omnibox deploy tape_vars).each do |base_filename|
+        copy_example(
+          "templates/static_html/#{base_filename}.example.yml",
+          "#{tapefiles_dir}/#{base_filename}.yml"
+        )
+      end
     end
 
     def copy_basic_examples
-      copy_example(
-        'templates/base/omnibox.example.yml',
-        "#{tapefiles_dir}/omnibox.yml"
-      )
-      copy_example(
-        'templates/base/deploy.example.yml',
-        "#{tapefiles_dir}/deploy.yml"
-      )
-      copy_example(
-        'templates/base/tape_vars.example.yml',
-        "#{tapefiles_dir}/tape_vars.yml"
-      )
+      %w(omnibox deploy tape_vars rake).each do |base_filename|
+        copy_example(
+          "templates/base/#{base_filename}.example.yml",
+          "#{tapefiles_dir}/#{base_filename}.yml"
+        )
+      end
     end
 
     def uninstall
       rm "#{tapefiles_dir}/omnibox.yml"
       rm "#{tapefiles_dir}/deploy.yml"
       rm "#{tapefiles_dir}/tape_vars.yml"
+      rm "#{tapefiles_dir}/rake.yml"
       rm "#{tapefiles_dir}/roles"
       rm "#{tapefiles_dir}/hosts"
       rm "#{tapefiles_dir}/dev_keys"
@@ -90,7 +79,7 @@ module TapeBoxer
 
     def rm(file)
       print 'Deleting '.red
-      FileUtils.rm_r "#{local_dir}/#{file}"
+      FileUtils.rm_r "#{local_dir}#{file}"
       puts file
     end
 

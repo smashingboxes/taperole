@@ -256,6 +256,14 @@ This will git pull the latest changes from the tracking branch you specified and
 
 This command runs all Ansible roles specified in the deploy.yml playbook.
 
+### Rake tasks
+
+To run ad-hoc rake tasks, you can use the following:
+
+```
+tape ansible rake --task users:rank
+```
+
 ## Slack integration
 
 Tape includes built-in support for posting messages to slack at the beginning and end of deployments.
