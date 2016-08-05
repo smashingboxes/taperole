@@ -114,7 +114,7 @@ localhost:2222 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 The port number might be different if other vagrant machines are running, run `vagrant ssh-config`  to find the correct configuration.
 You can specify a port using the `ansible_ssh_port` in your hosts inventory file.
 
-3. Update `tape_vars.yml` with information to a [rails app you want to deploy](https://github.com/BrandonMathis/vanilla-rails-app)
+3. Update `tape_vars.yml` with information to a rails app you want to deploy
 4. `tape ansible everything -l vagrant`
 
 ### With Docker
