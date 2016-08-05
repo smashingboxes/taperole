@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'tape'
+require 'taperole'
 
-TapeBoxer::Tape.start(ARGV)
+Taperole::Commands::Tape.start(ARGV)

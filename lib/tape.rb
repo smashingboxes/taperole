@@ -1,1 +1,0 @@
-require 'tape/commands/tape'

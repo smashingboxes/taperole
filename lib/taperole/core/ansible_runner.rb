@@ -1,8 +1,6 @@
-require 'tape/detector'
-
-module TapeBoxer
+module Taperole
   module AnsibleRunner
-    include TapeBoxer::Detector
+    include Helpers
 
     protected
 

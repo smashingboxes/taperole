@@ -1,6 +1,9 @@
+$:.push File.expand_path("../lib", __FILE__)
+require 'taperole/version'
+
 Gem::Specification.new do |spec|
   spec.name = "taperole"
-  spec.version = '1.7.0'
+  spec.version = Taperole::VERSION.dup
   spec.authors = ['Jack Forrest', 'Smashing Boxes', 'Brandon Mathis']
   spec.description = "General purpose server provisioning and application deployment toolkit"
   spec.email = ['jack@smashingboxes.com', 'brandon@sbox.es']
@@ -11,4 +14,5 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files`.split("\n")
   spec.executables = 'tape'
   spec.add_runtime_dependency 'slack-notifier', '~> 1.5'
+  spec.require_paths = ['lib']
 end
