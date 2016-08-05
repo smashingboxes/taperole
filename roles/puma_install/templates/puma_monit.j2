@@ -1,0 +1,5 @@
+check process puma with pidfile {{ be_app_path }}/pids/puma.pid
+  start program "sudo start puma app={{ be_app_path }}" as uid deployer and gid deployer with timeout 90 seconds
+  restart program "sudo restart puma app={{ be_app_path }}" as uid deployer and gid deployer with timeout 90 seconds
+  stop program "sudo stop puma app={{ be_app_path }}" as uid deployer and gid deployer with timeout 90 seconds
+  if 5 restarts within 5 cycles then timeout

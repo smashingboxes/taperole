@@ -1,0 +1,35 @@
+- name: Set up Puma log dir
+  file: path={{be_app_path}}/log state=directory owner=deployer
+
+- name: Install Puma config
+  template: src=puma.rb.j2
+            dest={{be_app_path}}/config/puma.rb
+
+
+- name: Set up Puma pids dir
+  file: path={{be_app_path}}/pids state=directory owner=deployer
+
+- name: Register Puma upstart script
+  template: src=puma_init.conf.j2
+            dest=/etc/init/puma.conf
+            mode=u=rwx,g=r,o=r
+
+- name: Register Puma upstart config script
+  template: src=puma-manager.conf.j2
+            dest=/etc/init/puma-manager.conf
+            mode=u=rwx,g=r,o=r
+
+- name: Register Puma config
+  template: src=puma.conf.j2
+            dest=/etc/puma.conf
+            mode=u=rwx,g=r,o=r
+
+- name: Register Puma monit config files
+  template: src=puma_monit.j2
+            dest=/etc/monit/conf.d/puma
+            mode=u=rw,g=r,o=r
+  register: puma_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: puma_monit_config.changed

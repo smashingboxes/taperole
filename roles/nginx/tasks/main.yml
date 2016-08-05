@@ -27,7 +27,7 @@
   tags: [nginx]
 
 - name: Configure App nginx
-  template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
+  template: src=nginx_puma.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
   tags: [nginx]
 
 - name: Install monit nginx config

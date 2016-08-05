@@ -14,8 +14,8 @@ deployer_user:
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
 
-unicorn_workers: "{{ansible_processor_cores * 2}}"
-unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
+puma_workers: "{{ansible_processor_cores * 2}}"
+puma_sockfile: /tmp/puma_{{ app_name }}.sock
 
 swap_file:
   path: /swp

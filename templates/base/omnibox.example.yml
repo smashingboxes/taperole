@@ -16,10 +16,10 @@
     - backend_install_essentials
     - frontend_install_essentials
     - backend_checkout
-    - unicorn_install
+    - puma_install
     - backend_config
     - database_load
-    - unicorn_activate
+    - puma_activate
     - frontend_deploy
     # - delayed_job
     # - sidekiq

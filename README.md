@@ -154,7 +154,7 @@ We're assuming that you're starting with the following things installed and work
 
 Your rails application must:
 * use posgres as the database
-* use unicorn as the app server
+* use puma as the app server
 * have access to the taperole gem
 
 Usually, your Gemfile will include something like:
@@ -162,8 +162,8 @@ Usually, your Gemfile will include something like:
 # Use postgresql as the database
 gem 'pg'
 
-# Use Unicorn as the app server
-gem 'unicorn'
+# Use Puma as the app server
+gem 'puma'
 
 # Use taperole for deployment
 gem 'taperole', '~>1.3'
@@ -191,7 +191,7 @@ To ensure you have ssh access as root to your server:
 
 ### Provisioning/Deploying a Rails Application server with Taperole
 
-1. Confirm that `taperole`, `pg`, and `unicorn` are in your gemfile.
+1. Confirm that `taperole`, `pg`, and `puma` are in your gemfile.
 2. `$ bundle`
 3. When asked `Are you going to use vagrant? (y/n):`, say `n`.
 4. Make your hosts file. Assuming you're going to have multiple environments, it should look something like this:

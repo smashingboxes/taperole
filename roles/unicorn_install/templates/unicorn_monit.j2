@@ -1,5 +1,0 @@
-check process unicorn with pidfile {{ be_app_path }}/tmp/unicorn.pid
-  start program "/etc/init.d/unicorn_{{ app_name }} start" as uid deployer and gid deployer with timeout 90 seconds
-  restart program "/etc/init.d/unicorn_{{ app_name }} restart" as uid deployer and gid deployer with timeout 90 seconds
-  stop program "/etc/init.d/unicorn_{{ app_name }} stop" as uid deployer and gid deployer with timeout 90 seconds
-  if 5 restarts within 5 cycles then timeout

@@ -1,0 +1,26 @@
+# Should match number of CPU Cores
+workers {{puma_workers}}
+
+# Min and Max threads per worker
+threads 1, 6
+
+# Default to production
+rails_env = "{{be_app_env}}"
+environment rails_env
+
+# Set up socket location
+bind "unix://{{puma_sockfile}}"
+
+# Logging
+stdout_redirect "{{be_app_path}}/log/puma.stdout.log", "{{be_app_path}}/log/puma.stderr.log", true
+
+# Set master PID and state locations
+pidfile "{{be_app_path}}/pids/puma.pid"
+state_path "{{be_app_path}}/pids/puma.state"
+activate_control_app
+
+on_worker_boot do
+  require "active_record"
+  ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+  ActiveRecord::Base.establish_connection(YAML.load_file("{{be_app_path}}/config/database.yml")["{{be_app_env}}"])
+end

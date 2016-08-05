@@ -10,5 +10,5 @@
   fail: msg="{{db_reset.stderr}}"
   when: db_reset.stderr
 
-- name: start unicorns
+- name: start everything
   command: bash -lc "monit start all"

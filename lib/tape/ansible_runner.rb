@@ -6,18 +6,6 @@ class AnsibleRunner < ExecutionModule
   action :configure_dj_runner,
          proc { ansible '-t configure_dj_runner -e force_dj_runner_restart=true' },
          "Configures and restarts the delayed job runner"
-  action :restart_unicorn,
-         proc { ansible '-t unicorn_restart' },
-         "Restarts the unicorns running on the app servers"
-  action :stop_unicorn,
-         proc { ansible '-t unicorn_stop -e kill_unicorn=true' },
-         "Stops the unicorns running on the app servers"
-  action :force_stop_unicorn,
-         proc { ansible '-t unicorn_force_stop -e kill_unicorn=true' },
-         "Stops the unicorns running on the app servers"
-  action :start_unicorn,
-         proc { ansible '-t unicorn_start' },
-         "Starts the unicorns running on the app servers"
   action :restart_nginx,
          proc { ansible '-t restart_nginx' },
          "Restarts Nginx"
@@ -38,7 +26,7 @@ class AnsibleRunner < ExecutionModule
          "Re-deploys fe code"
   action :deploy,
          proc { ansible_deploy '-t be_deploy,fe_deploy' },
-         "Checks out app code, installs dependencies and restarts unicorns for "\
+         "Checks out app code, installs dependencies and restarts puma for "\
          "both FE and BE code."
   action :everything,
          proc { valid_preconfigs ? ansible : puts("Not a Rails or JS app") },
@@ -66,7 +54,7 @@ class AnsibleRunner < ExecutionModule
   end
 
   def valid_gems
-    has_gem_in_gemfile('unicorn')
+    has_gem_in_gemfile('puma')
   end
 
   def has_gem_in_gemfile(name)
