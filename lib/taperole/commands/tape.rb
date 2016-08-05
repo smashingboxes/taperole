@@ -3,6 +3,8 @@ require 'thor'
 module Taperole
   module Commands
     class Tape < Thor
+      include Taperole::Helpers::Files
+
       class_option :verbose, type: :boolean
 
       map %w[--version -v] => :__print_version
@@ -17,6 +19,11 @@ module Taperole
 
       desc 'installer [COMMAND]', 'install and uninstall tape'
       subcommand 'installer', Installer
+
+      desc 'overwrite [ROLE]', 'Overwrite a taperole ansible role'
+      def overwrite_role(role)
+        FileUtils.cp_r("#{tape_dir}/roles/#{role}", "taperole/roles/")
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 module Taperole
   module AnsibleRunner
-    include Helpers
+    include Taperole::Helpers::Files
 
     protected
 

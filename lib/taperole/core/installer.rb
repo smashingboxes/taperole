@@ -2,7 +2,7 @@ require 'pry-byebug'
 
 module Taperole
   module Installer
-    include Helpers::Files
+    include Taperole::Helpers::Files
     include Thor::Actions
 
     protected
