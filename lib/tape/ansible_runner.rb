@@ -1,137 +1,85 @@
-# Executes ansible commands
+require 'tape/detector'
+
 module TapeBoxer
-class AnsibleRunner < ExecutionModule
-  TapeBoxer.register_module :ansible, self
+  module AnsibleRunner
+    include TapeBoxer::Detector
 
-  action :configure_dj_runner,
-         proc { ansible '-t configure_dj_runner -e force_dj_runner_restart=true' },
-         "Configures and restarts the delayed job runner"
-  action :restart_unicorn,
-         proc { ansible '-t unicorn_restart' },
-         "Restarts the unicorns running on the app servers"
-  action :stop_unicorn,
-         proc { ansible '-t unicorn_stop -e kill_unicorn=true' },
-         "Stops the unicorns running on the app servers"
-  action :force_stop_unicorn,
-         proc { ansible '-t unicorn_force_stop -e kill_unicorn=true' },
-         "Stops the unicorns running on the app servers"
-  action :start_unicorn,
-         proc { ansible '-t unicorn_start' },
-         "Starts the unicorns running on the app servers"
-  action :restart_nginx,
-         proc { ansible '-t restart_nginx' },
-         "Restarts Nginx"
-  action :configure_deployer_user,
-         proc { ansible '-t deployer' },
-         "Ensures the deployer user is present and configures its SSH keys"
-  action :reset_db,
-         proc { ansible '-t db_reset -e force_db_reset=true' },
-         "wipes and re-seeds the DB"
-  action :bundle,
-         proc { ansible '-t bundle -e force_bundle=true' },
-         "Bundles the gems running on the app servers"
-  action :be_deploy,
-         proc { ansible_deploy '-t be_deploy' },
-         "Re-deploys fe code"
-  action :fe_deploy,
-         proc { ansible_deploy '-t fe_deploy' },
-         "Re-deploys fe code"
-  action :deploy,
-         proc { ansible_deploy '-t be_deploy,fe_deploy' },
-         "Checks out app code, installs dependencies and restarts unicorns for "\
-         "both FE and BE code."
-  action :everything,
-         proc { valid_preconfigs ? ansible : puts("Not a Rails or JS app") },
-         "This does it all."
-  action :playbook,
-         proc { ansible_custom_playbook },
-         "Run a custom playbook"
-  action :rake,
-         proc { ansible_rake_task },
-         "Run a rake task"
+    protected
 
-  def initialize(*args)
-    super
-    register_notifiers
-  end
+    def valid_preconfigs
+      if rails_app?
+        valid_gems
+      elsif fe_app?
+        true
+      else
+        false
+      end
+    end
 
-  protected
-  attr_reader :opts
+    def valid_gems
+      has_gem_in_gemfile('unicorn')
+    end
 
-  def valid_preconfigs
-    if rails_app?
-      valid_gems
-    elsif fe_app?
-      true
-    else
-      false
+    def has_gem_in_gemfile(name)
+      if open('Gemfile').grep(/#{name}/).empty?
+        puts "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
+        false
+      else
+        true
+      end
+    end
+
+    def ansible(cmd_str = '')
+      exec_ansible("#{tapefiles_dir}/omnibox.yml", cmd_str)
+    end
+
+    def ansible_deploy(cmd_str = '')
+      exec_ansible("#{tapefiles_dir}/deploy.yml", cmd_str)
+    end
+
+    def ansible_custom_playbook(cmd_str = '')
+      exec_ansible("#{tapefiles_dir}/#{opts.book}", cmd_str)
+    end
+
+    def ansible_rake_task
+      exec_ansible("#{tapefiles_dir}/rake.yml", "--extra-vars \"task=#{opts.task}\"")
+    end
+
+    def exec_ansible(playbook, args)
+      enforce_roles_path!
+      cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
+      cmd += ' --ask-vault-pass' if opts.vault
+      cmd += ' -vvvv' if opts.verbose
+      cmd += " -t #{opts.tags}" if opts.tags
+      STDERR.puts "Executing: #{cmd}" if opts.verbose
+      notify_observers(:start)
+      if Kernel.system(cmd)
+        notify_observers(:success)
+      else
+        notify_observers(:fail)
+      end
+    end
+
+    def enforce_roles_path!
+      Dir.mkdir('.tape') unless Dir.exists?('.tape')
+
+      File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
+        f.puts '[defaults]'
+        f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
+        f.puts "inventory=#{tapefiles_dir}/hosts"
+        f.puts "retries-dir=/dev/null"
+        f.puts "retry_files_enabled = False"
+        f.puts '[ssh_connection]'
+        f.puts 'ssh_args=-o ForwardAgent=yes'
+      end
+    end
+
+    def hosts_flag
+      "-l #{opts.host_pattern}" if opts.host_pattern
+    end
+
+    def inventory_file
+      opts.inventory_file || "#{tapefiles_dir}/hosts"
     end
   end
-
-  def valid_gems
-    has_gem_in_gemfile('unicorn')
-  end
-
-  def has_gem_in_gemfile(name)
-    if open('Gemfile').grep(/#{name}/).empty?
-      puts "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
-      false
-    else
-      true
-    end
-  end
-
-  def ansible(cmd_str = '')
-    exec_ansible("#{tapefiles_dir}/omnibox.yml", cmd_str)
-  end
-
-  def ansible_deploy(cmd_str = '')
-    exec_ansible("#{tapefiles_dir}/deploy.yml", cmd_str)
-  end
-
-  def ansible_custom_playbook(cmd_str = '')
-    exec_ansible("#{tapefiles_dir}/#{opts.book}", cmd_str)
-  end
-
-  def ansible_rake_task
-    exec_ansible("#{tapefiles_dir}/rake.yml", "--extra-vars \"task=#{opts.task}\"")
-  end
-
-  def exec_ansible(playbook, args)
-    enforce_roles_path!
-    cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
-    cmd += ' --ask-vault-pass' if opts.vault
-    cmd += ' -vvvv' if opts.verbose
-    cmd += " -t #{opts.tags}" if opts.tags
-    STDERR.puts "Executing: #{cmd}" if opts.verbose
-    notify_observers(:start)
-    if Kernel.system(cmd)
-      notify_observers(:success)
-    else
-      notify_observers(:fail)
-    end
-  end
-
-  def enforce_roles_path!
-    Dir.mkdir('.tape') unless Dir.exists?('.tape')
-
-    File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
-      f.puts '[defaults]'
-      f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
-      f.puts "inventory=#{tapefiles_dir}/hosts"
-      f.puts "retries-dir=/dev/null"
-      f.puts "retry_files_enabled = False"
-      f.puts '[ssh_connection]'
-      f.puts 'ssh_args=-o ForwardAgent=yes'
-    end
-  end
-
-  def hosts_flag
-    "-l #{opts.host_pattern}" if opts.host_pattern
-  end
-
-  def inventory_file
-    opts.inventory_file || "#{tapefiles_dir}/hosts"
-  end
-end
 end
