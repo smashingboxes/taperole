@@ -27,34 +27,34 @@ module Taperole
       end
     end
 
-    def ansible(cmd_str = '')
-      exec_ansible("#{tapefiles_dir}/omnibox.yml", cmd_str)
+    def ansible(args: '', options: {})
+      exec_ansible("#{tapefiles_dir}/omnibox.yml", args, options)
     end
 
-    def ansible_deploy(cmd_str = '')
-      exec_ansible("#{tapefiles_dir}/deploy.yml", cmd_str)
+    def ansible_deploy(args: '', options: {})
+      exec_ansible("#{tapefiles_dir}/deploy.yml", args, options)
     end
 
-    def ansible_custom_playbook(cmd_str = '')
-      exec_ansible("#{tapefiles_dir}/#{opts.book}", cmd_str)
+    def ansible_custom_playbook(args: '', options: {})
+      exec_ansible("#{tapefiles_dir}/#{options[:book]}", args, options)
     end
 
-    def ansible_rake_task
-      exec_ansible("#{tapefiles_dir}/rake.yml", "--extra-vars \"task=#{opts.task}\"")
+    def ansible_rake_task(options: {})
+      exec_ansible("#{tapefiles_dir}/rake.yml", "--extra-vars \"task=#{options[:task]}\"", options)
     end
 
-    def exec_ansible(playbook, args)
+    def exec_ansible(playbook, args, options)
       enforce_roles_path!
-      cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file} #{playbook} #{args} #{hosts_flag} -e tape_dir=#{tape_dir}"
-      cmd += ' --ask-vault-pass' if opts.vault
-      cmd += ' -vvvv' if opts.verbose
-      cmd += " -t #{opts.tags}" if opts.tags
-      STDERR.puts "Executing: #{cmd}" if opts.verbose
-      notify_observers(:start)
+      cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file(options)} #{playbook} #{args} #{hosts_flag(options)} -e tape_dir=#{tape_dir}"
+      cmd += ' --ask-vault-pass' if options[:vault]
+      cmd += ' -vvvv' if options[:verbose]
+      cmd += " -t #{options[:tags]}" if options[:tags]
+      STDERR.puts "Executing: #{cmd}" if options[:verbose]
+      Taperole::Notifier.notify_observers(:start)
       if Kernel.system(cmd)
-        notify_observers(:success)
+        Taperole::Notifier.notify_observers(:success)
       else
-        notify_observers(:fail)
+        Taperole::Notifier.notify_observers(:fail)
       end
     end
 
@@ -72,12 +72,13 @@ module Taperole
       end
     end
 
-    def hosts_flag
-      "-l #{opts.host_pattern}" if opts.host_pattern
+    def hosts_flag(options)
+      limit = options[:limit]
+      "-l #{limit}" if limit
     end
 
-    def inventory_file
-      opts.inventory_file || "#{tapefiles_dir}/hosts"
+    def inventory_file(options)
+      options[:inventory_file] || "#{tapefiles_dir}/hosts"
     end
   end
 end
