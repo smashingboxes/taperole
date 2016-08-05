@@ -13,7 +13,7 @@ RUN gem install slack-notifier
 RUN gem install --local taperole
 
 # Configure tape
-RUN git clone https://github.com/BrandonMathis/vanilla-rails-app.git
+RUN git clone https://github.com/BrandonMathis/vanilla_4.git
 WORKDIR /taperole/vanilla-rails-app
 RUN echo 'n' | tape installer install
 ADD ./test/rails/tape_vars.yml taperole/tape_vars.yml
