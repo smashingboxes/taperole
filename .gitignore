@@ -4,8 +4,3 @@ site_vars.yml
 hosts
 *.gem
 .tape
-
-
-# TODO: Remove this after refactor
-old_lib
-bin/old_tape
