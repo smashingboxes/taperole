@@ -15,10 +15,10 @@ module Taperole
     end
 
     def valid_gems
-      has_gem_in_gemfile('unicorn')
+      has_gem_in_gemfile?('unicorn')
     end
 
-    def has_gem_in_gemfile(name)
+    def has_gem_in_gemfile?(name)
       if open('Gemfile').grep(/#{name}/).empty?
         puts "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
         false
@@ -45,7 +45,9 @@ module Taperole
 
     def exec_ansible(playbook, args, options)
       enforce_roles_path!
-      cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i #{inventory_file(options)} #{playbook} #{args} #{hosts_flag(options)} -e tape_dir=#{tape_dir}"
+      cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i"
+      cmd += " #{inventory_file(options)} #{playbook} #{args} #{hosts_flag(options)}"
+      cmd += " -e tape_dir=#{tape_dir}"
       cmd += ' --ask-vault-pass' if options[:vault]
       cmd += ' -vvvv' if options[:verbose]
       cmd += " -t #{options[:tags]}" if options[:tags]
@@ -59,7 +61,7 @@ module Taperole
     end
 
     def enforce_roles_path!
-      Dir.mkdir('.tape') unless Dir.exists?('.tape')
+      Dir.mkdir('.tape') unless Dir.exist?('.tape')
 
       File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
         f.puts '[defaults]'
