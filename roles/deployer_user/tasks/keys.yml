@@ -16,8 +16,8 @@
 
 
 - name: Ensure devs keys are present
-  authorized_key: key={{ lookup('file', item) }}
-                  user={{ deployer_user.name }}
-                  state=present
+  authorized_key: key="{{ lookup('file', item) }}"
+    user={{ deployer_user.name }}
+    state=present
   with_fileglob:
-    - "./dev_keys/*"
+    - "{{ playbook_dir }}/../dev_keys/*"
