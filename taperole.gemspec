@@ -14,5 +14,6 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files`.split("\n")
   spec.executables = 'tape'
   spec.add_runtime_dependency 'slack-notifier', '~> 1.5'
+  spec.add_runtime_dependency 'thor', '~>0.19.1'
   spec.require_paths = ['lib']
 end

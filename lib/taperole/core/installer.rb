@@ -1,4 +1,4 @@
-require 'pry-byebug'
+require 'pathname'
 
 module Taperole
   module Installer

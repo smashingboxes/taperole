@@ -1,4 +1,5 @@
 require 'singleton'
+require 'yaml'
 
 module Taperole
   class Notifier

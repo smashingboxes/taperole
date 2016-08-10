@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 module Taperole
   module Helpers
     module Files
