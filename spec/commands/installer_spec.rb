@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry-byebug'
 
 describe Taperole::Commands::Installer do
   before(:each) do
