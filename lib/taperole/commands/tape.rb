@@ -6,6 +6,7 @@ module Taperole
       include Taperole::Helpers::Files
 
       class_option :verbose, type: :boolean
+      class_option :silent, type: :boolean
 
       map %w[--version -v] => :__print_version
 

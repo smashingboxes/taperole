@@ -11,18 +11,16 @@ module Taperole
       File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~ /^\.tape$/ }
       mkdir tapefiles_dir
       if fe_app? && !rails_app?
-        puts '🔎  JS/HTML app detected'.pink
+        puts '🔎  JS/HTML app detected'.pink unless options[:silent]
         copy_static_app_examples
       elsif rails_app?
-        puts '🔎  Rails app detected'.pink
+        puts '🔎  Rails app detected'.pink unless options[:silent]
         copy_basic_examples
       end
       create_roles_dir
       create_inventory_file
       create_ssh_keys_dir
-      if ask 'Are you going to use vagrant? (y/n): '
-        copy_example 'Vagrantfile', 'Vagrantfile'
-      end
+      handle_vagrantfile
     end
 
     def create_roles_dir
@@ -56,6 +54,15 @@ module Taperole
       end
     end
 
+    def handle_vagrantfile
+      if options[:vagrant].nil?
+        options[:vagrant] = ask('Are you going to use vagrant? (y/n): ')
+      end
+      if options[:vagrant]
+        copy_example 'Vagrantfile', 'Vagrantfile'
+      end
+    end
+
     def uninstall_tape
       rm "#{tapefiles_dir}/omnibox.yml"
       rm "#{tapefiles_dir}/deploy.yml"
@@ -68,35 +75,37 @@ module Taperole
     end
 
     def rm(file)
-      print 'Deleting '.red
-      puts file
+      unless options[:silent]
+        print 'Deleting '.red
+        puts file
+      end
       FileUtils.rm_r file
     end
 
     def mkdir(name)
-      print "#{::Pathname.new(name).basename}: "
+      print "#{::Pathname.new(name).basename}: " unless options[:silent]
       begin
         FileUtils.mkdir name
-        success
+        success unless options[:silent]
       rescue Errno::EEXIST
-        exists
+        exists unless options[:silent]
       rescue StandardError => e
-        error
+        error unless options[:silent]
         raise e
       end
     end
 
     def copy_example(file, cp_file)
-      print "#{::Pathname.new(cp_file).basename}: "
+      print "#{::Pathname.new(cp_file).basename}: " unless options[:silent]
       begin
         if File.exist?(cp_file.to_s)
-          exists
+          exists unless options[:silent]
         else
           FileUtils.cp("#{tape_dir}/#{file}", cp_file.to_s)
-          success
+          success unless options[:silent]
         end
       rescue StandardError => e
-        error
+        error unless options[:silent]
         raise e
       end
     end

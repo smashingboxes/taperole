@@ -3,6 +3,7 @@ module Taperole
     class Installer < Thor
       include Taperole::Installer
 
+      option :vagrant, type: :boolean
       desc 'install', 'Creates all necessary hosts and config files'
       def install
         install_tape
