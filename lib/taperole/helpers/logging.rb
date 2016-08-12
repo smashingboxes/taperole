@@ -5,17 +5,9 @@ module Taperole
     module Logging
       def initialize(*_args)
         super
-        if options[:debug]
-          logger.level = Logger::DEBUG
-        elsif options[:verbose]
-          logger.level = Logger::INFO
-        elsif options[:quiet]
-          logger.level = Logger::ERROR
-        else
-          logger.level = Logger::INFO
-        end
-        logger.formatter = proc do |severity, datetime, progname, msg|
-           "#{msg}\n"
+        logger.level = logger_level
+        logger.formatter = proc do
+          "#{msg}\n"
         end
       end
 
@@ -25,6 +17,20 @@ module Taperole
 
       def self.logger
         @logger ||= Logger.new(STDOUT)
+      end
+
+      private
+
+      def logger_level
+        if options[:debug]
+          Logger::DEBUG
+        elsif options[:verbose]
+          Logger::INFO
+        elsif options[:quiet]
+          Logger::ERROR
+        else
+          Logger::INFO
+        end
       end
     end
   end
