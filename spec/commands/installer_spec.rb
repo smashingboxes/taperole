@@ -4,8 +4,13 @@ require 'pry-byebug'
 describe Taperole::Commands::Installer do
   describe '#install' do
     before(:each) do
+      setup
       described_class.new([], args).install
     end
+    let(:setup) {}
+
+    let(:root) { Dir.entries(Dir.pwd) }
+    let(:taperole) { Dir.entries("#{Dir.pwd}/taperole") }
 
     let(:args) { { vagrant: false, silent: true } }
 
@@ -14,38 +19,51 @@ describe Taperole::Commands::Installer do
     end
 
     it 'creates a taperoles directory' do
-      expect(Dir.entries(Dir.pwd)).to include('taperole')
+      expect(root).to include('taperole')
     end
 
     context 'in a rails app' do
-      pending 'creates deploy.yml' do
+      let(:setup) { FileUtils.touch('config.ru') }
+
+      it 'creates deploy.yml' do
+        expect(taperole).to include('deploy.yml')
       end
 
-      pending 'creates omnibox.yml' do
+      it 'creates omnibox.yml' do
+        expect(taperole).to include('omnibox.yml')
       end
 
-      pending 'creates tape_vars.yml' do
+      it 'creates tape_vars.yml' do
+        expect(taperole).to include('tape_vars.yml')
       end
     end
 
     context 'in a frontend app' do
-      pending 'creates deploy.yml' do
+      let(:setup) { FileUtils.touch('package.json') }
+
+      it 'creates deploy.yml' do
+        expect(taperole).to include('deploy.yml')
       end
 
-      pending 'creates omnibox.yml' do
+      it 'creates omnibox.yml' do
+        expect(taperole).to include('omnibox.yml')
       end
 
-      pending 'creates tape_vars.yml' do
+      it 'creates tape_vars.yml' do
+        expect(taperole).to include('tape_vars.yml')
       end
     end
 
-    pending 'creates the hosts file' do
+    it 'creates the hosts file' do
+      expect(taperole).to include('hosts')
     end
 
-    pending 'creates the roles directory' do
+    it 'creates the roles directory' do
+      expect(taperole).to include('roles')
     end
 
-    pending 'creates the dev_keys directory' do
+    it 'creates the dev_keys directory' do
+      expect(root).to include('dev_keys')
     end
   end
 end

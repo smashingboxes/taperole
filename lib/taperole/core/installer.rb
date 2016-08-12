@@ -29,7 +29,7 @@ module Taperole
     end
 
     def create_ssh_keys_dir
-      mkdir "#{tapefiles_dir}/dev_keys"
+      mkdir "#{local_dir}/dev_keys"
     end
 
     def create_inventory_file
@@ -70,7 +70,7 @@ module Taperole
       rm "#{tapefiles_dir}/rake.yml"
       rm "#{tapefiles_dir}/roles"
       rm "#{tapefiles_dir}/hosts"
-      rm "#{tapefiles_dir}/dev_keys"
+      rm "#{local_dir}/dev_keys"
       rm "#{local_dir}/Vagrantfile"
     end
 
