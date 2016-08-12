@@ -1,5 +1,5 @@
 require 'thor'
-require 'taperole/helpers/string_color_monkeypatch'
+require 'colorize'
 
 module Taperole
   autoload :VERSION, 'taperole/version'
