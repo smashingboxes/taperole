@@ -6,6 +6,7 @@ services:
   - docker
 
 script:
+  - gem install --dev taperole
   - rake spec
   - docker build -f test/rails/Dockerfile -t imagetest .
   - docker run -i -t $(docker images -q imagetest) /start_rails.sh | grep "Hello"
