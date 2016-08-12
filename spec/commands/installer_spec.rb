@@ -2,11 +2,13 @@ require 'spec_helper'
 require 'pry-byebug'
 
 describe Taperole::Commands::Installer do
+  before(:each) do
+    setup
+    Taperole::Commands::Tape.new.invoke(described_class, command, [], options)
+  end
+
   describe '#install' do
-    before(:each) do
-      setup
-      Taperole::Commands::Tape.new.invoke(described_class, :install, [], options)
-    end
+    let(:command) { :install }
     let(:setup) {}
 
     let(:root) { Dir.entries(Dir.pwd) }
