@@ -8,32 +8,40 @@ module Taperole
     protected
 
     def install_tape
-      File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~ /^\.tape$/ }
+      add_tape_to_gitignore
       mkdir tapefiles_dir
-      if fe_app? && !rails_app?
-        puts '🔎  JS/HTML app detected'.pink unless options[:silent]
-        copy_static_app_examples
-      elsif rails_app?
-        puts '🔎  Rails app detected'.pink unless options[:silent]
-        copy_basic_examples
-      end
+      create_tape_files
       create_roles_dir
       create_inventory_file
       create_ssh_keys_dir
       handle_vagrantfile
     end
 
-    def create_roles_dir
-      mkdir "#{tapefiles_dir}/roles"
-      `touch #{tapefiles_dir}/roles/.keep`
+    def uninstall_tape
+      rm "#{tapefiles_dir}/omnibox.yml"
+      rm "#{tapefiles_dir}/deploy.yml"
+      rm "#{tapefiles_dir}/tape_vars.yml"
+      rm "#{tapefiles_dir}/rake.yml"
+      rm "#{tapefiles_dir}/roles"
+      rm "#{tapefiles_dir}/hosts"
+      rm "#{local_dir}/dev_keys"
+      rm "#{local_dir}/Vagrantfile"
     end
 
-    def create_ssh_keys_dir
-      mkdir "#{local_dir}/dev_keys"
+    private
+
+    def add_tape_to_gitignore
+      File.open('.gitignore', 'r+') { |f| f.puts '.tape' unless f.read =~ /^\.tape$/ }
     end
 
-    def create_inventory_file
-      copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
+    def create_tape_files
+      if fe_app? && !rails_app?
+        logger.info '🔎  JS/HTML app detected'
+        copy_static_app_examples
+      elsif rails_app?
+        logger.info '🔎  Rails app detected'
+        copy_basic_examples
+      end
     end
 
     def copy_static_app_examples
@@ -54,6 +62,19 @@ module Taperole
       end
     end
 
+    def create_roles_dir
+      mkdir "#{tapefiles_dir}/roles"
+      `touch #{tapefiles_dir}/roles/.keep`
+    end
+
+    def create_inventory_file
+      copy_example 'templates/base/hosts.example', "#{tapefiles_dir}/hosts"
+    end
+
+    def create_ssh_keys_dir
+      mkdir "#{local_dir}/dev_keys"
+    end
+
     def handle_vagrantfile
       if options[:vagrant].nil?
         options[:vagrant] = ask('Are you going to use vagrant? (y/n): ')
@@ -63,63 +84,50 @@ module Taperole
       end
     end
 
-    def uninstall_tape
-      rm "#{tapefiles_dir}/omnibox.yml"
-      rm "#{tapefiles_dir}/deploy.yml"
-      rm "#{tapefiles_dir}/tape_vars.yml"
-      rm "#{tapefiles_dir}/rake.yml"
-      rm "#{tapefiles_dir}/roles"
-      rm "#{tapefiles_dir}/hosts"
-      rm "#{local_dir}/dev_keys"
-      rm "#{local_dir}/Vagrantfile"
-    end
-
+    # TODO: Move these to helpers/files
     def rm(file)
-      unless options[:silent]
-        print 'Deleting '.red
-        puts file
-      end
+      logger.info 'Deleting '.red + file
       FileUtils.rm_r file
     end
 
     def mkdir(name)
-      print "#{::Pathname.new(name).basename}: " unless options[:silent]
+      file_text = "#{::Pathname.new(name).basename}: "
       begin
         FileUtils.mkdir name
-        success unless options[:silent]
+        success(file_text)
       rescue Errno::EEXIST
-        exists unless options[:silent]
+        exists(file_text)
       rescue StandardError => e
-        error unless options[:silent]
+        error(file_text)
         raise e
       end
     end
 
     def copy_example(file, cp_file)
-      print "#{::Pathname.new(cp_file).basename}: " unless options[:silent]
+      file_text = "#{::Pathname.new(cp_file).basename}: "
       begin
         if File.exist?(cp_file.to_s)
-          exists unless options[:silent]
+          exists(file_text)
         else
           FileUtils.cp("#{tape_dir}/#{file}", cp_file.to_s)
-          success unless options[:silent]
+          success(file_text)
         end
       rescue StandardError => e
-        error unless options[:silent]
+        error(file_text)
         raise e
       end
     end
 
-    def success
-      puts '✔'.green
+    def success(file_text)
+      logger.info file_text + '✔'.green
     end
 
-    def error
-      puts '✘'.red
+    def error(file_text)
+      logger.info file_text + '✘'.red
     end
 
-    def exists
-      puts '✘ (Exists)'.yellow
+    def exists(file_text)
+      logger.info file_text + '✘ (Exists)'.yellow
     end
   end
 end

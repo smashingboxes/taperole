@@ -5,14 +5,14 @@ describe Taperole::Commands::Installer do
   describe '#install' do
     before(:each) do
       setup
-      described_class.new([], args).install
+      Taperole::Commands::Tape.new.invoke(described_class, :install, [], options)
     end
     let(:setup) {}
 
     let(:root) { Dir.entries(Dir.pwd) }
     let(:taperole) { Dir.entries("#{Dir.pwd}/taperole") }
 
-    let(:args) { { vagrant: false, silent: true } }
+    let(:options) { { vagrant: false, quiet: true } }
 
     it 'adds .tape to .gitignore' do
       expect(File.read('.gitignore')).to include('.tape')

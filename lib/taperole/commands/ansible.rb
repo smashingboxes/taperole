@@ -2,6 +2,7 @@ module Taperole
   module Commands
     class Ansible < Thor
       include Taperole::AnsibleRunner
+      include Taperole::Helpers::Logging
 
       class_option :limit,
                    type: :string,

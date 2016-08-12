@@ -15,6 +15,7 @@ module Taperole
 
   module Helpers
     autoload :Files, 'taperole/helpers/files'
+    autoload :Logging, 'taperole/helpers/logging'
   end
 
   module Notifiers

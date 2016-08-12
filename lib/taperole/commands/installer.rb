@@ -2,6 +2,7 @@ module Taperole
   module Commands
     class Installer < Thor
       include Taperole::Installer
+      include Taperole::Helpers::Logging
 
       option :vagrant, type: :boolean
       desc 'install', 'Creates all necessary hosts and config files'

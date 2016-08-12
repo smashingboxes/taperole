@@ -4,9 +4,11 @@ module Taperole
   module Commands
     class Tape < Thor
       include Taperole::Helpers::Files
+      include Taperole::Helpers::Logging
 
       class_option :verbose, type: :boolean
-      class_option :silent, type: :boolean
+      class_option :debug, type: :boolean
+      class_option :quiet, type: :boolean
 
       map %w[--version -v] => :__print_version
 
