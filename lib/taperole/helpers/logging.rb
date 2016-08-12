@@ -6,7 +6,7 @@ module Taperole
       def initialize(*_args)
         super
         logger.level = logger_level
-        logger.formatter = proc do
+        logger.formatter = proc do |_severity, _datetime, _progname, msg|
           "#{msg}\n"
         end
       end
