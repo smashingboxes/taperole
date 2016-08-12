@@ -36,10 +36,10 @@ module Taperole
 
     def create_tape_files
       if fe_app? && !rails_app?
-        logger.info '🔎  JS/HTML app detected'
+        logger.info '🔎  JS/HTML app detected'.red
         copy_static_app_examples
       elsif rails_app?
-        logger.info '🔎  Rails app detected'
+        logger.info '🔎  Rails app detected'.red
         copy_basic_examples
       end
     end
@@ -82,52 +82,6 @@ module Taperole
       if options[:vagrant]
         copy_example 'Vagrantfile', 'Vagrantfile'
       end
-    end
-
-    # TODO: Move these to helpers/files
-    def rm(file)
-      logger.info 'Deleting '.red + file
-      FileUtils.rm_r file
-    end
-
-    def mkdir(name)
-      file_text = "#{::Pathname.new(name).basename}: "
-      begin
-        FileUtils.mkdir name
-        success(file_text)
-      rescue Errno::EEXIST
-        exists(file_text)
-      rescue StandardError => e
-        error(file_text)
-        raise e
-      end
-    end
-
-    def copy_example(file, cp_file)
-      file_text = "#{::Pathname.new(cp_file).basename}: "
-      begin
-        if File.exist?(cp_file.to_s)
-          exists(file_text)
-        else
-          FileUtils.cp("#{tape_dir}/#{file}", cp_file.to_s)
-          success(file_text)
-        end
-      rescue StandardError => e
-        error(file_text)
-        raise e
-      end
-    end
-
-    def success(file_text)
-      logger.info file_text + '✔'.green
-    end
-
-    def error(file_text)
-      logger.info file_text + '✘'.red
-    end
-
-    def exists(file_text)
-      logger.info file_text + '✘ (Exists)'.yellow
     end
   end
 end
