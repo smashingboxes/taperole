@@ -20,7 +20,7 @@ module Taperole
 
     def has_gem_in_gemfile?(name)
       if open('Gemfile').grep(/#{name}/).empty?
-        puts "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
+        logger.error "💥 ERROR: Add #{name} to your Gemfile!💥 ".red
         false
       else
         true
@@ -51,7 +51,7 @@ module Taperole
       cmd += ' --ask-vault-pass' if options[:vault]
       cmd += ' -vvvv' if options[:verbose]
       cmd += " -t #{options[:tags]}" if options[:tags]
-      STDERR.puts "Executing: #{cmd}" if options[:verbose]
+      logger.info "Executing: #{cmd}" if options[:verbose]
       Taperole::Notifier.notify_observers(:start)
       if Kernel.system(cmd)
         Taperole::Notifier.notify_observers(:success)
