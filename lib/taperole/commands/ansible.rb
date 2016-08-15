@@ -24,10 +24,6 @@ module Taperole
                    aliases: :p,
                    type: :numeric,
                    desc: 'The port that the machine is listening on for SSH connections'
-      class_option :limit,
-                   aliases: :l,
-                   type: :string,
-                   desc: 'Limits ansible runs to hosts matching PATTERN'
       class_option :tags,
                    aliases: :t,
                    type: :string,
