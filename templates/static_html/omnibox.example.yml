@@ -1,6 +1,5 @@
 ---
 - hosts: omnibox
-  sudo: yes
   remote_user: root
   gather_facts: no
   pre_tasks:

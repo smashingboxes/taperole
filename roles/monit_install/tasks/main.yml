@@ -2,6 +2,12 @@
   apt: name=monit state=present
 
 - name: Register monit config files
+  template: src=monitrc.j2
+            dest=/etc/monitrc
+            mode=700
+  register: web_interface_monit_config
+
+- name: Register monit config files
   template: src={{ item }}.j2
             dest=/etc/monit/conf.d/{{ item }}
             mode=u=rw,g=r,o=r

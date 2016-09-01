@@ -31,9 +31,7 @@
   tags: [nginx]
 
 - name: Install monit nginx config
-  template: src=nginx_monit.j2
-            dest=/etc/monit/conf.d/nginx
-            mode=u=rw,g=r,o=r
+  file: src=/etc/monit/conf-available/nginx dest=/etc/monit/conf-enabled/nginx owner=root group=root state=link
   register: nginx_monit_config
 
 - name: Reload Monit
@@ -45,6 +43,6 @@
   tags: [restart_nginx]
 
 - name: Start nginx
-  remote_user: "{{ deployer_user.name }}"
+  become_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit start nginx"
   tags: [restart_nginx]

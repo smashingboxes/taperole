@@ -1,24 +1,9 @@
-# - name: Install DJ monit bin command
-#   template: src=dj_monit_runner.j2
-#             dest=/usr/bin/dj_monit_runner
-#             mode=u=rwx,g=rwx,o=r
-#
-# - name: Install DJ monit config
-#   template: src=dj_monit_config.j2
-#             dest=/etc/monit/conf.d/delayed_job
-#             mode=u=rw,g=r,o=r
-#   register: dj_monit_config
-#
-# - name: Reload Monit
-#   command: bash -lc "monit reload"
-#   when: dj_monit_config.changed
-
 - name: Stop Delayed Job
-  remote_user: "{{ deployer_user.name }}"
+  become_user: "{{ deployer_user.name }}"
   command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job stop -n {{dj_runners}}"
   tags: [be_deploy]
 
 - name: Start Delayed Job
-  remote_user: "{{ deployer_user.name }}"
+  become_user: "{{ deployer_user.name }}"
   command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job start -n {{dj_runners}}"
   tags: [be_deploy]

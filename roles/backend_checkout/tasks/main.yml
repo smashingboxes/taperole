@@ -5,6 +5,7 @@
 
 - name: Check if there are commited changes on {{ be_app_branch }}
   remote_user: "{{ deployer_user.name }}"
+  become_user: "{{ deployer_user.name }}"
   command: bash -lc "git fetch origin && git diff --name-only origin/{{ be_app_branch }}"
   args:
     chdir: "{{be_app_path}}"
@@ -18,6 +19,7 @@
   tags: [be_deploy]
 
 - name: Check out application
+  sudo: false
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ be_app_path }}
        repo={{ be_app_repo }}
