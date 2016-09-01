@@ -3,9 +3,6 @@
             dest=/etc/init.d/unicorn_{{app_name}}
             mode=u=rw,g=rx,o=rx
 
-- name: register unicorn init.d script
-  command: initctl reload-configuration
-
 - name: Set up unicorn log dir
   file: path={{be_app_path}}/log state=directory owner=deployer
 
