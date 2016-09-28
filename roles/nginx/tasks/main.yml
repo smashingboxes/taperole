@@ -21,7 +21,7 @@
   tags: [nginx]
 
 - name: Create Diffie Hellman Ephemeral Parameters (this will take some time)
-  command: bash -lc "openssl dhparam -out dhparam.pem 2048"
+  command: bash -lc "openssl dhparam -out dhparam.pem 2048" creates=/etc/nginx/ssl/dhparam.pem
   args:
     chdir: /etc/nginx/ssl
   tags: [nginx]
