@@ -8,7 +8,7 @@
 
 - src: https://github.com/ANXS/postgresql
   name: ANXS.postgresql
-  version: v1.3.0
+  version: v1.6.2
 
 - src: geerlingguy.memcached
   version: 1.0.4
