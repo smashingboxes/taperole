@@ -4,7 +4,7 @@
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundle gems
-  become_user: "{{ deployer_user.name }}"
+  remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
            bash -lc "RAILS_ENV={{be_app_env}} bundle install
            --without test development --no-binstubs --deployment"
@@ -25,7 +25,7 @@
   when: secrets_file.stat.exists != true
 
 - name: Precompile Assets
-  become_user: "{{ deployer_user.name }}"
+  remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
            bash -lc "bundle exec rake assets:precompile RAILS_ENV={{be_app_env}}"
   tags: [precompile_assets,be_deploy]

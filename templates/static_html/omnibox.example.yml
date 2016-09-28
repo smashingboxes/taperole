@@ -7,16 +7,13 @@
       raw: sudo apt-get -y install python-simplejson
 
     - name: install apt requirements
-      become: yes
       apt: pkg=aptitude
 
     - name: update pre-installed packages
-      become: yes
       apt: upgrade=full update_cache=yes
 
 - hosts: omnibox
   user: root
-  become: yes
 
   vars_files:
     - "{{tape_dir}}/vars/defaults.yml"

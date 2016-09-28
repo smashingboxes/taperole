@@ -1,9 +1,9 @@
 - name: Stop Delayed Job
-  become_user: "{{ deployer_user.name }}"
+  remote_user: "{{ deployer_user.name }}"
   command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job stop -n {{dj_runners}}"
   tags: [be_deploy]
 
 - name: Start Delayed Job
-  become_user: "{{ deployer_user.name }}"
+  remote_user: "{{ deployer_user.name }}"
   command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job start -n {{dj_runners}}"
   tags: [be_deploy]

@@ -43,6 +43,6 @@
   tags: [restart_nginx]
 
 - name: Start nginx
-  become_user: "{{ deployer_user.name }}"
+  remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit start nginx"
   tags: [restart_nginx]

@@ -9,11 +9,11 @@
   when: sidekiq_monit_config.changed
 
 - name: Stop sidekiq
-  become_user: "{{deployer_user.name}}"
+  remote_user: "{{deployer_user.name}}"
   command: bash -lc "sudo monit stop sidekiq"
   tags: [be_deploy, unicorn_stop]
 
 - name: Start sidekiq
-  become_user: "{{deployer_user.name}}"
+  remote_user: "{{deployer_user.name}}"
   command: bash -lc "sudo monit start sidekiq"
   tags: [be_deploy, unicorn_start]

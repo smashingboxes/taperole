@@ -16,7 +16,6 @@
 
 - hosts: omnibox
   user: root
-  become: yes
 
   vars_files:
     - "{{tape_dir}}/vars/defaults.yml"
