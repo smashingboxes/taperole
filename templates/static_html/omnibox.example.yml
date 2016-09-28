@@ -1,5 +1,18 @@
 ---
 - hosts: omnibox
+  remote_user: root
+  gather_facts: no
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python-simplejson
+
+    - name: install apt requirements
+      apt: pkg=aptitude
+
+    - name: update pre-installed packages
+      apt: upgrade=full update_cache=yes
+
+- hosts: omnibox
   user: root
 
   vars_files:

@@ -1,6 +1,6 @@
 worker_processes {{ unicorn_workers }}
 working_directory "{{ be_app_path }}"
-pid "{{ be_app_path }}/tmp/unicorn.pid"
+pid "{{ be_app_path }}/tmp/unicorn/unicorn.pid"
 stderr_path "{{ be_app_path }}/log/unicorn.log"
 stdout_path "{{ be_app_path }}/log/unicorn.log"
 

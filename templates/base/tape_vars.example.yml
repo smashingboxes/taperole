@@ -11,19 +11,20 @@ be_app_repo:
 
 slack_webhook_url:
 
-# Configure Postgresql Backups
+## Configure Postgresql Backups
+## Uncomment the following to enabled backups
 #
-# Store Backups on S3
+## Store Backups on S3 or seperate server via rsync
+# S3
+# backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
+# Rsync
 # backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
 #
-# Store Backups on Seperate server via rsync
-# backup_dir: s3+http://[aws_access_key:aws_secret_access_key]@bucket_name[/folder]
-#
-# Adjust Cron Job Schedule (default is every night at 4am)
-# backup_schedule: "* */4 * * *"
-#
-# Change Which Servers are backed up
+## Which Servers are backed up
 # backup_hosts:
 #   - production
 #   - staging
 #   - qa
+#
+## Set Backup Schedule
+# backup_schedule: "* */4 * * *"

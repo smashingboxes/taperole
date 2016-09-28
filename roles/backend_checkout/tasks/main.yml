@@ -18,6 +18,7 @@
   tags: [be_deploy]
 
 - name: Check out application
+  sudo: false
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ be_app_path }}
        repo={{ be_app_repo }}

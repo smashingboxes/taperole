@@ -18,10 +18,11 @@
   command: bash -lc "openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout self-signed.key -out self-signed.crt -subj '/CN=localhost'"
   args:
     chdir: /etc/nginx/ssl
+    creates: /etc/nginx/ssl/self-signed.*
   tags: [nginx]
 
 - name: Create Diffie Hellman Ephemeral Parameters (this will take some time)
-  command: bash -lc "openssl dhparam -out dhparam.pem 2048"
+  command: bash -lc "openssl dhparam -out dhparam.pem 2048" creates=/etc/nginx/ssl/dhparam.pem
   args:
     chdir: /etc/nginx/ssl
   tags: [nginx]
@@ -31,9 +32,7 @@
   tags: [nginx]
 
 - name: Install monit nginx config
-  template: src=nginx_monit.j2
-            dest=/etc/monit/conf.d/nginx
-            mode=u=rw,g=r,o=r
+  file: src=/etc/monit/conf-available/nginx dest=/etc/monit/conf-enabled/nginx owner=root group=root state=link
   register: nginx_monit_config
 
 - name: Reload Monit
