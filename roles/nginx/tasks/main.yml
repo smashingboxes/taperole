@@ -18,6 +18,7 @@
   command: bash -lc "openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout self-signed.key -out self-signed.crt -subj '/CN=localhost'"
   args:
     chdir: /etc/nginx/ssl
+    creates: /etc/nginx/ssl/self-signed.*
   tags: [nginx]
 
 - name: Create Diffie Hellman Ephemeral Parameters (this will take some time)
