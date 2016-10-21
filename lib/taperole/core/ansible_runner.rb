@@ -48,7 +48,7 @@ module Taperole
       cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i"
       cmd += " #{inventory_file(options)} #{playbook} #{args} #{hosts_flag(options)}"
       cmd += " -e tape_dir=#{tape_dir}"
-      cmd += ' --ask-vault-pass' if options[:vault]
+      cmd += ' --ask-vault-pass' if options['ask-vault-pass']
       cmd += ' -vvvv' if options[:verbose]
       cmd += " -t #{options[:tags]}" if options[:tags]
       logger.info "Executing: #{cmd}" if options[:verbose]
