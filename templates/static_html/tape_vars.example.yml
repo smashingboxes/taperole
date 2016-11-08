@@ -1,5 +1,8 @@
 app_name:
 
+# Set this in your hosts file if you have multiple environments
+domain:
+
 # App Configs
 fe_app_repo:
 fe_app_branch: master
