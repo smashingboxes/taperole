@@ -124,7 +124,7 @@ You can specify a port using the `ansible_ssh_port` in your hosts inventory file
 **Test Rails**
 
 2. `docker build -f test/rails/Dockerfile -t tapetest .`
-3. `docker run -i -t $(docker images -q imagetest) /start_rails.sh | grep "Hello"`
+3. `docker run -i -t $(docker images -q tapetest) /start_rails.sh | grep "Hello"`
 
 If the last command resulted in a `<h1>Hello</h1>` then your Rails application deployed successfully!
 
