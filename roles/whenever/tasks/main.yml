@@ -1,4 +1,4 @@
 - name: Wheneverize
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
-           bash -lc "RAILS_ENV={{be_app_env}} bundle exec whenever --update-crontab"
+           bash -lc bundle exec whenever --update-crontab --set environment={{be_app_env}}"
