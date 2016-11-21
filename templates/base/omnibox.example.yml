@@ -37,6 +37,7 @@
     - unicorn_activate
     - frontend_deploy
     # - delayed_job
+    # - whenever
     # - sidekiq
     # - redis
     - monit_activate # Run Last
