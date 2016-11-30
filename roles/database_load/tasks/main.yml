@@ -1,12 +1,10 @@
 - include: db_reset.yml
   when: force_db_reset is defined and force_db_reset
-  tags: [db_reset]
 
 - name: Migrate DB
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ be_app_path }}
            bash -lc "bundle exec rake db:migrate RAILS_ENV={{be_app_env}}"
-  tags: [be_deploy,migrate,db_reset]
   when: (app_checkout is defined and app_checkout.changed)
         or rake.force_migrate 
         or (db_reset is defined and db_reset.changed)

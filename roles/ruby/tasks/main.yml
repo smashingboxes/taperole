@@ -17,15 +17,11 @@
     accept_hostkey=yes
     force=yes
   when: rbenv.env == "system"
-  tags:
-    - rbenv
 
 - name: create plugins directory for system
   remote_user: '{{ rbenv_owner }}'
   file: state=directory path={{ rbenv_root }}/plugins
   when: rbenv.env == "system"
-  tags:
-    - rbenv
 
 - name: install plugins for system
   remote_user: '{{ rbenv_owner }}'
@@ -34,8 +30,6 @@
     dest={{ rbenv_root }}/plugins/ruby-build
     accept_hostkey=yes
     force=yes
-  tags:
-    - rbenv
 
 - name: Set group ownership of content under rbenv_root
   shell:
@@ -50,8 +44,6 @@
     - rbenv_group != None
   register: rbenv_chgrp
   changed_when: '"changed group" in rbenv_chgrp.stdout'
-  tags:
-    - rbenv
 
 - name: Set group permissions of content under rbenv_root
   shell:
@@ -65,15 +57,11 @@
     - rbenv_group != None
   register: rbenv_chmod
   changed_when: '"changed from" in rbenv_chmod.stdout'
-  tags:
-    - rbenv
 
 - name: add rbenv initialization to profile system-wide
   template: src=rbenv.sh.j2 dest=/etc/profile.d/rbenv.sh owner=root group=root mode=0755
   when:
     - ansible_os_family != 'OpenBSD'
-  tags:
-    - rbenv
 
 - name: check ruby {{ rbenv.ruby_version }} installed for system
   shell: $SHELL -lc "rbenv versions | grep {{ rbenv.ruby_version }}"
@@ -82,16 +70,12 @@
   ignore_errors: yes
   always_run: yes
   when: rbenv.env == "system"
-  tags:
-    - rbenv
 
 - name: install ruby {{ rbenv.ruby_version }} for system
   shell: bash -lc "rbenv install {{ rbenv.ruby_version }}"
   when:
     - rbenv.env == "system"
     - ruby_installed.rc != 0
-  tags:
-    - rbenv
 
 - name: check if current system ruby version is {{ rbenv.ruby_version }}
   shell: $SHELL -lc "rbenv version | cut -d ' ' -f 1 | grep -Fx '{{ rbenv.ruby_version }}'"
@@ -100,13 +84,9 @@
   ignore_errors: yes
   always_run: yes
   when: rbenv.env == "system"
-  tags:
-    - rbenv
 
 - name: set ruby {{ rbenv.ruby_version }} for system
   shell: bash -lc "rbenv global {{ rbenv.ruby_version }} && rbenv rehash"
   when:
     - rbenv.env == "system"
     - ruby_selected.rc != 0
-  tags:
-    - rbenv

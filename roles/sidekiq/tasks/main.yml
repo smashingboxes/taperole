@@ -11,9 +11,7 @@
 - name: Stop sidekiq
   remote_user: "{{deployer_user.name}}"
   command: bash -lc "sudo monit stop sidekiq"
-  tags: [be_deploy, unicorn_stop]
 
 - name: Start sidekiq
   remote_user: "{{deployer_user.name}}"
   command: bash -lc "sudo monit start sidekiq"
-  tags: [be_deploy, unicorn_start]

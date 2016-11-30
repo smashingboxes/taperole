@@ -49,7 +49,7 @@ module Taperole
       desc 'deploy', 'Deploy the latest version of the app'
       def deploy
         Taperole::Notifier.register_notifiers(options)
-        ansible_deploy(args: '-t be_deploy,fe_deploy', options: options)
+        ansible_deploy(options: options)
       end
     end
   end

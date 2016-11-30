@@ -2,19 +2,15 @@
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit restart unicorn"
   when: kill_unicorn
-  tags: [unicorn_stop]
 
 - name: Force stop unicorn
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "service unicorn_{{ app_name }} stop"
   when: kill_unicorn
-  tags: [unicorn_force_stop]
 
 - name: Ensure tmp dir present for unicorn pids
   file: state=directory path={{be_app_path}}/tmp/unicorn owner={{ deployer_user.name }}
-  tags: [be_deploy]
 
 - name: Restart Unicorn
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit restart unicorn"
-  tags: [unicorn_restart,be_deploy]
