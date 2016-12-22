@@ -39,5 +39,5 @@
     # - delayed_job
     # - sidekiq
     # - redis
-    # - install_image_magick
+    # - imagemagick
     - monit_activate # Run Last
