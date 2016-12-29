@@ -14,4 +14,4 @@
   when: db_reset.stderr
 
 - name: Restart Services
-  command: bash -lc "sudomonit start all"
+  command: bash -lc "sudo monit start all"
