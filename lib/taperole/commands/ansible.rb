@@ -32,6 +32,10 @@ module Taperole
                    aliases: :r,
                    type: :string,
                    desc: 'Name of the role to operate on'
+      class_option :extras,
+                   aliases: :e,
+                   type: :string,
+                   desc: 'Extra variables to be passed into ansible'
 
       class_option :'ask-vault-pass', type: :boolean, desc: 'Ask for Ansible vault password'
 
