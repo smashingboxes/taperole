@@ -47,7 +47,7 @@ module Taperole
       enforce_roles_path!
       cmd = "ANSIBLE_CONFIG=#{local_dir}/.tape/ansible.cfg ansible-playbook -i"
       cmd += " #{inventory_file(options)} #{playbook} #{args} #{hosts_flag(options)}"
-      cmd += " -e tape_dir=#{tape_dir}"
+      cmd += " -e \"#{extra_vars(options)}\""
       cmd += ' --ask-vault-pass' if options['ask-vault-pass']
       cmd += ' -vvvv' if options[:verbose]
       cmd += " -t #{options[:tags]}" if options[:tags]
@@ -71,6 +71,17 @@ module Taperole
         f.puts "retry_files_enabled = False"
         f.puts '[ssh_connection]'
         f.puts 'ssh_args=-o ForwardAgent=yes'
+      end
+    end
+
+    def extra_vars(options)
+      base_vars = "tape_dir=#{tape_dir}"
+      extra_vars = options[:extras]
+
+      if extra_vars
+        base_vars + " " + extra_vars
+      else
+        base_vars
       end
     end
 
