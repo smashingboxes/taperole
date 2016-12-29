@@ -1,3 +1,2 @@
 rake:
-  force_seed: false
   force_migrate: false
