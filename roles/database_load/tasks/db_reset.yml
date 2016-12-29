@@ -1,14 +1,17 @@
-- name: stop everything
-  command: bash -lc "monit stop all"
+- name: Confirm Reset
+  pause: prompt='About to destroy and reseed the database. Press any key to continue or Ctrl+c and then "a" to abort'
+
+- name: Stop all Services
+  command: bash -lc "sudo monit stop all"
 
 - name: Reset DB
   command: chdir={{ be_app_path }}
-           bash -lc "bundle exec rake db:drop db:create RAILS_ENV={{be_app_env}}"
+           bash -lc "bundle exec rake db:drop db:setup RAILS_ENV={{be_app_env}}"
   register: db_reset
 
 - name: DB Reset Failed
   fail: msg="{{db_reset.stderr}}"
   when: db_reset.stderr
 
-- name: start unicorns
-  command: bash -lc "monit start all"
+- name: Restart Services
+  command: bash -lc "sudomonit start all"
