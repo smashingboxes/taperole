@@ -1,16 +1,13 @@
 - name: Ensure repo is defined
   fail: msg="App Repo is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
   when: (be_app_repo is undefined or be_app_repo is none) and (fe_app_repo is undefined or fe_app_repo is none)
-  tags: [be_deploy]
 
 - name: Ensure app name is defined
   fail: msg="app_name is not defined. Please define it in {{ tapefiles_dir }}/tape_vars.yml"
   when: app_name is undefined or app_name is none
-  tags: [be_deploy]
 
 - name: apt-get update upgrade
   apt: update_cache=yes  upgrade=safe
-  tags: [update, upgrade]
 
 - include: basic_packages.yml
 - include: swapfile.yml

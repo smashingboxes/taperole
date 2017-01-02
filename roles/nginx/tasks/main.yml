@@ -1,35 +1,28 @@
 - name: Enable nginx PPA
   apt_repository: repo=ppa:nginx/stable
-  tags: [nginx]
 
 - name: Install nginx
   apt: name=nginx state=present
-  tags: [nginx]
 
 - name: Ditch default nginx site enabled
   file: path=/etc/nginx/sites-enabled/default state=absent
-  tags: [nginx]
 
 - name: Create /etc/nginx/ssl
   file: path=/etc/nginx/ssl state=directory
-  tags: [nginx]
 
 - name: Create self signed SSL cert/key
   command: bash -lc "openssl req -x509 -sha256 -nodes -newkey rsa:2048 -keyout self-signed.key -out self-signed.crt -subj '/CN=localhost'"
   args:
     chdir: /etc/nginx/ssl
     creates: /etc/nginx/ssl/self-signed.*
-  tags: [nginx]
 
 - name: Create Diffie Hellman Ephemeral Parameters (this will take some time)
   command: bash -lc "openssl dhparam -out dhparam.pem 2048" creates=/etc/nginx/ssl/dhparam.pem
   args:
     chdir: /etc/nginx/ssl
-  tags: [nginx]
 
 - name: Configure App nginx
   template: src=nginx_unicorn.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
-  tags: [nginx]
 
 - name: Install monit nginx config
   file: src=/etc/monit/conf-available/nginx dest=/etc/monit/conf-enabled/nginx owner=root group=root state=link
@@ -41,9 +34,7 @@
 
 - name: Stop nginx
   service: name=nginx state=stopped
-  tags: [restart_nginx]
 
 - name: Start nginx
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit start nginx"
-  tags: [restart_nginx]
