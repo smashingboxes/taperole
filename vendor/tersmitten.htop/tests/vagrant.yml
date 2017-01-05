@@ -1,10 +1,10 @@
----
 # test file for htop
+---
 - hosts: all
   remote_user: vagrant
   sudo: true
   roles:
-    - htop
+    - ../../
   vars:
     htop_htoprc_destinations:
       skell:

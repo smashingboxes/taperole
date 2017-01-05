@@ -1,2 +1,4 @@
----
 # vars file for htop
+---
+htop_dependencies:
+  - htop

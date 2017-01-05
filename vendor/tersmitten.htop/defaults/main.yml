@@ -1,5 +1,5 @@
----
 # defaults file for htop
+---
 htop_htoprc_destinations:
   skell:
     dest: /etc/skel/.config/htop
