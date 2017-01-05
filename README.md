@@ -131,8 +131,8 @@ If the last command resulted in a `<h1>Hello</h1>` then your Rails application d
 ## Development
 
 ```sh
-git clone git@github.com:smashingboxes/tape.git
-cd tape
+git clone git@github.com:smashingboxes/taperole.git
+cd taperole
 ansible-galaxy install -r requirements.yml --force
 ```
 
@@ -156,7 +156,7 @@ gem 'taperole', '~>1.7'
 
 ```
 
-Note: You can also `$ gem install taperole` and not put Taperole in your 
+Note: You can also `$ gem install taperole` and not put Taperole in your
 Gemfile.
 
 During your first deploy, your app will not have a `secrets.yml` file configured, and Tape will prompt you to provide one:
