@@ -3,13 +3,6 @@
             dest=/etc/gemrc
             mode=u=rw,g=r,o=r
 
-- name: Install imagemagick
-  apt: name={{ item }} state=present
-  with_items:
-    - imagemagick
-    - libmagickcore-dev
-    - libmagickwand-dev
-
 - name: Register monit memcached config files
   template: src=memcached.j2
             dest=/etc/monit/conf.d/memcached

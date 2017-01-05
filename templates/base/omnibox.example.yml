@@ -40,4 +40,5 @@
     # - whenever
     # - sidekiq
     # - redis
+    # - imagemagick
     - monit_activate # Run Last
