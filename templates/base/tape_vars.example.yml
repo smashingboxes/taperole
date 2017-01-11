@@ -1,5 +1,8 @@
 app_name:
 
+# Set this in your hosts file if you have multiple environments
+domain:
+
 # Rails App Configs
 be_app_repo:
 
