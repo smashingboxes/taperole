@@ -25,6 +25,7 @@
     - general
     - ufw
     - deployer_user
+    - dev_keys
     - monit_install
     - postgres
     - nginx

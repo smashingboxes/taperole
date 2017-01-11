@@ -14,10 +14,3 @@
     owner={{ deployer_user.name }}
     group=users
     mode=600
-
-- name: Ensure devs keys are present
-  authorized_key: key="{{ lookup('file', item) }}"
-    user={{ deployer_user.name }}
-    state=present
-  with_fileglob:
-    - "{{ playbook_dir }}/../dev_keys/*"
