@@ -1,4 +1,6 @@
 ### 1.8.0
+* Major readme cleanup
+* I'm actually writing a changlog now :snowman:
 * Updates to multiple Ansible galaxy roles
 * Support for deploying a specific branch
 * Adds support for the ruby gem whenever
