@@ -56,6 +56,9 @@ backup_user: root
 backup_postgres_user: postgres
 backup_postgres_host: localhost
 
+# PG Settings
+postgresql_version: 9.4
+
 backup_profiles:
   - name: postgresql
     schedule: "{{ backup_schedule }}"
