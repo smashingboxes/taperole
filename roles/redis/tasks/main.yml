@@ -1,6 +1,12 @@
 - name: Get PPA for latest Redis
   apt_repository: repo='ppa:rwky/redis' state=present
 
+- name: Set vm overcommit memory to 1 in sysctl
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+    state: present
+
 - name: Install Redis
   apt: name=redis-server state=latest
 
