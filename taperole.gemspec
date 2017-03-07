@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'slack-notifier', '~> 1.5'
   spec.add_runtime_dependency 'thor', '~> 0.19.1'
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
+  spec.add_development_dependency 'rspec-expectations', '~> 3.5'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.require_paths = ['lib']
 end

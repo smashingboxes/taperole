@@ -6,9 +6,9 @@
 
 - src: lxhunter.apt
 
-- src: https://github.com/ANXS/postgresql
+- src: ANXS.postgresql
   name: ANXS.postgresql
-  version: v1.6.2
+  version: v1.7.1
 
 - src: geerlingguy.memcached
   version: 1.0.4

@@ -4,3 +4,5 @@ site_vars.yml
 hosts
 *.gem
 .tape
+vendor/ruby
+.bundle
