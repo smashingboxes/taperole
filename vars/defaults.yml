@@ -72,3 +72,9 @@ rbenv:
   ruby_version: 2.3.1
 
 rbenv_group: root
+
+# Redis
+sysfs_sysfs_d_files:
+  001-transparent-hugepage.conf:
+    - attribute: kernel/mm/transparent_hugepage/enabled
+      value: never

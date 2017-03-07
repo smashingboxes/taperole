@@ -1,0 +1,43 @@
+# test file for sysfs
+---
+- hosts: all
+  remote_user: vagrant
+  become: true
+  roles:
+    - ../../
+  post_tasks:
+    - name: post | check permissions
+      stat:
+        path: "{{ item }}"
+      register: check_permissions
+      changed_when: false
+      failed_when: >
+        check_permissions.stat.pw_name != 'root'
+        and check_permissions.stat.gr_name != 'vagrant'
+        and check_permissions.stat.mode != '0660'
+      with_items:
+        - /sys/power/state
+
+    - name: post | check values
+      shell: awk 'NR>1 {print $1}' RS=[ FS=] {{ item }}
+      register: check_values
+      changed_when: false
+      failed_when: check_values.stdout != 'never'
+      with_items:
+        - /sys/kernel/mm/transparent_hugepage/enabled
+        - /sys/kernel/mm/transparent_hugepage/defrag
+
+  vars:
+    sysfs_sysfs_d_files:
+      000-power-state.conf:
+        - action: mode
+          attribute: power/state
+          value: '0660'
+        - action: owner
+          attribute: power/state
+          value: 'root:vagrant'
+      001-transparent-hugepage.conf:
+        - attribute: kernel/mm/transparent_hugepage/enabled
+          value: never
+        - attribute: kernel/mm/transparent_hugepage/defrag
+          value: never
