@@ -1,8 +1,20 @@
 - name: Get PPA for latest Redis
-  apt_repository: repo='ppa:rwky/redis' state=present
+  apt_repository:
+    repo: ppa:chris-lea/redis-server
+    update_cache: true
+
 
 - name: Install Redis
-  apt: name=redis-server state=latest
+  apt:
+    name: redis-server
+    state: latest
+
+- name: kernel | set system overcommit policy
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+    reload: true
+    state: present
 
 - name: Register with monit
   template: src=redis.j2

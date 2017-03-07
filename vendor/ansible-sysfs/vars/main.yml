@@ -1,0 +1,10 @@
+# vars file for sysfs
+---
+sysfs_dependencies:
+  - sysfsutils
+
+sysfs_uses_old_sysfsutils: "{{ false if (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>') or ansible_distribution == 'Debian' and ansible_distribution_version | version_compare('8.0', '>=')) else true }}"
+
+sysfs_actions_supported:
+  - mode
+  - owner

@@ -1,0 +1,3 @@
+# defaults file for sysfs
+---
+sysfs_sysfs_d_files: {}
