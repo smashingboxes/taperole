@@ -16,6 +16,18 @@
     reload: true
     state: present
 
+- name: Disbale transparent_hugepage
+  command: bash -lc 'echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+
+- name: Disable transparent_hugepage in grub
+  lineinfile:
+    dest: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX'
+    line: 'GRUB_CMDLINE_LINUX="transparent_hugepage=never"'
+
+- name: Update Grub
+  command: 'update-grub'
+
 - name: Register with monit
   template: src=redis.j2
             dest=/etc/monit/conf.d/redis
