@@ -1,4 +1,4 @@
-### 1.8.2
+### 1.8.2 (also 1.8.1)
 * Updates ANXS PG Galaxy role
 * Install postgres 9.4 by default
 * Kernel level mem leak issues for Redis fixed
