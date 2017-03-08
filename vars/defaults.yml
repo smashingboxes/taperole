@@ -73,7 +73,11 @@ rbenv:
 
 rbenv_group: root
 
-# # Redis
+# Redis
+# Disable transparent hugepage in redis because it causes memory leak issues
+# This change does not persist on server reboot. We have to modify /etc/default/grub
+# for a changes to take full effect.
+# Check out roles/redis/tasks/main.yml
 sysfs_sysfs_d_files:
   001-transparent-hugepage.conf:
     - attribute: kernel/mm/transparent_hugepage/enabled
