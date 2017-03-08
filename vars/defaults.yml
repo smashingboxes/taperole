@@ -73,7 +73,7 @@ rbenv:
 
 rbenv_group: root
 
-# Redis
+# # Redis
 sysfs_sysfs_d_files:
   001-transparent-hugepage.conf:
     - attribute: kernel/mm/transparent_hugepage/enabled
