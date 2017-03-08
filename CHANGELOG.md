@@ -1,3 +1,9 @@
+### 1.8.2
+* Updates ANXS PG Galaxy role
+* Install postgres 9.4 by default
+* Kernel level mem leak issues for Redis fixed
+* Node 6 installed by default
+
 ### 1.8.0
 * Major readme cleanup
 * I'm actually writing a changlog now :snowman:
