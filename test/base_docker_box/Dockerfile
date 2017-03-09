@@ -1,5 +1,5 @@
 # Start with the ubuntu image
-FROM ubuntu
+FROM ubuntu:16.04
 
 CMD ["bash"]
 

@@ -53,6 +53,7 @@ server {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
+    root {{ be_app_path }}/public;
   }
 
 {% if be_app_repo is defined %}

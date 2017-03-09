@@ -10,11 +10,11 @@ RUN truncate -s 0 /taperole/roles/general/tasks/swapfile.yml
 WORKDIR /taperole
 RUN gem build taperole.gemspec
 RUN gem install slack-notifier
-RUN gem install --local taperole
+RUN gem install taperole # gem installs from local directory first, then remote
 
 # Configure tape
-RUN git clone https://github.com/BrandonMathis/vanilla-rails-app.git
-WORKDIR /taperole/vanilla-rails-app
+RUN git clone https://github.com/smashingboxes/taperole_vanilla_4.git
+WORKDIR /taperole/taperole_vanilla_4
 RUN echo 'n' | tape installer install
 ADD ./test/rails/tape_vars.yml taperole/tape_vars.yml
 

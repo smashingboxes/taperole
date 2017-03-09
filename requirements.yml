@@ -6,11 +6,15 @@
 
 - src: lxhunter.apt
 
-- src: https://github.com/ANXS/postgresql
+- src: ANXS.postgresql
   name: ANXS.postgresql
-  version: v1.3.0
+  version: v1.7.1
 
 - src: geerlingguy.memcached
   version: 1.0.4
 
 - src: tersmitten.htop
+
+- src: https://github.com/Oefenweb/ansible-sysfs
+  name: ansible-sysfs
+  version: v1.0.2

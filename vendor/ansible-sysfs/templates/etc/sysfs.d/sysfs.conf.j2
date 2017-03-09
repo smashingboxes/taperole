@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+{% for item in item.value | default([]) %}
+{%- if item.action is defined %}{{ item.action }} {% endif -%}
+{{- item.attribute }} = {{ item.value }}
+{% endfor %}

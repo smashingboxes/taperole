@@ -1,7 +1,7 @@
-app_name: vanilla
+app_name: vanilla_4
 
 # Rails App Configs
-be_app_repo: https://github.com/BrandonMathis/vanilla-rails-app.git
+be_app_repo: https://github.com/smashingboxes/taperole_vanilla_4.git
 
 # HTML/JS App Configs
 # Uncomment if you want to deploy a JS/HTML App

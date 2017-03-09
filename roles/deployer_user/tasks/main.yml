@@ -9,9 +9,6 @@
   user: name={{ deployer_user.name }} groups={{ item }} state=present append=yes shell=/bin/bash
   with_items: deployer_user.groups
 
-# It's possible for the deployer's homedir to get created on accident by
-# a deploy script or something getting run before this.  This just ensures
-# the env is sane moving forward
 - name: Ensure deployer user owns its own homedir
   file: path=/home/deployer state=directory owner=deployer
 

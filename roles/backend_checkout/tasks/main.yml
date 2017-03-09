@@ -1,7 +1,6 @@
 - name: Check if path exists
   stat: path={{ be_app_path }}
   register: be_app_path_stat
-  tags: [be_deploy]
 
 - name: Check if there are commited changes on {{ be_app_branch }}
   remote_user: "{{ deployer_user.name }}"
@@ -10,14 +9,13 @@
     chdir: "{{be_app_path}}"
   register: changes_on_remote
   when: be_app_path_stat.stat.exists
-  tags: [be_deploy]
 
 - name: Inform User if there are no changes
   debug: msg={{no_changes_found_error.split('\n')}}
   when: be_app_path_stat.stat.exists and changes_on_remote.stdout_lines == []
-  tags: [be_deploy]
 
 - name: Check out application
+  sudo: false
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ be_app_path }}
        repo={{ be_app_repo }}
@@ -25,7 +23,6 @@
        accept_hostkey=true
        force=yes
   register: app_checkout
-  tags: [be_deploy]
 
 - name: check that secrets is ignored
   shell: cat {{ be_app_path }}/.gitignore | grep {{ item }}
@@ -33,9 +30,7 @@
     - config/secrets.yml
   register: secrets_ignore_check
   ignore_errors: true
-  tags: [be_deploy]
 
 - name: ignore secrets
   shell: /bin/bash -c 'echo "config/secrets.yml" > {{ be_app_path }}/.git/info/exclude'
   when: secrets_ignore_check|failed
-  tags: [be_deploy]

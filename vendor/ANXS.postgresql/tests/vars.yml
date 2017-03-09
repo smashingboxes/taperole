@@ -1,6 +1,6 @@
 ---
 
-postgresql_version: 9.5
+postgresql_version: 9.6
 
 postgresql_databases:
   - name: foobar
@@ -13,6 +13,8 @@ postgresql_users:
   - name: zab
     pass: md51a1dc91c907325c69271ddf0c944bc72
     encrypted: yes
+
+  - name: zabaz
 
 postgresql_user_privileges:
   - name: baz

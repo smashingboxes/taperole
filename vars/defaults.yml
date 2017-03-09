@@ -37,7 +37,7 @@ allowed_ports:
   - 80
   - 443
 
-nodejs_version: "4.x"
+nodejs_version: "6.x"
 
 no_changes_found_error: |
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
@@ -56,6 +56,9 @@ backup_user: root
 backup_postgres_user: postgres
 backup_postgres_host: localhost
 
+# PG Settings
+postgresql_version: 9.4
+
 backup_profiles:
   - name: postgresql
     schedule: "{{ backup_schedule }}"
@@ -69,3 +72,13 @@ rbenv:
   ruby_version: 2.3.1
 
 rbenv_group: root
+
+# Redis
+# Disable transparent hugepage in redis because it causes memory leak issues
+# This change does not persist on server reboot. We have to modify /etc/default/grub
+# for a changes to take full effect.
+# Check out roles/redis/tasks/main.yml
+sysfs_sysfs_d_files:
+  001-transparent-hugepage.conf:
+    - attribute: kernel/mm/transparent_hugepage/enabled
+      value: never

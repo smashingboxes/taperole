@@ -1,3 +1,20 @@
+### 1.8.2 (also 1.8.1)
+* Updates ANXS PG Galaxy role
+* Install postgres 9.4 by default
+* Kernel level mem leak issues for Redis fixed
+* Node 6 installed by default
+
+### 1.8.0
+* Major readme cleanup
+* I'm actually writing a changlog now :snowman:
+* Updates to multiple Ansible galaxy roles
+* Support for deploying a specific branch
+* Adds support for the ruby gem whenever
+* Remove all Ansible tags from roles
+* Removes imagemagick as a default install on all rails servers
+* Move deployment keys setup into a separate role that can be run on every deploy
+* Only create dhparam if it does not already exist
+
 ### 1.6.0
 * Added Hound
 * Documentation Updates

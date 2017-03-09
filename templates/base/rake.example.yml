@@ -1,0 +1,18 @@
+---
+- hosts: omnibox
+
+  vars_files:
+    - "{{tape_dir}}/vars/defaults.yml"
+    - tape_vars.yml
+
+  user: "{{ deployer_user.name }}"
+
+  tasks:
+  - name: Running rake {{ task }}
+    command: bash -lc "bin/rake {{ task }}"
+    register: rake_output
+    args:
+      chdir: "{{ be_app_path }}"
+
+  - name: Print the rake task output
+    debug: var=rake_output.stdout_lines
