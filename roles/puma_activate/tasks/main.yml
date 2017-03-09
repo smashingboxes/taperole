@@ -1,4 +1,3 @@
 - name: Restart Puma
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit restart puma"
-  tags: [puma_restart,be_deploy]

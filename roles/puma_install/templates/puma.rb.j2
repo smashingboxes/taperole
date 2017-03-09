@@ -12,11 +12,11 @@ environment rails_env
 bind "unix://{{puma_sockfile}}"
 
 # Logging
-stdout_redirect "{{be_app_path}}/log/puma.stdout.log", "{{be_app_path}}/log/puma.stderr.log", true
+stdout_redirect "{{be_app_path}}/log/puma.log", "{{be_app_path}}/log/puma.log", true
 
 # Set master PID and state locations
-pidfile "{{be_app_path}}/pids/puma.pid"
-state_path "{{be_app_path}}/pids/puma.state"
+pidfile "{{ puma_pidfile }}"
+state_path "{{puma_state_path}}"
 activate_control_app
 
 on_worker_boot do

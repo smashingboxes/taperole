@@ -5,22 +5,16 @@
   template: src=puma.rb.j2
             dest={{be_app_path}}/config/puma.rb
 
-
 - name: Set up Puma pids dir
   file: path={{be_app_path}}/pids state=directory owner=deployer
 
-- name: Register Puma upstart script
-  template: src=puma_init.conf.j2
-            dest=/etc/init/puma.conf
-            mode=u=rwx,g=r,o=r
-
-- name: Register Puma upstart config script
-  template: src=puma-manager.conf.j2
-            dest=/etc/init/puma-manager.conf
+- name: Register Puma script
+  template: src=puma.sh.j2
+            dest=/etc/init.d/puma
             mode=u=rwx,g=r,o=r
 
 - name: Register Puma config
-  template: src=puma.conf.j2
+  template: src=etc/puma.conf.j2
             dest=/etc/puma.conf
             mode=u=rwx,g=r,o=r
 

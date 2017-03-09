@@ -15,7 +15,7 @@ module Taperole
     end
 
     def valid_gems
-      has_gem_in_gemfile?('unicorn')
+      has_gem_in_gemfile?('puma')
     end
 
     def has_gem_in_gemfile?(name)

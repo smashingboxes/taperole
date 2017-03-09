@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# This monit wrapper script will be called by monit as root
+# Edit these variables to your liking
+
+RAILS_ENV={{ be_app_env }}
+USER={{ deployer_user }}
+APP_DIR={{ be_app_path }}
+PUMA_CONFIG_FILE=$APP_DIR/config/puma.rb
+PUMA_PID_FILE={{ puma_pidfile }}
+PUMA_SOCKET={{ puma_sockfile }}
+
+# check if puma process is running
+puma_is_running() {
+  if [ -S $PUMA_SOCKET ] ; then
+    if [ -e $PUMA_PID_FILE ] ; then
+      if cat $PUMA_PID_FILE | xargs pgrep -P > /dev/null ; then
+        return 0
+      else
+        echo "No puma process found"
+      fi
+    else
+      echo "No puma pid file found"
+    fi
+  else
+    echo "No puma socket found"
+  fi
+
+  return 1
+}
+
+case "$1" in
+  start)
+    echo "Starting puma..."
+    rm -f $PUMA_SOCKET
+
+    if [ -e $PUMA_CONFIG_FILE ] ; then
+      echo "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec puma -C $PUMA_CONFIG_FILE --daemon"
+      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec puma -C $PUMA_CONFIG_FILE --daemon"
+    else
+      echo "ERROR: No config file found in $PUMA_CONFIG_FILE"
+    fi
+
+    echo "done"
+    ;;
+
+  stop)
+    echo "Stopping puma..."
+      echo "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl stop"
+      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl stop"
+      rm -f $PUMA_PID_FILE
+      rm -f $PUMA_SOCKET
+
+    echo "done"
+    ;;
+
+  restart)
+    if puma_is_running ; then
+      echo "Hot-restarting puma..."
+      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl restart"
+
+      echo "Doublechecking the process restart..."
+      sleep 15
+      if puma_is_running ; then
+        echo "done"
+        exit 0
+      else
+        echo "Puma restart failed :/"
+      fi
+    fi
+    ;;
+  *)
+    echo "Usage: puma {start|stop|restart}" >&2
+    ;;
+esac
