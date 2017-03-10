@@ -6,22 +6,22 @@
             dest={{be_app_path}}/config/puma.rb
 
 - name: Set up Puma pids dir
-  file: path={{be_app_path}}/pids state=directory owner=deployer
+  file:
+    path: "{{be_app_path}}/pids"
+    state: directory
+    owner: deployer
 
-- name: Register Puma script
-  template: src=puma.sh.j2
-            dest=/etc/init.d/puma
-            mode=u=rwx,g=r,o=r
-
-- name: Register Puma config
-  template: src=etc/puma.conf.j2
-            dest=/etc/puma.conf
-            mode=u=rwx,g=r,o=r
+- name: Register Puma init script
+  template:
+    src: puma_init.j2
+    dest: /etc/init.d/puma
+    mode: u=rwx,g=r,o=r
 
 - name: Register Puma monit config files
-  template: src=puma_monit.j2
-            dest=/etc/monit/conf.d/puma
-            mode=u=rw,g=r,o=r
+  template:
+    src: puma_monit.j2
+    dest: /etc/monit/conf.d/puma
+    mode: u=rw,g=r,o=r
   register: puma_monit_config
 
 - name: Reload Monit
