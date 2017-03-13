@@ -1,0 +1,19 @@
+- name: Install letsencrypt
+  apt: name=letsencrypt state=present
+  when: letsencrypt.enabled == true
+
+- name: Get letsencrypt cert
+  command: bash -lc "letsencrypt certonly --standalone --rsa-key-size 4096 --force-renew --agree-tos --email {{ letsencrypt.email }} --text --non-interactive -d {{ letsencrypt.hostname }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ letsencrypt.hostname }}/privkey.pem"
+  when: letsencrypt.enabled == true
+
+- name: Set cert to renew every monday at 2:30 am
+  cron:
+    name: Certbot renew
+    weekday: 1
+    hour: 2
+    minute: 30
+    job: /usr/bin/letsencrypt renew --rsa-key-size 4096 >> /var/log/le-renew.log
+    user: root
+  when: letsencrypt.enabled == true

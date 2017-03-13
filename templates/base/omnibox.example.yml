@@ -28,6 +28,7 @@
     - dev_keys
     - monit_install
     - postgres
+    - letsencrypt
     - nginx
     - backend_install_essentials
     - frontend_install_essentials

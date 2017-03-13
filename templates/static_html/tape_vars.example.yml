@@ -1,5 +1,10 @@
 app_name:
 
+letsencrypt:
+  enabled: false
+  hostname:          # REQUIRED should be example.com or subdomain.example.com (do not include the www)
+  email:             # REQUIRED
+
 # App Configs
 fe_app_repo:
 fe_app_branch: master

@@ -25,6 +25,7 @@
     - deployer_user
     - frontend_install_essentials
     - monit_install
+    - letsencrypt
     - nginx
     - frontend_deploy
     - monit_activate # Run Last
