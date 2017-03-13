@@ -1,3 +1,15 @@
+- name: Ensure puma owns it tmp dir
+  file:
+    path: "{{be_app_path}}/tmp"
+    state: directory
+    owner: deployer
+
+- name: Ensure puma owns it pids dir
+  file:
+    path: "{{be_app_path}}/pids"
+    state: directory
+    owner: deployer
+
 - name: Check if puma running
   shell: ps -ef | grep puma | grep -v grep
   register: puma_running
