@@ -18,5 +18,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'colorize', '~> 0.8.1'
   spec.add_development_dependency 'rspec-expectations', '~> 3.5'
   spec.add_development_dependency 'rspec', '~> 3.5'
+  spec.add_development_dependency 'rake', '12.0.0'
   spec.require_paths = ['lib']
 end
