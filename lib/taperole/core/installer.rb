@@ -41,6 +41,9 @@ module Taperole
       elsif rails_app?
         logger.info '🔎  Rails app detected'.red
         copy_basic_examples
+      else
+        logger.info '❌  Did not detect a package.json or Gemfile.'.red
+        exit 1
       end
     end
 
