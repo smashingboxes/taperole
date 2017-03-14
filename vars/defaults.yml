@@ -26,14 +26,13 @@ swap_file:
 
 # echo 'password' | md5
 database_password: 286755fad04869ca523320acce0dc6a4
-enabled_delayed_job: false
 
 precompile_assets: true
 
 # Sets server_name in the nginx sites-enabled file
 app_url: false
 
-fe_build_command: gulp build
+fe_build_command: npm run build
 
 allowed_ports:
   - 80
@@ -71,7 +70,7 @@ backup_profiles:
 rbenv:
   env: system
   version: v1.0.0
-  ruby_version: 2.3.1
+  ruby_version: 2.4.0
 
 rbenv_group: root
 

@@ -11,9 +11,9 @@ RUN apt-get install -y python-dev git aptitude sudo wget make zlib1g-dev libssl-
 
 # Install Ruby
 WORKDIR /tmp
-RUN wget http://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
-RUN tar -xvzf ruby-2.3.0.tar.gz
-WORKDIR /tmp/ruby-2.3.0
+RUN wget http://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz
+RUN tar -xvzf ruby-2.4.0.tar.gz
+WORKDIR /tmp/ruby-2.4.0
 RUN ./configure --prefix=/usr/local
 RUN make
 RUN make install

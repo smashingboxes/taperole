@@ -1,3 +1,6 @@
+### 2.0.0
+* Added support for 
+
 ### 1.8.2 (also 1.8.1)
 * Updates ANXS PG Galaxy role
 * Install postgres 9.4 by default
