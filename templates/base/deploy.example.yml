@@ -12,7 +12,7 @@
     - backend_checkout
     - backend_config
     - database_load
-    - unicorn_activate
+    - puma_activate
     - frontend_deploy
     # - delayed_job
     # - whenever

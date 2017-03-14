@@ -139,8 +139,8 @@ ansible-galaxy install -r requirements.yml --force
 ## Rails Application Requirements
 
 Your rails application must:
-* use postgres as the database
-* use unicorn as the app server
+* use posgres as the database
+* use puma as the app server
 * have access to the taperole gem
 
 Usually, your Gemfile will include something like:
@@ -148,8 +148,8 @@ Usually, your Gemfile will include something like:
 # Use postgresql as the database
 gem 'pg'
 
-# Use Unicorn as the app server
-gem 'unicorn'
+# Use Puma as the app server
+gem 'puma'
 
 # Use taperole for deployment
 gem 'taperole', '~>1.7'

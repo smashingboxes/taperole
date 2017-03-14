@@ -1,5 +1,4 @@
 ---
 dependencies:
-  - role: geerlingguy.memcached
   - role: ruby
   - role: node

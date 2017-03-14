@@ -1,7 +1,12 @@
-app_name: vanilla_4
+app_name: vanilla
+
+letsencrypt:
+  enabled: false
+  hostname:          # REQUIRED should be example.com or subdomain.example.com (do not include the www)
+  email:             # REQUIRED
 
 # Rails App Configs
-be_app_repo: https://github.com/smashingboxes/taperole_vanilla_4.git
+be_app_repo: https://github.com/BrandonMathis/vanilla-rails-app.git
 
 # HTML/JS App Configs
 # Uncomment if you want to deploy a JS/HTML App

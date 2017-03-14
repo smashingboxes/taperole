@@ -1,0 +1,6 @@
+check process puma
+  with pidfile  {{ puma_pidfile }}
+  start program = "/etc/init.d/puma start"
+  stop program = "/etc/init.d/puma stop"
+  restart program = "/etc/init.d/puma restart"
+  group myapp

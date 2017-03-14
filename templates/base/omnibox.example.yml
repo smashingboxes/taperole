@@ -28,14 +28,15 @@
     - dev_keys
     - monit_install
     - postgres
+    - letsencrypt
     - nginx
     - backend_install_essentials
     - frontend_install_essentials
     - backend_checkout
-    - unicorn_install
+    - puma_install
     - backend_config
     - database_load
-    - unicorn_activate
+    - puma_activate
     - frontend_deploy
     # - delayed_job
     # - whenever

@@ -3,16 +3,6 @@
             dest=/etc/gemrc
             mode=u=rw,g=r,o=r
 
-- name: Register monit memcached config files
-  template: src=memcached.j2
-            dest=/etc/monit/conf.d/memcached
-            mode=u=rw,g=r,o=r
-  register: memcached_monit_config
-
-- name: Reload Monit
-  command: bash -lc "monit reload"
-  when: memcached_monit_config.changed
-
 # zzet.rbenv puts all the rbenv stuff in profile for some reason
 # so we gotta use login shells to do this stuff
 - name: Install bundler

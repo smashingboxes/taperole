@@ -14,8 +14,11 @@ deployer_user:
 # Path where this playbook is being run from
 local_dir: "{{lookup('env', 'PWD')}}"
 
-unicorn_workers: "{{ansible_processor_cores * 2}}"
-unicorn_sockfile: /tmp/unicorn_{{ app_name }}.sock
+# Puma Configs
+puma_workers: "{{ansible_processor_cores}}"
+puma_pidfile: "{{be_app_path}}/pids/puma.pid"
+puma_state_path: "{{be_app_path}}/pids/puma.state"
+puma_sockfile: "{{ be_app_path }}/tmp/puma_{{ app_name }}.sock"
 
 swap_file:
   path: /swp
@@ -23,7 +26,6 @@ swap_file:
 
 # echo 'password' | md5
 database_password: 286755fad04869ca523320acce0dc6a4
-
 enabled_delayed_job: false
 
 precompile_assets: true
