@@ -8,4 +8,4 @@ letsencrypt:
 # App Configs
 fe_app_repo:
 fe_app_branch: master
-fe_build_command: gulp build
+fe_build_command: npm run build
