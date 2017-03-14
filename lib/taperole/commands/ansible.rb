@@ -44,8 +44,8 @@ module Taperole
                    type: :string,
                    desc: 'A custom playbook to run'
 
-      desc 'everything', 'Initial setup of a server'
-      def everything
+      desc 'provision', 'Initial setup of a server'
+      def provision
         Taperole::Notifier.register_notifiers(options)
         valid_preconfigs ? ansible(options: options) : puts("Not a Rails or JS app")
       end

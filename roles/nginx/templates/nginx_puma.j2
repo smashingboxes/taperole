@@ -1,3 +1,7 @@
+# DoS Mitigation
+limit_req_zone $binary_remote_addr zone=one:10m rate=3r/m;
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+
 {% if be_app_repo is defined %}
 upstream puma {
   server unix:{{puma_sockfile}} fail_timeout=0;
@@ -9,7 +13,9 @@ server {
 }
 
 server {
-  listen 443 default deferred;
+  listen 443 http2 default_server;
+  listen [::]:443 ssl http2 default_server;
+
 
 {% if letsencrypt.hostname %}
   server_name {{ letsencrypt.hostname }};
@@ -38,11 +44,16 @@ server {
   ssl_stapling on;
   ssl_stapling_verify on;
 
+
   resolver 8.8.8.8 8.8.4.4 valid=300s;
   resolver_timeout 5s;
 
   add_header X-Frame-Options "DENY";
   add_header Public-Key-Pins 'pin-sha256="klO23nT2ehFDXCfx3eHTDRESMz3asj1muO+4aIdjiuY="; pin-sha256="633lt352PKRXbOwf4xSEa1M517scpD3l5f79xMD9r9Q="; max-age=2592000; includeSubDomains';
+
+  # DoS Mitigation
+  client_body_timeout 5s;
+  client_header_timeout 5s;
 
 {% if fe_app_repo is defined%}
   root {{ fe_app_path }}/dist;

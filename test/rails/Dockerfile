@@ -25,7 +25,7 @@ RUN sed -i '/ufw/d' taperole/omnibox.yml
 # Run Tape
 RUN echo '[omnibox]' > taperole/hosts
 RUN echo 'localhost ansible_connection=local be_app_env=production be_app_branch=master' >> taperole/hosts
-RUN tape ansible everything
+RUN tape ansible provision
 RUN chown deployer:users /home/deployer -R
 ADD test/rails/start_rails.sh /
 

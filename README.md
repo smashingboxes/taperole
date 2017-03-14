@@ -28,7 +28,7 @@ be_app_repo: [git repo]
 ```
 
 * Copy all developers' public keys into the `taperole/dev_keys` directory.
-* Use `$ tape ansible everything` for your first deploy, then `$ tape ansible deploy` for subsequent changes.
+* Use `$ tape ansible provision` for your first deploy, then `$ tape ansible deploy` for subsequent changes.
 
 **Upgrade**
 
@@ -116,7 +116,7 @@ The port number might be different if other vagrant machines are running, run `v
 You can specify a port using the `ansible_ssh_port` in your hosts inventory file.
 
 3. Update `tape_vars.yml` with information to a rails app you want to deploy
-4. `tape ansible everything -l vagrant`
+4. `tape ansible provision -l vagrant`
 
 ### With Docker
 1. Setup your machine to work with Docker. We recommend [Docker Machine](https://docs.docker.com/machine/)

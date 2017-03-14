@@ -7,6 +7,6 @@ services:
 
 script:
   - bundle install
-  - rake spec
+  - bundle exec rake spec
   - docker build -f test/rails/Dockerfile -t imagetest .
   - docker run -i -t $(docker images -q imagetest) /start_rails.sh | grep "Hello"

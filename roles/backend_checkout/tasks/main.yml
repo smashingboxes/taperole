@@ -15,7 +15,6 @@
   when: be_app_path_stat.stat.exists and changes_on_remote.stdout_lines == []
 
 - name: Check out application
-  sudo: false
   remote_user: "{{ deployer_user.name }}"
   git: dest={{ be_app_path }}
        repo={{ be_app_repo }}

@@ -64,7 +64,7 @@ describe Taperole::Commands::Installer do
     end
 
     it 'creates the dev_keys directory' do
-      expect(root).to include('dev_keys')
+      expect(taperole).to include('dev_keys')
     end
   end
 
@@ -77,7 +77,7 @@ describe Taperole::Commands::Installer do
       FileUtils.touch("#{Dir.pwd}/taperole/rake.yml")
       FileUtils.touch("#{Dir.pwd}/taperole/roles")
       FileUtils.touch("#{Dir.pwd}/taperole/hosts")
-      FileUtils.touch("#{Dir.pwd}/dev_keys")
+      FileUtils.touch("#{Dir.pwd}/taperole/dev_keys")
       FileUtils.touch("#{Dir.pwd}/Vagrantfile")
     end
     let(:command) { :uninstall }
@@ -107,7 +107,7 @@ describe Taperole::Commands::Installer do
     end
 
     it 'removes dev_keys' do
-      expect(root).to_not include('dev_keys')
+      expect(taperole).to_not include('dev_keys')
     end
 
     it 'removes Vagrantfile' do

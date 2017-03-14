@@ -24,7 +24,7 @@ module Taperole
       rm "#{tapefiles_dir}/rake.yml"
       rm "#{tapefiles_dir}/roles"
       rm "#{tapefiles_dir}/hosts"
-      rm "#{local_dir}/dev_keys"
+      rm "#{tapefiles_dir}/dev_keys"
       rm "#{local_dir}/Vagrantfile"
     end
 
@@ -36,14 +36,11 @@ module Taperole
 
     def create_tape_files
       if fe_app? && !rails_app?
-        logger.info '🔎  JS/HTML app detected'.red
+        logger.info '🔎  JS/HTML app detected'.blue
         copy_static_app_examples
       elsif rails_app?
-        logger.info '🔎  Rails app detected'.red
+        logger.info '🔎  Rails app detected'.blue
         copy_basic_examples
-      else
-        logger.info '❌  Did not detect a package.json or Gemfile.'.red
-        exit 1
       end
     end
 
@@ -75,7 +72,7 @@ module Taperole
     end
 
     def create_ssh_keys_dir
-      mkdir "#{local_dir}/dev_keys"
+      mkdir "#{tapefiles_dir}/dev_keys"
     end
 
     def handle_vagrantfile

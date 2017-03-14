@@ -23,19 +23,42 @@
     creates: /etc/nginx/ssl/dhparam.pem
 
 - name: Configure App nginx
-  template: src=nginx_puma.j2 dest=/etc/nginx/sites-enabled/{{ app_name }}
+  template:
+    src: nginx_puma.j2
+    dest: /etc/nginx/sites-enabled/{{ app_name }}
+  register: nginx_config
+
+- name: Install nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  register: nginx_config
 
 - name: Install monit nginx config
-  file: src=/etc/monit/conf-available/nginx dest=/etc/monit/conf-enabled/nginx owner=root group=root state=link
+  file:
+    src: /etc/monit/conf-available/nginx
+    dest: /etc/monit/conf-enabled/nginx
+    owner: root
+    group: root
+    state: link
   register: nginx_monit_config
 
 - name: Reload Monit
   command: bash -lc "monit reload && sleep 2"
   when: nginx_monit_config.changed
 
-- name: Stop nginx
-  service: name=nginx state=stopped
+- name: Check if nginx running
+  shell: ps -ef | grep nginx | grep -v grep
+  register: nginx_running
+  changed_when: false
+  ignore_errors: true
 
 - name: Start nginx
   remote_user: "{{ deployer_user.name }}"
   command: bash -lc "sudo monit start nginx"
+  when: nginx_running | failed
+
+- name: Restart nginx
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc "sudo monit restart nginx"
+  when: nginx_running | success and nginx_config.changed

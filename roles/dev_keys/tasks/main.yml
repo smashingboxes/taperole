@@ -3,4 +3,4 @@
     user={{ deployer_user.name }}
     state=present
   with_fileglob:
-    - "{{ playbook_dir }}/../dev_keys/*"
+    - "{{ playbook_dir }}/dev_keys/*"
