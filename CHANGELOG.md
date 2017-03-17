@@ -1,5 +1,9 @@
 ### 2.0.0
-* Added support for 
+* Set default ruby to 2.4
+* Moved from Unicorn to Puma
+* Supports Rails 5
+* Use letsencrypt for HTTPS configuration
+* `tape ansible everything` is now `tape ansible deploy`
 
 ### 1.8.2 (also 1.8.1)
 * Updates ANXS PG Galaxy role
