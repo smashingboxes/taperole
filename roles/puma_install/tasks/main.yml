@@ -2,8 +2,8 @@
   file: path={{be_app_path}}/log state=directory owner=deployer
 
 - name: Install Puma config
-  template: src=puma.rb.j2
-            dest={{be_app_path}}/config/puma.rb
+  template: src=puma.production.rb.j2
+            dest={{be_app_path}}/config/puma.production.rb
 
 - name: Set up Puma pids dir
   file:
