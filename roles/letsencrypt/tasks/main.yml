@@ -14,6 +14,6 @@
     weekday: 1
     hour: 2
     minute: 30
-    job: /usr/bin/letsencrypt renew --rsa-key-size 4096 >> /var/log/le-renew.log
+    job: /usr/bin/letsencrypt renew --rsa-key-size 4096 --renew-hook "/usr/bin/monit restart nginx" >> /var/log/le-renew.log
     user: root
   when: letsencrypt.enabled == true
