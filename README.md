@@ -44,7 +44,7 @@ tape installer install
 All default configurations found in `vars/defaults.yml` can be overridden in your local `taperole/tape_vars.yml` file
 
 **Default Node Version**: 4.2.x
-**Default Ruby Version** 2.3.0
+**Default Ruby Version** 2.4.0
 
 ### Backups
 Backups are handled via [duply](http://duply.net/) and are configured via the [Stouts.backup](https://github.com/Stouts/Stouts.backup) ansible galaxy role. Bacups occur every night at 4am under the root user. You can configure your backup schedule and target where you want your backups stored at within your `taperole/tape_vars.yml` file.
@@ -98,6 +98,27 @@ Then use the `-l` option to specify the stage/environment
 
 ```sh
 tape ansible deploy -l staging
+```
+
+### Configure LetsEncrypt
+As of 2.0, Tape can automatically configure HTTPS with LetsEncrypt
+You will need to set the following configs:
+
+In your `hosts` file add a hostname variable
+```
+[production]
+0.0.0.0 be_app_env=production be_app_branch=SOME_BRANCH hostname=project-production.example.com
+
+[staging]
+0.0.0.0 be_app_env=staging be_app_branch=SOME_BRANCH hostname=project-staging.example.com
+```
+
+In your `tape_vars.yml`
+```
+letsencrypt:
+  enabled: true
+  hostname: "{{hostname}}"
+  email: some_email@example.com
 ```
 
 ## Testing
