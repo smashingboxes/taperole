@@ -14,5 +14,5 @@
     - database_load
     - puma_activate
     - frontend_deploy
-    # - delayed_job
+    # - delayed_job_activate
     # - whenever
