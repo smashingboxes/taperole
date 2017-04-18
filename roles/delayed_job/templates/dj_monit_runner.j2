@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-USER={{deployer_user.name}}
-APP_PATH={{be_app_path}}
-PATH=/usr/local/rbenv/bin:/usr/local/rbenv/shims:$PATH
-RAILS_ENV={{be_app_env}}
-
-cd $APP_PATH
-RAILS_ENV=$RAILS_ENV bin/delayed_job $1 -n $2

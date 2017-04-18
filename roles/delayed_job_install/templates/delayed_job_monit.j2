@@ -1,0 +1,4 @@
+check process delayed_job
+  with pidfile {{ be_app_path }}/tmp/pids/delayed_job.pid
+  start program = "/bin/bash -c 'cd {{ be_app_path }} && RAILS_ENV={{be_app_env}} /usr/local/rbenv/shims/bundle exec {{be_app_path}}/bin/delayed_job start'" as uid deployer and gid deployer
+  stop program = "/bin/bash -c 'cd {{ be_app_path }} && RAILS_ENV={{be_app_env}} /usr/local/rbenv/shims/bundle exec {{be_app_path}}/bin/delayed_job stop'" as uid deployer and gid deployer

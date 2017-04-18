@@ -1,7 +1,15 @@
-- name: Stop Delayed Job
-  remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job stop -n {{dj_runners}}"
+- name: Check if Delayed Job running
+  shell: ps -ef | grep delayed_job | grep -v grep
+  register: dj_running
+  changed_when: false
+  ignore_errors: true
 
 - name: Start Delayed Job
   remote_user: "{{ deployer_user.name }}"
-  command: bash -lc "cd {{be_app_path}} && RAILS_ENV={{be_app_env}} bin/delayed_job start -n {{dj_runners}}"
+  command: bash -lc "sudo monit start delayed_job"
+  when: dj_running | failed
+
+- name: Restart Delayed Job
+  remote_user: "{{ deployer_user.name }}"
+  command: bash -lc "sudo monit restart delayed_job"
+  when: dj_running | success

@@ -1,0 +1,10 @@
+- name: Install Delayed Job Monit
+  template:
+    src: delayed_job_monit.j2
+    dest: /etc/monit/conf.d/delayed_job
+    mode: u=rw,g=r,o=r
+  register: delayed_job_monit_config
+
+- name: Reload Monit
+  command: bash -lc "monit reload"
+  when: delayed_job_monit_config.changed
