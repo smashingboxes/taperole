@@ -47,7 +47,7 @@ case "$1" in
   stop)
     echo "Stopping puma..."
       echo "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl stop"
-      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl stop"
+      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl --config-file $PUMA_CONFIG_FILE stop"
       rm -f $PUMA_PID_FILE
       rm -f $PUMA_SOCKET
 
