@@ -57,7 +57,7 @@ case "$1" in
   restart)
     if puma_is_running ; then
       echo "Hot-restarting puma..."
-      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl restart"
+      /bin/su - $USER -c "cd $APP_DIR && RAILS_ENV=$RAILS_ENV bundle exec pumactl --config-file $PUMA_CONFIG_FILE restart"
 
       echo "Doublechecking the process restart..."
       sleep 15
