@@ -18,7 +18,7 @@
   when: letsencrypt.enabled == false
 
 - name: Create Diffie Hellman Ephemeral Parameters (this will take some time)
-  command: bash -lc "openssl dhparam -out dhparam.pem 2048"
+  command: bash -lc "openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048"
   args:
     creates: /etc/nginx/ssl/dhparam.pem
 
