@@ -1,3 +1,9 @@
+### 2.0.5
+* Fixes letsencrypt bugs
+* Uses letsencrypt hooks when renewing cert
+* Updates galaxy roles
+* Fixes to apt-get upgrade
+
 ### 2.0.0
 * Set default ruby to 2.4
 * Moved from Unicorn to Puma
