@@ -1,3 +1,6 @@
+### 2.0.6
+* Disable public key pinning so you don't brick your site
+
 ### 2.0.5
 * Fixes letsencrypt bugs
 * Uses letsencrypt hooks when renewing cert
