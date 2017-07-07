@@ -49,7 +49,6 @@ server {
   resolver_timeout 5s;
 
   add_header X-Frame-Options "DENY";
-  add_header Public-Key-Pins 'pin-sha256="klO23nT2ehFDXCfx3eHTDRESMz3asj1muO+4aIdjiuY="; pin-sha256="633lt352PKRXbOwf4xSEa1M517scpD3l5f79xMD9r9Q="; max-age=2592000; includeSubDomains';
 
   # DoS Mitigation
   client_body_timeout 5s;
