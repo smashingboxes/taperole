@@ -1,5 +1,5 @@
 check process redis-server
-    with pidfile "/var/run/redis/redis.pid"
+    with pidfile "/var/run/redis/redis-server.pid"
     start program = "/etc/init.d/redis-server start"
     stop program = "/etc/init.d/redis-server stop"
     if 2 restarts within 3 cycles then timeout
