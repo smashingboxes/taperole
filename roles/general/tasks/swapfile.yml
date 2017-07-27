@@ -22,4 +22,4 @@
 
 - name: Swapon swapfile
   command: swapon {{ swap_file.path }}
-  when: swap_file_is_on.stdout.find('{{ swap_file.path }}') != 1
+  when: swap_file_is_on.stdout.find('{{ swap_file.path }}') == -1
