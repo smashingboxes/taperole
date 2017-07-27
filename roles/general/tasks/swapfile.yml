@@ -17,7 +17,7 @@
   mount: name=none src={{ swap_file.path }} fstype=swap opts=sw passno=0 dump=0 state=present
 
 - name: Check swapon swapfile
-  raw: swapon | grep "{{ swap_file.path }}"
+  shell: swapon | grep "{{ swap_file.path }}"
   ignore_errors: True
   register: swap_file_is_on
 
