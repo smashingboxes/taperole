@@ -18,8 +18,10 @@
 
 - name: Check swapon swapfile
   raw: swapon | grep "{{ swap_file.path }}"
-  register: swapfile_is_on
+  ignore_errors: True
+  register: swap_file_is_on
 
 - name: Swapon swapfile
   command: swapon {{ swap_file.path }}
-  when: swapfile_is_on.stdout == ""
+  when: swap_file_is_on.stdout == ""
+
