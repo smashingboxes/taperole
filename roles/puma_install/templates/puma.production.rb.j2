@@ -4,6 +4,8 @@ workers {{puma_workers}}
 # Min and Max threads per worker
 threads 1, 6
 
+daemonize
+
 # Default to production
 rails_env = "{{be_app_env}}"
 environment rails_env
