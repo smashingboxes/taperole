@@ -28,7 +28,7 @@ module Taperole
     end
 
     def ansible(args: '', options: {})
-      exec_ansible("#{tapefiles_dir}/omnibox.yml", args, options)
+      exec_ansible("#{tapefiles_dir}/provision.yml", args, options)
     end
 
     def ansible_deploy(args: '', options: {})
