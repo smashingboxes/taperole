@@ -20,7 +20,7 @@ ADD ./test/rails/tape_vars.yml taperole/tape_vars.yml
 
 # FIXME
 # Disable ufw bc docker gets mad about iptables
-RUN sed -i '/ufw/d' taperole/omnibox.yml
+RUN sed -i '/ufw/d' taperole/provision.yml
 
 # Run Tape
 RUN echo '[omnibox]' > taperole/hosts

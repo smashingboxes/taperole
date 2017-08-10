@@ -30,8 +30,8 @@ describe Taperole::Commands::Installer do
         expect(taperole).to include('deploy.yml')
       end
 
-      it 'creates omnibox.yml' do
-        expect(taperole).to include('omnibox.yml')
+      it 'creates provision.yml' do
+        expect(taperole).to include('provision.yml')
       end
 
       it 'creates tape_vars.yml' do
@@ -46,8 +46,8 @@ describe Taperole::Commands::Installer do
         expect(taperole).to include('deploy.yml')
       end
 
-      it 'creates omnibox.yml' do
-        expect(taperole).to include('omnibox.yml')
+      it 'creates provision.yml' do
+        expect(taperole).to include('provision.yml')
       end
 
       it 'creates tape_vars.yml' do
@@ -71,7 +71,7 @@ describe Taperole::Commands::Installer do
   describe '#uninstall' do
     let(:setup) do
       Dir.mkdir("#{Dir.pwd}/taperole")
-      FileUtils.touch("#{Dir.pwd}/taperole/omnibox.yml")
+      FileUtils.touch("#{Dir.pwd}/taperole/provision.yml")
       FileUtils.touch("#{Dir.pwd}/taperole/deploy.yml")
       FileUtils.touch("#{Dir.pwd}/taperole/tape_vars.yml")
       FileUtils.touch("#{Dir.pwd}/taperole/rake.yml")
@@ -82,8 +82,8 @@ describe Taperole::Commands::Installer do
     end
     let(:command) { :uninstall }
 
-    it 'removes omnibox.yml' do
-      expect(taperole).to_not include('omnibox.yml')
+    it 'removes provision.yml' do
+      expect(taperole).to_not include('provision.yml')
     end
 
     it 'removes deploy.yml' do

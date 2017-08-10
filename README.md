@@ -75,7 +75,7 @@ backup_hosts:
 ### Custom roles
 You can add app specific ansible roles to `<app_root>/roles`.
 
-You must then specify the roles you want to use in `omnibox.yml` or `deploy.yml`
+You must then specify the roles you want to use in `provision.yml` or `deploy.yml`
 
 [Read the Ansible docs on playbook roles here](http://docs.ansible.com/playbooks_roles.html)
 

@@ -18,7 +18,7 @@ module Taperole
     end
 
     def uninstall_tape
-      rm "#{tapefiles_dir}/omnibox.yml"
+      rm "#{tapefiles_dir}/provision.yml"
       rm "#{tapefiles_dir}/deploy.yml"
       rm "#{tapefiles_dir}/tape_vars.yml"
       rm "#{tapefiles_dir}/rake.yml"
@@ -45,7 +45,7 @@ module Taperole
     end
 
     def copy_static_app_examples
-      %w(omnibox deploy tape_vars).each do |base_filename|
+      %w(provision deploy tape_vars).each do |base_filename|
         copy_example(
           "templates/static_html/#{base_filename}.example.yml",
           "#{tapefiles_dir}/#{base_filename}.yml"
@@ -54,7 +54,7 @@ module Taperole
     end
 
     def copy_basic_examples
-      %w(omnibox deploy tape_vars rake).each do |base_filename|
+      %w(provision deploy tape_vars rake).each do |base_filename|
         copy_example(
           "templates/base/#{base_filename}.example.yml",
           "#{tapefiles_dir}/#{base_filename}.yml"
