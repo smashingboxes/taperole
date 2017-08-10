@@ -1,3 +1,9 @@
+### 2.0.7
+* Cleanup to the puma configs installed on a server
+* omnibox.yml is now provision.yml
+* Fixes bugs for redis where pidfile was in wrong location
+* Increase default swapfile saize
+
 ### 2.0.6
 * Disable public key pinning so you don't brick your site
 
