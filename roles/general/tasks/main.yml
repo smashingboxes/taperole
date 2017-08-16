@@ -9,5 +9,9 @@
 - name: apt-get update upgrade
   apt: update_cache=yes  upgrade=safe
 
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes
+
 - include: basic_packages.yml
 - include: swapfile.yml
