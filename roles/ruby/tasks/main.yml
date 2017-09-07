@@ -68,7 +68,7 @@
   register: ruby_installed
   changed_when: false
   ignore_errors: yes
-  always_run: yes
+  check_mode: no
   when: rbenv.env == "system"
 
 - name: install ruby {{ rbenv.ruby_version }} for system
@@ -82,7 +82,7 @@
   register: ruby_selected
   changed_when: false
   ignore_errors: yes
-  always_run: yes
+  check_mode: no
   when: rbenv.env == "system"
 
 - name: set ruby {{ rbenv.ruby_version }} for system
