@@ -5,7 +5,9 @@ module Taperole
   autoload :VERSION, 'taperole/version'
   autoload :AnsibleRunner, 'taperole/core/ansible_runner'
   autoload :Installer, 'taperole/core/installer'
+  autoload :DockerInstaller, 'taperole/core/docker_installer'
   autoload :Notifier, 'taperole/core/notifier'
+  autoload :OS, 'taperole/core/os'
 
   module Commands
     autoload :Tape, 'taperole/commands/tape'
