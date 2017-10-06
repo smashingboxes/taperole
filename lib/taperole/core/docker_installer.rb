@@ -7,14 +7,24 @@ module Taperole
     no_commands do
       def docker_installed_precheck
         unless exec('docker -v') =~ /Docker version/
-          logger.info "You must have Docker Installed to use tape"
+          logger.info "⚠️  You must have Docker installed to use tape".yellow
           if OS.mac?
-            logger.info "https://docs.docker.com/docker-for-mac/install/"
+            logger.info "🔗  https://docs.docker.com/docker-for-mac/install/"
             return false
           else
-            logger.info "https://docs.docker.com/engine/installation/"
+            logger.info "🔗  https://docs.docker.com/engine/installation/"
             return false
           end
+        end
+        return true
+      end
+
+
+      def docker_compose_installed_precheck
+        unless exec('docker-compose version') =~ /docker-compose version/
+          logger.info "⚠️  You must have Docker Compose installed to use tape".yellow
+          logger.info "🔗  https://docs.docker.com/compose/install/"
+          return false
         end
         return true
       end
