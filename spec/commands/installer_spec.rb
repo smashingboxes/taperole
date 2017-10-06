@@ -1,117 +1,61 @@
 require 'spec_helper'
 
 describe Taperole::Commands::Installer do
-  before(:each) do
-    setup
-    Taperole::Commands::Tape.new.invoke(described_class, command, [], options)
-  end
+  subject  { Taperole::Commands::Installer.new }
 
-  let(:setup) {}
-  let(:options) { { vagrant: false, quiet: true } }
-
-  let(:root) { Dir.entries(Dir.pwd) }
-  let(:taperole) { Dir.entries("#{Dir.pwd}/taperole") }
-
-  describe '#install' do
-    let(:command) { :install }
-
-    it 'adds .tape to .gitignore' do
-      expect(File.read('.gitignore')).to include('.tape')
-    end
-
-    it 'creates a taperoles directory' do
-      expect(root).to include('taperole')
-    end
-
-    context 'in a rails app' do
-      let(:setup) { FileUtils.touch('config.ru') }
-
-      it 'creates deploy.yml' do
-        expect(taperole).to include('deploy.yml')
+  describe '#docker_installed_precheck' do
+    context 'when docker is installed' do
+      before do
+        allow(subject).to receive(:exec).and_return('Docker version 1.0.0').once
+        allow_any_instance_of(Logger).to receive(:info)
       end
 
-      it 'creates provision.yml' do
-        expect(taperole).to include('provision.yml')
-      end
-
-      it 'creates tape_vars.yml' do
-        expect(taperole).to include('tape_vars.yml')
+      it 'checks for docker' do
+        expect(subject.docker_installed_precheck).to eq true
       end
     end
 
-    context 'in a frontend app' do
-      let(:setup) { FileUtils.touch('package.json') }
+    context 'when docker is not installed' do
+      let(:stubbed_logger) { double("logger", 'level=': nil, 'formatter=': nil) }
 
-      it 'creates deploy.yml' do
-        expect(taperole).to include('deploy.yml')
+      before do
+        allow(subject).to receive(:exec).and_return('no docker found').once
       end
 
-      it 'creates provision.yml' do
-        expect(taperole).to include('provision.yml')
+      it 'returns false' do
+        allow_any_instance_of(Logger).to receive(:info).twice
+        expect(subject.docker_installed_precheck).to eq false
       end
 
-      it 'creates tape_vars.yml' do
-        expect(taperole).to include('tape_vars.yml')
+      it 'informs the user' do
+        expect_any_instance_of(Logger).to receive(:info).twice
+        subject.docker_installed_precheck
       end
-    end
-
-    it 'creates the hosts file' do
-      expect(taperole).to include('hosts')
-    end
-
-    it 'creates the roles directory' do
-      expect(taperole).to include('roles')
-    end
-
-    it 'creates the dev_keys directory' do
-      expect(taperole).to include('dev_keys')
     end
   end
 
-  describe '#uninstall' do
-    let(:setup) do
-      Dir.mkdir("#{Dir.pwd}/taperole")
-      FileUtils.touch("#{Dir.pwd}/taperole/provision.yml")
-      FileUtils.touch("#{Dir.pwd}/taperole/deploy.yml")
-      FileUtils.touch("#{Dir.pwd}/taperole/tape_vars.yml")
-      FileUtils.touch("#{Dir.pwd}/taperole/rake.yml")
-      FileUtils.touch("#{Dir.pwd}/taperole/roles")
-      FileUtils.touch("#{Dir.pwd}/taperole/hosts")
-      FileUtils.touch("#{Dir.pwd}/taperole/dev_keys")
-      FileUtils.touch("#{Dir.pwd}/Vagrantfile")
-    end
-    let(:command) { :uninstall }
-
-    it 'removes provision.yml' do
-      expect(taperole).to_not include('provision.yml')
+  describe '#docker_compose_installed_precheck' do
+    context 'when docker compose is installed' do
+      it 'returns true' do
+        allow(subject).to receive(:exec).with('docker-compose version').and_return('docker-compose version 1.0.0, build abcdefg')
+        expect(subject.docker_compose_installed_precheck).to eq true
+      end
     end
 
-    it 'removes deploy.yml' do
-      expect(taperole).to_not include('deploy.yml')
-    end
+    context 'when docker compose is not installed' do
+      before do
+        allow(subject).to receive(:exec).and_return('no docker found').once
+      end
 
-    it 'removes tape_vars.yml' do
-      expect(taperole).to_not include('tape_vars.yml')
-    end
+      it 'returns false' do
+        allow_any_instance_of(Logger).to receive(:info).twice
+        expect(subject.docker_compose_installed_precheck).to eq false
+      end
 
-    it 'removes rake.yml' do
-      expect(taperole).to_not include('rake.yml')
-    end
-
-    it 'removes roles' do
-      expect(taperole).to_not include('roles')
-    end
-
-    it 'removes hosts' do
-      expect(taperole).to_not include('hosts')
-    end
-
-    it 'removes dev_keys' do
-      expect(taperole).to_not include('dev_keys')
-    end
-
-    it 'removes Vagrantfile' do
-      expect(root).to_not include('Vagrantfile')
+      it 'informs the user' do
+        expect_any_instance_of(Logger).to receive(:info).twice
+        subject.docker_installed_precheck
+      end
     end
   end
 end
