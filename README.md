@@ -43,7 +43,7 @@ tape installer install
 
 All default configurations found in `vars/defaults.yml` can be overridden in your local `taperole/tape_vars.yml` file
 
-**Default Node Version**: 4.2.x
+**Default Node Version**: 8.x
 **Default Ruby Version** 2.4.0
 
 ### Backups
