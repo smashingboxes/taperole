@@ -26,7 +26,7 @@
     - ufw
     - deployer_user
     - dev_keys
-    - monit_install
+    - install_monit
     - postgres
     - letsencrypt
     - nginx
@@ -34,7 +34,7 @@
     - frontend_install_essentials
     - install_yarn
     - backend_checkout
-    - puma_install
+    - install_puma
     - backend_config
     - database_load
     - puma_activate
