@@ -29,8 +29,15 @@
   register: npm_result
   ignore_errors: true
 
+
+- name: Detect yarn.lock
+  command: chdir={{ fe_app_path }}
+    bash -lc 'test -e yarn.lock'
+  register: yarn_result
+  ignore_errors: true
+
 - name: YARN install
-  when: fe_app_repo is defined and npm_result|success
+  when: fe_app_repo is defined and npm_result|success and yarn_result|success
   remote_user: "{{ deployer_user.name }}"
   command: chdir={{ fe_app_path }}
     bash -lc 'yarn install'
