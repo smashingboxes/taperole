@@ -32,6 +32,7 @@
     - nginx
     - backend_install_essentials
     - frontend_install_essentials
+    - yarn_install
     - backend_checkout
     - puma_install
     - backend_config

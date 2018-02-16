@@ -1,7 +1,3 @@
 - name: Register npm executable
   command: bash -lc "which npm"
   register: npm_path
-
-- name: Ensure bower is installed
-  npm: name=bower state=present global=yes executable="{{npm_path.stdout}}"
-  when: fe_app_repo is defined
