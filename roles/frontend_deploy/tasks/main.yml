@@ -35,18 +35,6 @@
   command: chdir={{ fe_app_path }}
     bash -lc 'npm install'
 
-- name: Detect bower.json
-  command: chdir={{ fe_app_path }}
-    bash -lc 'test -e bower.json'
-  register: bower_result
-  ignore_errors: true
-
-- name: Bower install
-  when: fe_app_repo is defined and bower_result|success
-  remote_user: "{{ deployer_user.name }}"
-  command: chdir={{ fe_app_path }} 
-    bash -lc 'bower install'
-
 - name: Build FE
   when: fe_app_repo is defined
   remote_user: "{{ deployer_user.name }}"
