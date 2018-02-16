@@ -38,7 +38,7 @@ allowed_ports:
   - 80
   - 443
 
-nodejs_version: "6.x"
+nodejs_version: "8.x"
 
 no_changes_found_error: |
   ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️ ‼️
