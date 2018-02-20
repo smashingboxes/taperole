@@ -1,3 +1,4 @@
 ---
 dependencies:
   - role: node
+  - role: install_yarn
