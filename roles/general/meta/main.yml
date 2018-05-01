@@ -1,4 +1,5 @@
 ---
 dependencies:
   - role: jnv.unattended-upgrades
+    unattended_remove_unused_dependencies: true
   - role: tersmitten.htop
