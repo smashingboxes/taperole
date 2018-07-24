@@ -16,6 +16,17 @@ be_app_repo:
 
 slack_webhook_url:
 
+logrotate_scripts:
+  - name: rails
+    path: "{{be_app_path}}/log/*.log"
+    options:
+      - daily
+      - rotate 30
+      - missingok
+      - compress
+      - delaycompress
+      - copytruncate
+
 ## Configure Postgresql Backups
 ## Uncomment the following to enabled backups
 #
