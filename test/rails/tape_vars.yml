@@ -15,3 +15,14 @@ be_app_repo: https://github.com/BrandonMathis/vanilla-rails-app.git
 # fe_build_command: yarn run build:production
 
 slack_webhook_url:
+
+logrotate_scripts:
+  - name: rails
+    path: "{{be_app_path}}/log/*.log"
+    options:
+      - daily
+      - rotate 30
+      - missingok
+      - compress
+      - delaycompress
+      - copytruncate

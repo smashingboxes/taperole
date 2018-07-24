@@ -15,3 +15,5 @@
 - src: https://github.com/Oefenweb/ansible-sysfs
   name: ansible-sysfs
   version: v1.0.2
+
+- src: nickhammond.logrotate
