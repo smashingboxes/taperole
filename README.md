@@ -208,3 +208,16 @@ Here are the steps needed to enable this functionality:
 1. Start by setting up [an incoming webhook integration](https://my.slack.com/services/new/incoming-webhook/)
 2. Add that URL to `tape_vars.yml` as `slack_webhook_url`
 3. Profit.
+
+# Releasing a new version of taperole
+
+1. Bump the version in `lib/taperole/version.rb`
+2. `gem build taperole.gemspec`
+3. `bundle install`
+4. Commit to git, push, and make PR
+5. Wait for approval, and merge
+6. `git checkout master`
+7. `git pull`
+8. `git tag -a VERSION` (e.g. `git tag -a 2.1.0`)
+9. `git push --tags`
+10. `gem push taperole.gemspec` (You'll need access to push the gem on rubygems. Ask Derek for this)
