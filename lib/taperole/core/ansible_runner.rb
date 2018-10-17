@@ -62,8 +62,11 @@ module Taperole
 
     def enforce_roles_path!
       Dir.mkdir('.tape') unless Dir.exist?('.tape')
+      config_file = "#{local_dir}/.tape/ansible.cfg"
 
-      File.open("#{local_dir}/.tape/ansible.cfg", 'w') do |f|
+      return if File.exist?(config_file)
+
+      File.open(config_file, 'w') do |f|
         f.puts '[defaults]'
         f.puts "roles_path=.tape/roles:#{tape_dir}/roles:#{tape_dir}/vendor"
         f.puts "inventory=#{tapefiles_dir}/hosts"
